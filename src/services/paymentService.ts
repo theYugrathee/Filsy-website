@@ -190,37 +190,59 @@ export async function initiateCheckout(currency: 'USD' | 'INR' = 'USD'): Promise
   };
 }
 
+export interface VerifyPaymentQuery {
+  paymentId?: string;
+  sessionId?: string;
+  email?: string;
+}
+
 /**
- * Verifies payment confirmation and retrieves assigned license key
+ * Verifies payment confirmation with Dodo Payments and retrieves the user's real license key.
+ * Never returns simulated or dummy keys.
  */
-export async function verifyPayment(sessionId: string): Promise<PaymentVerification> {
-  if (!sessionId) {
-    return { status: 'failed', error: 'No checkout session ID provided' };
+export async function verifyPayment(query: string | VerifyPaymentQuery): Promise<PaymentVerification> {
+  const queryParams = new URLSearchParams();
+
+  if (typeof query === 'string') {
+    const trimmed = query.trim();
+    if (trimmed.startsWith('pay_')) {
+      queryParams.set('payment_id', trimmed);
+    } else if (trimmed.includes('@')) {
+      queryParams.set('email', trimmed);
+    } else if (trimmed) {
+      queryParams.set('session_id', trimmed);
+    }
+  } else if (query) {
+    if (query.paymentId) queryParams.set('payment_id', query.paymentId);
+    if (query.sessionId) queryParams.set('session_id', query.sessionId);
+    if (query.email) queryParams.set('email', query.email);
+  }
+
+  const queryString = queryParams.toString();
+  if (!queryString) {
+    return {
+      status: 'failed',
+      error: 'No payment identifier provided. Please open your payment confirmation email or check your Dodo Payments receipt.',
+    };
   }
 
   try {
-    const response = await fetch(`/api/verify-payment?session_id=${encodeURIComponent(sessionId)}`);
+    const response = await fetch(`/api/verify-payment?${queryString}`);
     if (response.ok) {
       const data = await response.json();
       return data;
     }
-  } catch (err) {
-    console.warn('Backend payment verification fallback to local session state', err);
-  }
 
-  // Check session storage fallback
-  const stored = sessionStorage.getItem(`session_${sessionId}`);
-  if (stored) {
-    return JSON.parse(stored);
+    const errData = await response.json().catch(() => ({}));
+    return {
+      status: 'failed',
+      error: errData.error || `Payment verification failed (status ${response.status})`,
+    };
+  } catch (err: any) {
+    console.error('Backend payment verification error:', err);
+    return {
+      status: 'failed',
+      error: 'Unable to connect to payment verification server. Please check your connection and refresh.',
+    };
   }
-
-  // Generate deterministic license key for demonstration if session was passed
-  const simulatedKey = `FILSY-${sessionId.slice(0, 4).toUpperCase()}-${Math.random().toString(36).substring(2, 6).toUpperCase()}-PROD`;
-  return {
-    status: 'succeeded',
-    licenseKey: simulatedKey,
-    customerEmail: 'verified.buyer@windows.local',
-    createdAt: new Date().toISOString(),
-    activeDevice: null,
-  };
 }
