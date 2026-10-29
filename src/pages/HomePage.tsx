@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { APP_CONFIG } from '../config';
-import { initiateCheckout } from '../services/paymentService';
+import { initiateCheckout, retrieveLicenses } from '../services/paymentService';
 import { ExplorerComparison } from '../components/ExplorerComparison';
 import {
   Search,
@@ -173,35 +173,23 @@ export const HomePage: React.FC = () => {
 
   const handleRetrieveLicense = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!retrieveEmail.trim()) return;
+    const cleanEmail = retrieveEmail.trim().toLowerCase();
+    if (!cleanEmail) return;
 
     setRetrieveStatus('loading');
     setRetrievedLicenses([]);
 
     try {
-      const res = await fetch(`${APP_CONFIG.supabaseFunctionsUrl}/retrieve-license`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-filsy-app-token': APP_CONFIG.filsyAppToken
-        },
-        body: JSON.stringify({ email: retrieveEmail.trim() })
-      });
-
-      const data = await res.json();
-      if (data.ok && data.licenses && data.licenses.length) {
-        setRetrievedLicenses(data.licenses);
+      const result = await retrieveLicenses(cleanEmail);
+      if (result.ok && result.licenses && result.licenses.length > 0) {
+        setRetrievedLicenses(result.licenses);
         setRetrieveStatus('success');
       } else {
         setRetrieveStatus('not_found');
       }
-    } catch {
-      if (retrieveEmail.toLowerCase().includes('customer') || retrieveEmail.toLowerCase().includes('test')) {
-        setRetrievedLicenses(['FILSY-DEMO-7842-WK91-LIVE']);
-        setRetrieveStatus('success');
-      } else {
-        setRetrieveStatus('not_found');
-      }
+    } catch (err) {
+      console.error('Home retrieve license error:', err);
+      setRetrieveStatus('not_found');
     }
   };
 

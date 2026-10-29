@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { APP_CONFIG } from '../config';
+import { retrieveLicenses } from '../services/paymentService';
 import {
   KeyRound,
   Mail,
@@ -32,36 +33,16 @@ export const FindKeyPage: React.FC = () => {
     setErrorMessage('');
 
     try {
-      const res = await fetch(`${APP_CONFIG.supabaseFunctionsUrl}/retrieve-license`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-filsy-app-token': APP_CONFIG.filsyAppToken,
-        },
-        body: JSON.stringify({ email: cleanEmail }),
-      });
-
-      const data = await res.json();
-      if (data.ok && data.licenses && data.licenses.length > 0) {
-        setLicenses(data.licenses);
-        setStatus('success');
-      } else {
-        // Test fallback for demonstration if test emails used
-        if (cleanEmail.includes('customer') || cleanEmail.includes('test') || cleanEmail.includes('demo')) {
-          setLicenses(['FILSY-DEMO-7842-WK91-LIVE']);
-          setStatus('success');
-        } else {
-          setStatus('not_found');
-        }
-      }
-    } catch {
-      // Graceful fallback for demo/test accounts
-      if (cleanEmail.includes('customer') || cleanEmail.includes('test') || cleanEmail.includes('demo')) {
-        setLicenses(['FILSY-DEMO-7842-WK91-LIVE']);
+      const result = await retrieveLicenses(cleanEmail);
+      if (result.ok && result.licenses && result.licenses.length > 0) {
+        setLicenses(result.licenses);
         setStatus('success');
       } else {
         setStatus('not_found');
       }
+    } catch (err: any) {
+      console.error('License retrieval error:', err);
+      setStatus('not_found');
     }
   };
 
