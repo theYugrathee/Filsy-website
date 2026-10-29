@@ -22,6 +22,7 @@ import { TermsPage } from './pages/TermsPage';
 import { FindKeyPage } from './pages/FindKeyPage';
 import { PaymentSuccessPage } from './pages/PaymentSuccessPage';
 import { PaymentCancelledPage } from './pages/PaymentCancelledPage';
+import { FreeLicensePage } from './pages/FreeLicensePage';
 
 export const App: React.FC = () => {
   return (
@@ -36,6 +37,10 @@ export const App: React.FC = () => {
             <Route path="/how-it-works" element={<HowItWorksPage />} />
             <Route path="/explorer-vs-filsy" element={<ExplorerVsFilsyPage />} />
             <Route path="/pricing" element={<PricingPage />} />
+            <Route path="/free-license" element={<FreeLicensePage />} />
+            <Route path="/free-key" element={<FreeLicensePage />} />
+            <Route path="/creator-reward" element={<FreeLicensePage />} />
+            <Route path="/giveaway" element={<FreeLicensePage />} />
             <Route path="/find-key" element={<FindKeyPage />} />
             <Route path="/retrieve-key" element={<FindKeyPage />} />
             <Route path="/find-license" element={<FindKeyPage />} />
