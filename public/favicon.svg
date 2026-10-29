@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <rect width="32" height="32" rx="6" fill="#08090B"/>
+  <rect x="0.5" y="0.5" width="31" height="31" rx="5.5" stroke="#242831"/>
+  <!-- Clean desktop folder outline -->
+  <path d="M7 11.5C7 10.67 7.67 10 8.5 10H13C13.4 10 13.8 10.16 14.1 10.45L15.5 11.85C15.8 12.14 16.2 12.3 16.6 12.3H23.5C24.33 12.3 25 12.97 25 13.8V21.5C25 22.33 24.33 23 23.5 23H8.5C7.67 23 7 22.33 7 21.5V11.5Z" fill="#101217" stroke="#353B47" stroke-width="1.2"/>
+  <!-- Restrained icy blue file discovery accent -->
+  <circle cx="16" cy="17" r="3.2" stroke="#8FB8FF" stroke-width="1.5"/>
+  <line x1="18.3" y1="19.3" x2="20.8" y2="21.8" stroke="#8FB8FF" stroke-width="1.5" stroke-linecap="round"/>
+</svg>
