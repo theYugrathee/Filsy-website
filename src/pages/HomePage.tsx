@@ -631,8 +631,8 @@ export const HomePage: React.FC = () => {
                 </div>
                 <div className="find-key-manage-link">
                   <span>Moving to a new PC? </span>
-                  <Link to="/manage-license" style={{ color: 'var(--documents)', fontWeight: 600 }}>
-                    Manage or deactivate active devices →
+                  <Link to="/license" style={{ color: 'var(--documents)', fontWeight: 600 }}>
+                    Read our activation &amp; transfer guide →
                   </Link>
                 </div>
               </div>

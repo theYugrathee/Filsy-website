@@ -124,8 +124,8 @@ export const Navbar: React.FC = () => {
           <Link to="/pricing" onClick={closeMobile}>
             Pricing ({APP_CONFIG.pricing.displayPrice})
           </Link>
-          <Link to="/manage-license" onClick={closeMobile}>
-            Manage License
+          <Link to="/license" onClick={closeMobile}>
+            License Guide
           </Link>
           <Link to="/changelog" onClick={closeMobile}>
             Changelog

@@ -55,7 +55,7 @@ export const HowItWorksPage: React.FC = () => {
 
         <div style={{ textAlign: 'center', marginTop: '48px', display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
           <Link to="/pricing" className="btn btn-primary">Get License Key — {APP_CONFIG.pricing.displayPrice}</Link>
-          <Link to="/manage-license" className="btn btn-secondary">Manage License</Link>
+          <Link to="/find-key" className="btn btn-secondary">Find My License Key</Link>
         </div>
       </div>
     </div>

@@ -98,8 +98,8 @@ export const PricingPage: React.FC = () => {
             <KeyRound size={16} />
             <span>Find My License Key</span>
           </Link>
-          <Link to="/manage-license" className="btn btn-secondary" style={{ gap: '6px' }}>
-            <span>Manage Devices</span>
+          <Link to="/license" className="btn btn-secondary" style={{ gap: '6px' }}>
+            <span>License Guide</span>
           </Link>
           <Link to="/faq" className="btn btn-ghost">Read Full FAQ</Link>
         </div>

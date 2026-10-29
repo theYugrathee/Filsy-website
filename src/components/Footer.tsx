@@ -20,7 +20,7 @@ export const Footer: React.FC = () => {
             <a href="/#compare">vs Explorer</a>
             <Link to="/pricing">Pricing ({APP_CONFIG.pricing.displayPrice})</Link>
             <Link to="/find-key">Find My Key</Link>
-            <Link to="/manage-license">Manage License</Link>
+            <Link to="/license">License Guide</Link>
             <Link to="/changelog">Changelog</Link>
             <Link to="/privacy">Privacy</Link>
             <Link to="/terms">Terms</Link>

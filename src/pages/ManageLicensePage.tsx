@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { APP_CONFIG } from '../config';
+import { KeyRound, Laptop, Mail, ShieldCheck, ArrowRight, Info } from 'lucide-react';
 
 export const ManageLicensePage: React.FC = () => {
   const [licenseKeyInput, setLicenseKeyInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [licenseData, setLicenseData] = useState<any>(null);
-  const [statusMessage, setStatusMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   const handleLookup = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!licenseKeyInput.trim()) return;
 
     setIsLoading(true);
-    setStatusMessage(null);
 
     try {
       const response = await fetch(`/api/manage-license?license_key=${encodeURIComponent(licenseKeyInput.trim())}`);
@@ -24,69 +23,71 @@ export const ManageLicensePage: React.FC = () => {
         setLicenseData({
           licenseKey: licenseKeyInput.trim().toUpperCase(),
           valid: true,
-          activeDevice: 'DESKTOP-WIN11',
-          activatedOn: '2026-10-18',
-          customerEmail: 'customer@example.com',
           plan: `Filsy Lifetime License (${APP_CONFIG.pricing.displayPrice})`,
+          maxDevices: 1,
         });
       }
     } catch {
       setLicenseData({
         licenseKey: licenseKeyInput.trim().toUpperCase(),
         valid: true,
-        activeDevice: 'DESKTOP-WIN11',
-        activatedOn: '2026-10-18',
-        customerEmail: 'customer@example.com',
         plan: `Filsy Lifetime License (${APP_CONFIG.pricing.displayPrice})`,
+        maxDevices: 1,
       });
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleDeactivate = async () => {
-    if (!licenseData) return;
-    setIsLoading(true);
-
-    try {
-      await fetch('/api/manage-license', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          action: 'deactivate',
-          license_key: licenseData.licenseKey,
-        }),
-      });
-    } catch {
-      // simulate success
-    }
-
-    setLicenseData({
-      ...licenseData,
-      activeDevice: null,
-    });
-    setStatusMessage({
-      type: 'success',
-      text: 'Device deactivated successfully. You can now activate Filsy on your new PC.',
-    });
-    setIsLoading(false);
-  };
-
   return (
     <div className="page-wrapper">
-      <div className="wrap-narrow">
-        <div className="section-head center">
-          <h2>Manage Your License</h2>
-          <p>Transfer your license to a new PC or check your activation status.</p>
+      <div className="wrap" style={{ maxWidth: '780px' }}>
+        
+        {/* Header */}
+        <div className="section-head center" style={{ marginBottom: '32px' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 16px', borderRadius: 'var(--radius-full)', background: 'rgba(124, 92, 252, 0.1)', color: 'var(--documents)', fontSize: '0.85rem', fontWeight: 700, marginBottom: '16px' }}>
+            <KeyRound size={16} />
+            <span>LICENSE MANAGEMENT</span>
+          </div>
+          <h1 style={{ fontSize: 'clamp(2.2rem, 4vw, 3rem)', lineHeight: 1.15, marginBottom: '14px' }}>
+            License Information &amp; Policy
+          </h1>
+          <p style={{ fontSize: '1.05rem', color: 'var(--muted)', maxWidth: '580px', margin: '0 auto', lineHeight: 1.6 }}>
+            Check your lifetime license status and learn how device switching works.
+          </p>
         </div>
 
-        {/* Lookup Card */}
-        <div className="card" style={{ padding: '28px', marginBottom: '24px' }}>
+        {/* Notice on deactivation */}
+        <div
+          className="card"
+          style={{
+            padding: '24px',
+            marginBottom: '28px',
+            background: 'rgba(124, 92, 252, 0.05)',
+            border: '1px solid rgba(124, 92, 252, 0.2)',
+            display: 'flex',
+            gap: '14px',
+            alignItems: 'flex-start',
+          }}
+        >
+          <Info size={22} color="var(--documents)" style={{ flexShrink: 0, marginTop: '2px' }} />
+          <div>
+            <h3 style={{ fontSize: '1.02rem', marginBottom: '6px', color: 'var(--ink)' }}>
+              Device activation &amp; deactivation is managed in the Filsy app
+            </h3>
+            <p style={{ fontSize: '0.92rem', color: 'var(--muted)', lineHeight: 1.6, margin: 0 }}>
+              For your security and offline privacy, device binding is controlled directly inside the desktop app. To transfer your license to a new PC, open <strong>Settings → License</strong> in Filsy on your existing PC and click <strong>&ldquo;Deactivate this PC&rdquo;</strong>. Then enter your key on the new computer.
+            </p>
+          </div>
+        </div>
+
+        {/* Key Verification Card */}
+        <div className="card" style={{ padding: '36px', marginBottom: '32px' }}>
           <form onSubmit={handleLookup}>
-            <label style={{ display: 'block', fontSize: '0.9rem', fontWeight: 600, marginBottom: '8px' }}>
-              Enter your License Key
+            <label style={{ display: 'block', fontSize: '0.98rem', fontWeight: 600, marginBottom: '10px', color: 'var(--ink)' }}>
+              Verify a License Key
             </label>
-            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
               <input
                 type="text"
                 placeholder="FILSY-XXXX-XXXX-XXXX-XXXX"
@@ -94,82 +95,69 @@ export const ManageLicensePage: React.FC = () => {
                 onChange={(e) => setLicenseKeyInput(e.target.value)}
                 required
                 className="form-input mono"
-                style={{ flex: 1, minWidth: '220px' }}
+                style={{ flex: 1, minWidth: '240px', height: '48px' }}
               />
-              <button className="btn btn-primary" type="submit" disabled={isLoading}>
-                {isLoading ? 'Checking…' : 'Look Up'}
+              <button className="btn btn-primary" type="submit" disabled={isLoading} style={{ height: '48px', padding: '0 24px' }}>
+                {isLoading ? 'Checking…' : 'Check Key'}
               </button>
             </div>
           </form>
 
-          {statusMessage && (
-            <div
-              style={{
-                marginTop: '16px',
-                padding: '10px 14px',
-                borderRadius: 'var(--radius-sm)',
-                background: statusMessage.type === 'success' ? 'rgba(16, 185, 129, 0.1)' : 'rgba(225, 29, 72, 0.1)',
-                color: statusMessage.type === 'success' ? 'var(--music)' : 'var(--images)',
-                fontSize: '0.88rem',
-                fontWeight: 600,
-              }}
-            >
-              {statusMessage.text}
+          {licenseData && (
+            <div style={{ marginTop: '28px', paddingTop: '24px', borderTop: '1px solid var(--line)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--music)', marginBottom: '16px' }}>
+                <ShieldCheck size={20} />
+                <strong style={{ fontSize: '1.05rem' }}>Valid Lifetime License</strong>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '0.94rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid var(--line)' }}>
+                  <span style={{ color: 'var(--muted)' }}>Key:</span>
+                  <span className="mono" style={{ fontWeight: 600, color: 'var(--ink)' }}>{licenseData.licenseKey}</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid var(--line)' }}>
+                  <span style={{ color: 'var(--muted)' }}>Plan:</span>
+                  <span style={{ fontWeight: 600, color: 'var(--ink)' }}>{licenseData.plan || 'Filsy Lifetime License'}</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid var(--line)' }}>
+                  <span style={{ color: 'var(--muted)' }}>Allowed Active PCs:</span>
+                  <span style={{ fontWeight: 600, color: 'var(--ink)' }}>1 active PC (transferable anytime)</span>
+                </div>
+              </div>
             </div>
           )}
         </div>
 
-        {/* License Details if found */}
-        {licenseData && (
-          <div className="card" style={{ padding: '28px' }}>
-            <h3 style={{ fontSize: '1.15rem', marginBottom: '16px' }}>License Information</h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '0.92rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--line)', paddingBottom: '8px' }}>
-                <span style={{ color: 'var(--muted)' }}>License Key:</span>
-                <span className="mono" style={{ fontWeight: 600 }}>{licenseData.licenseKey}</span>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--line)', paddingBottom: '8px' }}>
-                <span style={{ color: 'var(--muted)' }}>Plan:</span>
-                <span style={{ fontWeight: 600 }}>{licenseData.plan}</span>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--line)', paddingBottom: '8px' }}>
-                <span style={{ color: 'var(--muted)' }}>Registered Email:</span>
-                <span style={{ fontWeight: 600 }}>{licenseData.customerEmail}</span>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--line)', paddingBottom: '8px' }}>
-                <span style={{ color: 'var(--muted)' }}>Active Device:</span>
-                <span style={{ fontWeight: 600, color: licenseData.activeDevice ? 'var(--documents)' : 'var(--music)' }}>
-                  {licenseData.activeDevice ? licenseData.activeDevice : 'None (Ready to activate)'}
-                </span>
-              </div>
-            </div>
+        {/* Transfer instructions */}
+        <div className="card" style={{ padding: '32px', marginBottom: '32px' }}>
+          <h3 style={{ fontSize: '1.15rem', marginBottom: '16px', color: 'var(--ink)' }}>
+            Moving to a new Windows PC?
+          </h3>
+          <ol style={{ paddingLeft: '20px', lineHeight: 1.8, fontSize: '0.94rem', color: 'var(--text-secondary)' }}>
+            <li>Launch Filsy on your old PC and open <strong>Settings</strong> (or press <span className="mono">Ctrl + ,</span>).</li>
+            <li>Go to the <strong>License</strong> tab and click <strong>&ldquo;Deactivate this PC&rdquo;</strong>.</li>
+            <li>On your new PC, install Filsy, enter your license key, and click <strong>Activate</strong>.</li>
+            <li>If your old computer is broken, formatted, or no longer accessible, contact <a href={`mailto:${APP_CONFIG.supportEmail}`} style={{ color: 'var(--documents)', fontWeight: 600 }}>{APP_CONFIG.supportEmail}</a> and we will reset the activation for you.</li>
+          </ol>
 
-            {licenseData.activeDevice ? (
-              <div style={{ marginTop: '20px' }}>
-                <p style={{ fontSize: '0.88rem', color: 'var(--muted)', marginBottom: '12px' }}>
-                  Want to move your license to a new PC? Deactivate this device, then enter your key on the new computer.
-                </p>
-                <button
-                  type="button"
-                  onClick={handleDeactivate}
-                  disabled={isLoading}
-                  className="btn btn-secondary"
-                  style={{ width: '100%', color: 'var(--images)' }}
-                >
-                  Deactivate "{licenseData.activeDevice}"
-                </button>
-              </div>
-            ) : (
-              <div style={{ marginTop: '16px', padding: '10px', background: 'rgba(16, 185, 129, 0.1)', borderRadius: 'var(--radius-sm)', color: 'var(--music)', fontSize: '0.88rem', textAlign: 'center', fontWeight: 600 }}>
-                ✓ Ready for activation! Open Filsy on your Windows PC and paste this key into Settings.
-              </div>
-            )}
+          <div style={{ marginTop: '20px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+            <Link to="/find-key" className="btn btn-primary btn-sm" style={{ gap: '6px' }}>
+              <Mail size={14} />
+              <span>Find Lost License Key</span>
+            </Link>
+            <Link to="/license" className="btn btn-ghost btn-sm" style={{ gap: '6px' }}>
+              <span>Detailed Activation Guide</span>
+              <ArrowRight size={14} />
+            </Link>
           </div>
-        )}
+        </div>
 
-        <div style={{ textAlign: 'center', marginTop: '32px', fontSize: '0.86rem', color: 'var(--muted)' }}>
-          Don't have your key handy? Use our <Link to="/find-key" style={{ color: 'var(--documents)', fontWeight: 600 }}>Find Key via Email tool</Link> or email{' '}
-          <a href={`mailto:${APP_CONFIG.supportEmail}`} style={{ color: 'var(--ink)', fontWeight: 600 }}>{APP_CONFIG.supportEmail}</a>.
+        {/* Footer link */}
+        <div style={{ textAlign: 'center', fontSize: '0.88rem', color: 'var(--muted)' }}>
+          Questions about your purchase? Contact support at{' '}
+          <a href={`mailto:${APP_CONFIG.supportEmail}`} style={{ color: 'var(--ink)', fontWeight: 600 }}>
+            {APP_CONFIG.supportEmail}
+          </a>.
         </div>
       </div>
     </div>

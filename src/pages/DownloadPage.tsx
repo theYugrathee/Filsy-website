@@ -107,7 +107,7 @@ export const DownloadPage: React.FC = () => {
         </div>
 
         <div style={{ textAlign: 'center', marginTop: '36px', fontSize: '0.86rem', color: 'var(--muted)' }}>
-          Need to manage an existing key? Visit <Link to="/manage-license" style={{ color: 'var(--ink)', fontWeight: 600 }}>Manage License</Link> or contact <a href={`mailto:${APP_CONFIG.supportEmail}`} style={{ color: 'var(--ink)', fontWeight: 600 }}>Support</a>.
+          Need to find an existing key? Use our <Link to="/find-key" style={{ color: 'var(--ink)', fontWeight: 600 }}>Find License Key</Link> tool or contact <a href={`mailto:${APP_CONFIG.supportEmail}`} style={{ color: 'var(--ink)', fontWeight: 600 }}>Support</a>.
         </div>
       </div>
     </div>

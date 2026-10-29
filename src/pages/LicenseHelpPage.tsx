@@ -38,11 +38,11 @@ export const LicenseHelpPage: React.FC = () => {
             A single license covers 1 active PC at a time. When upgrading computers:
           </p>
           <ol style={{ paddingLeft: '20px', display: 'flex', flexDirection: 'column', gap: '6px', fontSize: '0.9rem', color: 'var(--muted)', marginBottom: '16px' }}>
-            <li>Open Filsy → Settings → License, click <strong>“Deactivate this PC”</strong>.</li>
-            <li>On your new PC, install Filsy and paste your existing license key.</li>
-            <li>You can also deactivate remotely anytime on our <Link to="/manage-license" style={{ color: 'var(--ink)', fontWeight: 600 }}>Manage License page</Link>.</li>
+            <li>Open Filsy on your old PC → Settings → License, click <strong>“Deactivate this PC”</strong>.</li>
+            <li>On your new PC, install Filsy and paste your existing license key to activate immediately.</li>
+            <li>If your old computer is no longer working or was formatted, simply email <a href={`mailto:${APP_CONFIG.supportEmail}`} style={{ color: 'var(--ink)', fontWeight: 600 }}>{APP_CONFIG.supportEmail}</a> and we will gladly reset the activation.</li>
           </ol>
-          <Link to="/manage-license" className="btn btn-secondary btn-sm">Manage Active Devices</Link>
+          <Link to="/find-key" className="btn btn-secondary btn-sm">Find Lost License Key</Link>
         </div>
       </div>
     </div>

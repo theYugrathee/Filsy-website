@@ -35,7 +35,7 @@ export const TermsPage: React.FC = () => {
               1. Perpetual Lifetime License Grant
             </h3>
             <p>
-              Upon payment of the one-time fee of {APP_CONFIG.pricing.displayPrice}, we grant you a non-exclusive, perpetual, worldwide license to install and execute Filsy on <b>one (1) active personal computer</b> at a time. You may deactivate the software on one device and activate it on another computer freely using the in-app settings or the website license manager.
+              Upon payment of the one-time fee of {APP_CONFIG.pricing.displayPrice}, we grant you a non-exclusive, perpetual, worldwide license to install and execute Filsy on <b>one (1) active personal computer</b> at a time. You may deactivate the software on one device and activate it on another computer freely using the in-app settings or by contacting customer support.
             </p>
           </div>
 

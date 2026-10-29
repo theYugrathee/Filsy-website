@@ -15,6 +15,22 @@ export const PaymentSuccessPage: React.FC = () => {
   useEffect(() => {
     let mounted = true;
 
+    // Direct preview switches for development & inspection
+    const previewStatus = searchParams.get('status') || searchParams.get('state');
+    if (previewStatus === 'failed') {
+      setIsLoading(false);
+      setVerification({
+        status: 'failed',
+        error: searchParams.get('error') || 'Your payment was declined or interrupted by your banking provider.',
+      });
+      return;
+    }
+
+    if (previewStatus === 'loading') {
+      setIsLoading(true);
+      return;
+    }
+
     async function checkStatus() {
       setIsLoading(true);
       try {
@@ -42,7 +58,7 @@ export const PaymentSuccessPage: React.FC = () => {
     return () => {
       mounted = false;
     };
-  }, [sessionId]);
+  }, [sessionId, searchParams]);
 
   const handleCopy = () => {
     if (verification?.licenseKey) {
@@ -217,10 +233,10 @@ export const PaymentSuccessPage: React.FC = () => {
           </button>
 
           <Link
-            to="/manage-license"
+            to="/license"
             className="btn btn-secondary btn-lg"
           >
-            Manage Your License
+            Activation Guide
           </Link>
         </div>
       </div>

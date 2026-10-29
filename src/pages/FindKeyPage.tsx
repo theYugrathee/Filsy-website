@@ -249,16 +249,8 @@ export const FindKeyPage: React.FC = () => {
 
                 <div style={{ marginTop: '20px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
                   <Link
-                    to="/manage-license"
-                    className="btn btn-primary btn-sm"
-                    style={{ gap: '6px' }}
-                  >
-                    <Laptop size={14} />
-                    <span>Manage Active Devices</span>
-                  </Link>
-                  <Link
                     to="/license"
-                    className="btn btn-ghost btn-sm"
+                    className="btn btn-primary btn-sm"
                     style={{ gap: '6px' }}
                   >
                     <span>Activation Instructions</span>
@@ -354,11 +346,7 @@ export const FindKeyPage: React.FC = () => {
 
         {/* Bottom Assistance Row */}
         <div style={{ textAlign: 'center', fontSize: '0.9rem', color: 'var(--muted)' }}>
-          Need to transfer your license to a new PC? Use our{' '}
-          <Link to="/manage-license" style={{ color: 'var(--ink)', fontWeight: 600 }}>
-            Device Manager
-          </Link>{' '}
-          or email{' '}
+          Need to transfer your license to a new PC? Open Filsy Settings on your old device and click &ldquo;Deactivate this PC&rdquo;, or email{' '}
           <a href={`mailto:${APP_CONFIG.supportEmail}`} style={{ color: 'var(--ink)', fontWeight: 600 }}>
             {APP_CONFIG.supportEmail}
           </a>.

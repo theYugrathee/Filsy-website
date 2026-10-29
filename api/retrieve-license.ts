@@ -1,10 +1,9 @@
 // ==========================================================================
 // VERCEL / SERVERLESS EDGE HANDLER: RETRIEVE LICENSE KEYS BY EMAIL
-// Queries Dodo Payments to find all license keys owned by customer email
+// Fetches license keys EXCLUSIVELY from Supabase Edge Functions
 // ==========================================================================
 
 export default async function handler(req: any, res: any) {
-  // Allow CORS for local dev / cross-origin if needed
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-filsy-app-token');
@@ -26,131 +25,47 @@ export default async function handler(req: any, res: any) {
     return res.status(400).json({ ok: false, error: 'Email address is required' });
   }
 
-  const apiKey = process.env.DODO_PAYMENTS_API_KEY;
-  const mode = process.env.DODO_MODE || 'test';
-
-  if (!apiKey) {
-    // If running in development without credentials, provide demo fallback
-    if (cleanEmail.includes('demo') || cleanEmail.includes('test') || cleanEmail.includes('customer')) {
-      return res.status(200).json({
-        ok: true,
-        licenses: ['FILSY-DEMO-7842-WK91-LIVE'],
-        count: 1,
-      });
-    }
-    return res.status(200).json({ ok: true, licenses: [], count: 0 });
-  }
+  const supabaseUrl =
+    process.env.VITE_SUPABASE_FUNCTIONS_URL ||
+    'https://ofvyincijdrefgxbupwy.supabase.co/functions/v1';
+  const filsyToken =
+    process.env.VITE_FILSY_APP_TOKEN || '5cef6c413bebc63f819280c528b3e74f';
 
   try {
-    const dodoApiBase = mode === 'test'
-      ? 'https://test.dodopayments.com'
-      : 'https://api.dodopayments.com';
+    const supabaseRes = await fetch(`${supabaseUrl}/retrieve-license`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-filsy-app-token': filsyToken,
+      },
+      body: JSON.stringify({ email: cleanEmail }),
+    });
 
-    // 1. Look up customer(s) matching this email
-    const customerRes = await fetch(
-      `${dodoApiBase}/customers?email=${encodeURIComponent(cleanEmail)}`,
-      {
-        headers: {
-          'Authorization': `Bearer ${apiKey}`,
-          'Content-Type': 'application/json',
-        },
-      }
-    );
-
-    if (!customerRes.ok) {
-      const errText = await customerRes.text();
-      console.error('Dodo Customers lookup error:', errText);
-      return res.status(502).json({ ok: false, error: 'Failed to query customer database' });
+    if (supabaseRes.status === 404) {
+      return res.status(200).json({
+        ok: true,
+        licenses: [],
+        count: 0,
+      });
     }
 
-    const customerData = await customerRes.json();
-    const customers = customerData.items || [];
-
-    if (customers.length === 0) {
-      // Also check payments directly in case customer email is stored on a payment
-      const paymentsRes = await fetch(
-        `${dodoApiBase}/payments`,
-        {
-          headers: {
-            'Authorization': `Bearer ${apiKey}`,
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-
-      if (paymentsRes.ok) {
-        const paymentData = await paymentsRes.json();
-        const payments = paymentData.items || [];
-        const matchedPayments = payments.filter((p: any) =>
-          p.customer?.email?.toLowerCase() === cleanEmail &&
-          (p.status === 'succeeded' || p.has_license_key)
-        );
-
-        if (matchedPayments.length > 0) {
-          const keys: string[] = [];
-          for (const p of matchedPayments) {
-            if (p.customer?.customer_id) {
-              const licRes = await fetch(
-                `${dodoApiBase}/license_keys?customer_id=${encodeURIComponent(p.customer.customer_id)}`,
-                {
-                  headers: { 'Authorization': `Bearer ${apiKey}` },
-                }
-              );
-              if (licRes.ok) {
-                const licData = await licRes.json();
-                for (const lic of licData.items || []) {
-                  if (lic.key && !keys.includes(lic.key)) {
-                    keys.push(lic.key);
-                  }
-                }
-              }
-            }
-          }
-
-          if (keys.length > 0) {
-            return res.status(200).json({
-              ok: true,
-              licenses: keys,
-              count: keys.length,
-            });
-          }
-        }
-      }
-
-      return res.status(200).json({ ok: true, licenses: [], count: 0 });
+    if (!supabaseRes.ok) {
+      const errText = await supabaseRes.text();
+      console.error('Supabase retrieve-license error:', supabaseRes.status, errText);
+      return res.status(supabaseRes.status).json({
+        ok: false,
+        error: 'Error querying license database',
+      });
     }
 
-    // 2. Query license keys for each customer ID found
-    const allKeys: string[] = [];
-    for (const customer of customers) {
-      const licRes = await fetch(
-        `${dodoApiBase}/license_keys?customer_id=${encodeURIComponent(customer.customer_id)}`,
-        {
-          headers: {
-            'Authorization': `Bearer ${apiKey}`,
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-
-      if (licRes.ok) {
-        const licData = await licRes.json();
-        const items = licData.items || [];
-        for (const item of items) {
-          if (item.key && !allKeys.includes(item.key)) {
-            allKeys.push(item.key);
-          }
-        }
-      }
-    }
-
+    const data = await supabaseRes.json();
     return res.status(200).json({
       ok: true,
-      licenses: allKeys,
-      count: allKeys.length,
+      licenses: data.licenses || [],
+      count: (data.licenses || []).length,
     });
   } catch (error: any) {
-    console.error('Retrieve license handler error:', error);
+    console.error('Supabase query error:', error);
     return res.status(500).json({ ok: false, error: error.message || 'Internal server error' });
   }
 }
