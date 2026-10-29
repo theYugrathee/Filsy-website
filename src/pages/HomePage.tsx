@@ -27,6 +27,9 @@ import {
   KeyRound,
   Mail,
   AlertCircle,
+  Gift,
+  Share2,
+  Flame,
 } from 'lucide-react';
 
 /* ──────────────────────────────────────────────────
@@ -264,6 +267,68 @@ export const HomePage: React.FC = () => {
                   <Shield size={14} />
                   Instant Key by Email
                 </span>
+              </div>
+
+              {/* Free License Key Community Campaign */}
+              <div className="hero-free-key-card">
+                <div className="hero-free-key-top-bar" />
+
+                <div className="free-key-header">
+                  <div className="free-key-pill">
+                    <Gift size={14} />
+                    <span>Free Lifetime License</span>
+                  </div>
+                  <div className="free-key-target-badge">
+                    <Flame size={13} />
+                    <span>5,000+ Views Challenge</span>
+                  </div>
+                </div>
+
+                <div className="free-key-title">
+                  Promote Filsy &amp; Get a 100% Free Lifetime Key
+                </div>
+
+                <p className="free-key-desc">
+                  Share an honest post, thread, review, or video about Filsy on social media. If your post reaches <strong>5,000+ views</strong>, we will send you an official lifetime license key completely free!
+                </p>
+
+                <div className="free-key-platforms">
+                  <span className="platform-chip">𝕏 / Twitter</span>
+                  <span className="platform-chip">Reddit</span>
+                  <span className="platform-chip">Medium</span>
+                  <span className="platform-chip">YouTube</span>
+                  <span className="platform-chip">LinkedIn &amp; Tech Blogs</span>
+                </div>
+
+                <div className="free-key-steps-grid">
+                  <div className="free-key-step-box">
+                    <span className="step-box-num">Step 1</span>
+                    <span className="step-box-text">Post a review, thread, or demo of Filsy</span>
+                  </div>
+                  <div className="free-key-step-box">
+                    <span className="step-box-num">Step 2</span>
+                    <span className="step-box-text">Reach 5,000+ views or impressions</span>
+                  </div>
+                  <div className="free-key-step-box">
+                    <span className="step-box-num">Step 3</span>
+                    <span className="step-box-text">Email us your post link to claim your key</span>
+                  </div>
+                </div>
+
+                <div className="free-key-cta-row">
+                  <a
+                    href={`mailto:${APP_CONFIG.supportEmail}?subject=Free%20License%20Key%20Claim%20(5K%2B%20Views)&body=Hi%20Filsy%20Team%2C%0A%0AHere%20is%20the%20link%20to%20my%20post%20promoting%20Filsy%3A%0A%5BInsert%20link%20to%20your%20post%20on%20X%2C%20Reddit%2C%20Medium%2C%20etc.%5D%0A%0AProof%20of%205K%2B%20views%20(screenshot%20or%20public%20metrics)%3A%0A%0AMy%20email%20address%20for%20the%20license%20key%3A`}
+                    className="btn btn-secondary btn-sm"
+                    style={{ gap: '6px' }}
+                  >
+                    <Mail size={14} />
+                    <span>Submit Post Link &amp; Claim Key</span>
+                    <ArrowRight size={14} />
+                  </a>
+                  <span className="free-key-hint">
+                    ✓ Verified &amp; dispatched within 24 hours
+                  </span>
+                </div>
               </div>
             </div>
 
