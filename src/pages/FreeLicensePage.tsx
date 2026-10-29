@@ -61,7 +61,7 @@ export const FreeLicensePage: React.FC = () => {
             <span className="gradient-text">Get a 100% Free Lifetime Key.</span>
           </h1>
           <p style={{ fontSize: '1.1rem', color: 'var(--muted)', maxWidth: '640px', margin: '0 auto', lineHeight: 1.6 }}>
-            Share an honest post, thread, review, or video about Filsy on social media. If your post reaches <strong>5,000+ views</strong>, we will email you an official lifetime license key — completely free!
+            Share a great review, positive post, video, or thread about Filsy on social media. If your post reaches <strong>5,000+ views</strong>, we will email you an official lifetime license key — completely free!
           </p>
         </div>
 
@@ -73,7 +73,7 @@ export const FreeLicensePage: React.FC = () => {
             </div>
             <h3 style={{ fontSize: '1.1rem', marginBottom: '8px', color: 'var(--ink)' }}>Create &amp; Publish</h3>
             <p style={{ fontSize: '0.9rem', color: 'var(--muted)', lineHeight: 1.55 }}>
-              Write an honest review, share a demo screen, or create a thread showcasing how Filsy solves Windows file search. Include a link to <strong style={{ color: 'var(--ink)' }}>filsy.space</strong>.
+              Write a great review, share a demo screen, or create a thread showcasing how Filsy solves Windows file search. Include a link to <strong style={{ color: 'var(--ink)' }}>filsy.space</strong>.
             </p>
           </div>
 
@@ -263,7 +263,7 @@ export const FreeLicensePage: React.FC = () => {
             <div style={{ padding: '16px', border: '1px solid var(--line)', borderRadius: 'var(--radius-sm)', background: 'var(--card)' }}>
               <strong style={{ fontSize: '1rem', color: 'var(--ink)', display: 'block', marginBottom: '6px' }}>Reddit</strong>
               <p style={{ fontSize: '0.86rem', color: 'var(--muted)', lineHeight: 1.5 }}>
-                Share an honest review, tool recommendation, or showcase on subreddits like r/windows, r/software, r/productivity, or r/coolgithubprojects.
+                Share a positive review, tool recommendation, or showcase on subreddits like r/windows, r/software, r/productivity, or r/coolgithubprojects.
               </p>
             </div>
 
@@ -300,7 +300,7 @@ export const FreeLicensePage: React.FC = () => {
             <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
               <CheckCircle2 size={18} color="var(--music)" style={{ flexShrink: 0, marginTop: '3px' }} />
               <div>
-                <strong style={{ color: 'var(--ink)' }}>Meaningful Content:</strong> Your post must be a genuine, honest mention or review of Filsy that includes a link to <code className="mono">https://filsy.space</code> or the application.
+                <strong style={{ color: 'var(--ink)' }}>Meaningful Content:</strong> Your post must be a good review or positive mention of Filsy that includes a link to <code className="mono">https://filsy.space</code> or the application.
               </div>
             </div>
 
@@ -354,10 +354,10 @@ export const FreeLicensePage: React.FC = () => {
 
             <div style={{ borderTop: '1px solid var(--line)', paddingTop: '16px' }}>
               <strong style={{ fontSize: '1rem', color: 'var(--ink)', display: 'block', marginBottom: '4px' }}>
-                Can I combine views across multiple posts?
+                Do the 5,000 views need to be on a single post?
               </strong>
               <p style={{ fontSize: '0.9rem', color: 'var(--muted)', lineHeight: 1.55 }}>
-                If you published a multi-part thread or series of posts about Filsy that collectively reached 5K+ views, you can submit the entire thread for evaluation!
+                Yes. The 5,000+ views must be from a <strong>single public post</strong>. Views from different posts or threads cannot be combined. Make sure your content is compelling enough to reach 5K on its own!
               </p>
             </div>
 
@@ -383,3 +383,4 @@ export const FreeLicensePage: React.FC = () => {
     </div>
   );
 };
+
