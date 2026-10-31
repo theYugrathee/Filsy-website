@@ -65,14 +65,14 @@ export const APP_CONFIG: AppConfig = {
   // PRE-LAUNCH TOGGLE: Set to false once the app launches on the Microsoft Store
   isPreLaunch: true,
   pricing: {
-    usdPrice: 11,
-    inrPrice: 899,
+    usdPrice: 9,
+    inrPrice: 749,
     originalUsdPrice: 19,
-    displayPrice: "$11",
+    displayPrice: "$9",
     launchPrice: "$19",
-    model: "Pre-Launch Early Supporter (Lifetime License)",
-    terms: "Pre-launch early access license for $11 ($19 regular launch price). Instant digital license delivery. 1 active PC at a time (deactivate & move freely). All future updates included forever.",
-    earlyUsersNote: "Purchase the early license key only for early users before the official Microsoft Store release.",
+    model: "First 99 Users Special ($9 Lifetime License)",
+    terms: "First 99 users special: $9 one-time payment ($19 regular launch price). Instant digital license delivery. 1 active PC at a time (deactivate & move freely). All future updates included forever.",
+    earlyUsersNote: "First 99 users only: Purchase the early lifetime license key for $9 before price increases to $19.",
   },
   microsoftStore: {
     status: "coming_soon",

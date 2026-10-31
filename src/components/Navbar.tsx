@@ -73,7 +73,7 @@ export const Navbar: React.FC = () => {
               <span>Find Key</span>
             </Link>
 
-            {/* Get License Button (Pre-Launch $11 / Post-Launch $19) */}
+            {/* Get License Button (First 99 Users $9 / Post-Launch $19) */}
             <button
               type="button"
               id="navBuyBtn"
@@ -82,7 +82,7 @@ export const Navbar: React.FC = () => {
               style={{ gap: '6px' }}
             >
               <Sparkles size={14} />
-              <span>{APP_CONFIG.isPreLaunch ? 'Early Key ($11)' : 'Get Key ($19)'}</span>
+              <span>{APP_CONFIG.isPreLaunch ? 'Early Key ($9)' : 'Get Key ($19)'}</span>
             </button>
           </div>
 
@@ -171,7 +171,7 @@ export const Navbar: React.FC = () => {
               style={{ width: '100%', gap: '6px' }}
             >
               <Sparkles size={16} />
-              <span>{APP_CONFIG.isPreLaunch ? 'Purchase Early Key ($11)' : 'Get License Key ($19)'}</span>
+              <span>{APP_CONFIG.isPreLaunch ? 'Purchase Early Key ($9)' : 'Get License Key ($19)'}</span>
             </button>
           </div>
         </div>

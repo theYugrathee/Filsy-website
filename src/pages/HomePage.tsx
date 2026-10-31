@@ -248,7 +248,7 @@ export const HomePage: React.FC = () => {
                   ========================================================================= */}
               <div className="version-chip">
                 <span style={{ fontSize: '0.9rem' }}>🚀</span>
-                <span>Pre-Launch Beta · Microsoft Store Edition Coming Soon</span>
+                <span>Pre-Launch Beta · First 99 Users Special</span>
               </div>
 
               <h1 className="hero-headline">
@@ -259,7 +259,7 @@ export const HomePage: React.FC = () => {
 
               <p className="hero-sub">
                 Filsy replaces endless folder clicking with a single search bar that understands plain English.
-                Coming soon to the Microsoft Store — purchase the early license key for only $11 (regular $19) reserved only for early users before official launch.
+                Coming soon to the Microsoft Store — purchase the early license key for only $9 (first 99 users only, regular $19) before official launch.
               </p>
 
               <div className="hero-actions">
@@ -272,7 +272,7 @@ export const HomePage: React.FC = () => {
                   style={{ gap: '8px' }}
                 >
                   <Sparkles size={18} />
-                  <span>Purchase Early License Key ($11)</span>
+                  <span>Purchase Early License Key ($9)</span>
                 </button>
 
                 <a
@@ -324,12 +324,12 @@ export const HomePage: React.FC = () => {
               <div className="hero-trust-row">
                 <span className="trust-item">
                   <Sparkles size={14} color="var(--documents)" />
-                  Pre-Launch $11 (Regular $19)
+                  First 99 Users $9 (Regular $19)
                 </span>
                 <span className="trust-sep">·</span>
                 <span className="trust-item">
                   <Lock size={14} />
-                  Early Users Special
+                  First 99 Users Only
                 </span>
                 <span className="trust-sep">·</span>
                 <span className="trust-item">
@@ -565,8 +565,8 @@ export const HomePage: React.FC = () => {
                 <span>1</span>
               </div>
               <div className="timeline-content">
-                <h4>1. Purchase early ($11) or join waitlist</h4>
-                <p>Purchase the early lifetime license key for only $11 (regular $19 upon launch), or join our waitlist to be notified on Microsoft Store release day.</p>
+                <h4>1. First 99 users: $9 or join waitlist</h4>
+                <p>Purchase the early lifetime license key for only $9 (strictly reserved for the first 99 users only, regular $19 upon launch), or join our waitlist to be notified on Microsoft Store release day.</p>
               </div>
             </div>
 
@@ -595,7 +595,7 @@ export const HomePage: React.FC = () => {
 
 
       {/* ════════════════════════════════════════════════════════════════════
-          SECTION 6 — PRICING ($11 PRE-LAUNCH / $19 REGULAR UPON LAUNCH)
+          SECTION 6 — PRICING ($9 FIRST 99 USERS / $19 REGULAR UPON LAUNCH)
           ════════════════════════════════════════════════════════════════════ */}
       <section className="band" id="pricing">
         <div className="wrap">
@@ -604,33 +604,33 @@ export const HomePage: React.FC = () => {
               To switch to Post-Launch mode ($19), see the commented block below!
               ========================================================================= */}
           <div className="section-head center">
-            <span className="section-label">PRE-LAUNCH OFFER — ONLY FOR EARLY USERS</span>
-            <h2>Purchase early. Lock in $11 forever.</h2>
+            <span className="section-label">FIRST 99 USERS SPECIAL · LIMITED SPOTS</span>
+            <h2>First 99 users: Lock in $9 forever.</h2>
             <p>
-              Purchase the early license key only for early users before the official Microsoft Store release.
+              Special early pricing of $9 reserved exclusively for the first 99 users before our official Microsoft Store release.
               When we officially launch, the regular price will be $19.
             </p>
           </div>
 
           <div className="pricing-card-v2">
-            <div className="pricing-badge">PRE-LAUNCH OFFER · 42% OFF</div>
+            <div className="pricing-badge">FIRST 99 USERS SPECIAL · 52% OFF</div>
 
             <div className="prelaunch-strike-row">
               <span className="prelaunch-regular-price">$19 Regular Price</span>
-              <span className="prelaunch-discount-badge">Save $8 Pre-Launch</span>
+              <span className="prelaunch-discount-badge">Save $10 (First 99 Users)</span>
             </div>
 
             <div className="pricing-amount-row" style={{ flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
-              <span className="pricing-big-num" style={{ fontSize: 'clamp(2.6rem, 5.5vw, 4rem)' }}>
-                $11
+              <span className="pricing-big-num" style={{ fontSize: 'clamp(2.8rem, 5.8vw, 4.2rem)' }}>
+                $9
               </span>
-              <span className="pricing-period">one-time pre-launch payment · lifetime access</span>
+              <span className="pricing-period">one-time payment · lifetime access · first 99 users only</span>
             </div>
 
             <div className="early-supporter-alert">
               <Sparkles size={18} color="var(--documents)" style={{ flexShrink: 0, marginTop: '2px' }} />
               <div>
-                <strong>Early Users Exclusive:</strong> Purchase the early license key now to lock in lifetime access at $11 before our official Microsoft Store launch at $19.
+                <strong>First 99 Users Deal:</strong> Purchase the early license key now to lock in lifetime access for only $9. Price increases to $19 upon official Microsoft Store launch.
               </div>
             </div>
 
@@ -643,13 +643,13 @@ export const HomePage: React.FC = () => {
               style={{ gap: '8px' }}
             >
               <Sparkles size={18} />
-              <span>{isProcessingBuy ? 'Connecting to Checkout…' : 'Purchase Early License Key — $11'}</span>
+              <span>{isProcessingBuy ? 'Connecting to Checkout…' : 'Purchase Early License Key — $9'}</span>
             </button>
 
             <div className="pricing-features-grid">
               {[
                 'Lifetime license on 1 active PC',
-                'Guaranteed $11 pre-launch price',
+                'Guaranteed $9 price (first 99 users only)',
                 'Instant digital key delivered by email',
                 'Ready for Microsoft Store day-one launch',
                 'Natural-language search',
@@ -665,7 +665,7 @@ export const HomePage: React.FC = () => {
             </div>
 
             <div className="pricing-footer-note">
-              Secure checkout by Dodo Payments · Instant digital key delivered to your email · One-time $11 early payment ($19 regular launch price)
+              Secure checkout by Dodo Payments · Instant digital key delivered to your email · One-time $9 payment for the first 99 users ($19 regular launch price)
             </div>
           </div>
 
@@ -917,11 +917,11 @@ export const HomePage: React.FC = () => {
               },
               {
                 q: "Is it a subscription?",
-                a: "No. Filsy is a one-time purchase. During pre-launch, early users can purchase the lifetime license key for only $11 (regular price upon official release will be $19). All future updates are included forever."
+                a: "No. Filsy is a one-time purchase. During pre-launch, the first 99 users can purchase the lifetime license key for only $9 (regular price upon official release will be $19). All future updates are included forever."
               },
               {
                 q: "How will I install Filsy from the Microsoft Store?",
-                a: "Filsy is currently preparing for its Microsoft Store release. Purchase the early license key now for $11 (regular $19 upon launch), or join our waitlist, and as soon as the app goes live on the Store, simply download it and paste your key into Settings."
+                a: "Filsy is currently preparing for its Microsoft Store release. Purchase the early license key now for $9 (first 99 users special, regular $19 upon launch), or join our waitlist, and as soon as the app goes live on the Store, simply download it and paste your key into Settings."
               },
               {
                 q: "Can I move my license to a new PC?",
