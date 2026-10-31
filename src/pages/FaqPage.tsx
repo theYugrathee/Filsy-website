@@ -23,7 +23,7 @@ const FAQS: FaqItem[] = [
   },
   {
     q: 'Is it a subscription?',
-    a: 'No. Filsy is Pay What You Want. You choose what to contribute once and keep it forever. All future updates are included.',
+    a: 'No. Filsy is a one-time purchase. During pre-launch, you can purchase the early license key for only $11 (regular price upon official release will be $19). All future updates are included forever.',
   },
   {
     q: 'Can I use Filsy on more than one PC?',
@@ -35,7 +35,7 @@ const FAQS: FaqItem[] = [
   },
   {
     q: 'How will I install Filsy from the Microsoft Store?',
-    a: 'Filsy is currently preparing for its Microsoft Store release for Windows 10 & 11. You can acquire your lifetime license key now at Pay What You Want, and activate it inside the app as soon as it goes live on the Store.',
+    a: 'Filsy is currently preparing for its Microsoft Store release for Windows 10 & 11. You can purchase the early lifetime license key now for $11 (regular $19 upon launch), or join our waitlist to be notified as soon as it goes live on the Store.',
   },
   {
     q: 'What if I lose my license key?',

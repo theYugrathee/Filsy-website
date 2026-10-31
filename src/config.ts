@@ -13,13 +13,21 @@ export interface AppConfig {
   dodoPaymentLink: string;
   supabaseFunctionsUrl: string;
   filsyAppToken: string;
+  /**
+   * LAUNCH SWITCH TOGGLE:
+   * Set `isPreLaunch: true` for pre-launch mode ($11 early price, waitlist, early user messaging).
+   * Set `isPreLaunch: false` for official launch mode ($19 regular price, live store download).
+   */
+  isPreLaunch: boolean;
   pricing: {
     usdPrice: number;
     inrPrice: number;
     displayPrice: string;
     originalUsdPrice: number;
+    launchPrice: string;
     model: string;
     terms: string;
+    earlyUsersNote: string;
   };
   microsoftStore: {
     status: 'coming_soon' | 'available';
@@ -54,13 +62,17 @@ export const APP_CONFIG: AppConfig = {
     "https://ofvyincijdrefgxbupwy.supabase.co/functions/v1",
   filsyAppToken:
     import.meta.env.VITE_FILSY_APP_TOKEN || "5cef6c413bebc63f819280c528b3e74f",
+  // PRE-LAUNCH TOGGLE: Set to false once the app launches on the Microsoft Store
+  isPreLaunch: true,
   pricing: {
-    usdPrice: 0,
-    inrPrice: 0,
-    originalUsdPrice: 29,
-    displayPrice: "Pay What You Want",
-    model: "Pay What You Want (Lifetime License)",
-    terms: "Pay what you want. Instant digital license delivery. 1 active PC at a time (deactivate & move freely). All future updates included.",
+    usdPrice: 11,
+    inrPrice: 899,
+    originalUsdPrice: 19,
+    displayPrice: "$11",
+    launchPrice: "$19",
+    model: "Pre-Launch Early Supporter (Lifetime License)",
+    terms: "Pre-launch early access license for $11 ($19 regular launch price). Instant digital license delivery. 1 active PC at a time (deactivate & move freely). All future updates included forever.",
+    earlyUsersNote: "Purchase the early license key only for early users before the official Microsoft Store release.",
   },
   microsoftStore: {
     status: "coming_soon",
@@ -73,7 +85,7 @@ export const APP_CONFIG: AppConfig = {
     architecture: "64-bit (x64)",
     ram: "4 GB RAM minimum",
     diskSpace: "~70 MB",
-    format: "Coming to Microsoft Store. Get your lifetime license key today.",
+    format: "Coming to Microsoft Store. Get your early lifetime license key today.",
   },
 };
 

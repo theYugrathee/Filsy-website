@@ -33,9 +33,9 @@ export const DownloadPage: React.FC = () => {
             <span>Official Store Publication in Progress</span>
           </div>
 
-          <h3 style={{ fontSize: '1.45rem', marginBottom: '12px' }}>Get Your License Key in Advance</h3>
+          <h3 style={{ fontSize: '1.45rem', marginBottom: '12px' }}>Get Your Early Supporter License Key</h3>
           <p style={{ fontSize: '0.94rem', color: 'var(--muted)', maxWidth: '520px', margin: '0 auto 28px', lineHeight: 1.6 }}>
-            The app will be distributed securely via the Microsoft Store. You can get your lifetime license key right now with Pay What You Want pricing, and activate immediately upon launch.
+            The app will be distributed securely via the Microsoft Store. Purchase the early license key now for only $11 (regular $19 upon launch), or join our waitlist to be notified on launch day.
           </p>
 
           <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
@@ -46,11 +46,19 @@ export const DownloadPage: React.FC = () => {
               style={{ gap: '8px' }}
             >
               <Sparkles size={18} />
-              <span>Get License Key (Pay What You Want)</span>
+              <span>Purchase Early License Key ($11)</span>
             </button>
 
+            <a
+              href="/#waitlist"
+              className="btn btn-secondary btn-lg"
+              style={{ gap: '8px' }}
+            >
+              <span>Join Launch Waitlist</span>
+            </a>
+
             <Link
-              to="/#pricing"
+              to="/find-key"
               className="btn btn-secondary btn-lg"
               style={{ gap: '8px' }}
             >
@@ -74,7 +82,7 @@ export const DownloadPage: React.FC = () => {
           >
             <div><strong>Platform:</strong> Microsoft Store</div>
             <div><strong>OS:</strong> Windows 10 &amp; 11 (64-bit)</div>
-            <div><strong>Pricing:</strong> Pay What You Want</div>
+            <div><strong>Pricing:</strong> $11 Pre-Launch ($19 Regular)</div>
           </div>
         </div>
 

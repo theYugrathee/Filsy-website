@@ -30,6 +30,7 @@ import {
   Gift,
   Share2,
   Flame,
+  Bell,
 } from 'lucide-react';
 
 /* ──────────────────────────────────────────────────
@@ -155,6 +156,11 @@ export const HomePage: React.FC = () => {
   const [isProcessingBuy, setIsProcessingBuy] = useState(false);
   const [expandedFaq, setExpandedFaq] = useState<number | null>(0);
 
+  // Pre-launch Waitlist state
+  const [waitlistEmail, setWaitlistEmail] = useState('');
+  const [waitlistSubmitted, setWaitlistSubmitted] = useState(false);
+  const [waitlistLoading, setWaitlistLoading] = useState(false);
+
   // License retrieval state
   const [retrieveEmail, setRetrieveEmail] = useState('');
   const [retrieveStatus, setRetrieveStatus] = useState<'idle' | 'loading' | 'success' | 'not_found'>('idle');
@@ -162,7 +168,36 @@ export const HomePage: React.FC = () => {
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
   const currentPreset = PRESETS[activePresetIndex];
-  const activePriceDisplay = "Pay What You Want";
+  const activePriceDisplay = APP_CONFIG.isPreLaunch
+    ? `$${APP_CONFIG.pricing.usdPrice} Pre-Launch (Regular $${APP_CONFIG.pricing.originalUsdPrice})`
+    : `$${APP_CONFIG.pricing.originalUsdPrice}`;
+
+  const handleWaitlistSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const cleanEmail = waitlistEmail.trim().toLowerCase();
+    if (!cleanEmail) return;
+    setWaitlistLoading(true);
+
+    try {
+      const existing = JSON.parse(localStorage.getItem('filsy_waitlist') || '[]');
+      if (!existing.includes(cleanEmail)) {
+        existing.push(cleanEmail);
+        localStorage.setItem('filsy_waitlist', JSON.stringify(existing));
+      }
+      fetch('/api/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: cleanEmail }),
+      }).catch(() => {});
+    } catch {
+      // Storage fallback
+    }
+
+    setTimeout(() => {
+      setWaitlistLoading(false);
+      setWaitlistSubmitted(true);
+    }, 350);
+  };
 
   const handleBuy = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -207,9 +242,13 @@ export const HomePage: React.FC = () => {
           <div className="hero-grid">
             {/* LEFT — Text & CTAs */}
             <div className="hero-text-col">
+              {/* =========================================================================
+                  PRE-LAUNCH MODE HERO (ACTIVE)
+                  To switch to Post-Launch mode, see the commented block below!
+                  ========================================================================= */}
               <div className="version-chip">
-                <img src="/app-icon.png" alt="Filsy" style={{ width: '16px', height: '16px', borderRadius: '4px', objectFit: 'contain' }} />
-                <span>Microsoft Store Edition Coming Soon</span>
+                <span style={{ fontSize: '0.9rem' }}>🚀</span>
+                <span>Pre-Launch Beta · Microsoft Store Edition Coming Soon</span>
               </div>
 
               <h1 className="hero-headline">
@@ -220,7 +259,7 @@ export const HomePage: React.FC = () => {
 
               <p className="hero-sub">
                 Filsy replaces endless folder clicking with a single search bar that understands plain English.
-                Coming soon to the Microsoft Store — get your lifetime license key today at Pay What You Want.
+                Coming soon to the Microsoft Store — purchase the early license key for only $11 (regular $19) reserved only for early users before official launch.
               </p>
 
               <div className="hero-actions">
@@ -233,8 +272,18 @@ export const HomePage: React.FC = () => {
                   style={{ gap: '8px' }}
                 >
                   <Sparkles size={18} />
-                  <span>Get License Key (Pay What You Want)</span>
+                  <span>Purchase Early License Key ($11)</span>
                 </button>
+
+                <a
+                  href="#waitlist"
+                  className="btn btn-secondary btn-lg"
+                  id="heroWaitlistBtn"
+                  style={{ gap: '8px' }}
+                >
+                  <Bell size={18} color="var(--music)" />
+                  <span>Join Waitlist</span>
+                </a>
 
                 <Link
                   to="/free-license"
@@ -257,20 +306,35 @@ export const HomePage: React.FC = () => {
                 </Link>
               </div>
 
+              {/* =========================================================================
+                  [POST-LAUNCH HERO ACTIONS — UNCOMMENT WHEN OFFICIALLY LAUNCHED]
+                  -------------------------------------------------------------------------
+                  <div className="hero-actions" style={{ display: 'none' }}>
+                    <button type="button" onClick={handleBuy} className="btn btn-primary btn-lg">
+                      <Sparkles size={18} />
+                      <span>Get License Key ($19)</span>
+                    </button>
+                    <Link to="/download" className="btn btn-secondary btn-lg">
+                      <Download size={18} />
+                      <span>Download from Microsoft Store</span>
+                    </Link>
+                  </div>
+                  ========================================================================= */}
+
               <div className="hero-trust-row">
                 <span className="trust-item">
                   <Sparkles size={14} color="var(--documents)" />
-                  Pay What You Want
+                  Pre-Launch $11 (Regular $19)
                 </span>
                 <span className="trust-sep">·</span>
                 <span className="trust-item">
                   <Lock size={14} />
-                  100% Offline &amp; Private
+                  Early Users Special
                 </span>
                 <span className="trust-sep">·</span>
                 <span className="trust-item">
                   <HardDrive size={14} />
-                  Windows 10 &amp; 11 (Store Release)
+                  100% Offline &amp; Private
                 </span>
                 <span className="trust-sep">·</span>
                 <span className="trust-item">
@@ -501,8 +565,8 @@ export const HomePage: React.FC = () => {
                 <span>1</span>
               </div>
               <div className="timeline-content">
-                <h4>1. Pay what you want — Instant key</h4>
-                <p>Choose whatever amount you wish to contribute via Dodo Payments. Your lifetime license key is generated and emailed immediately.</p>
+                <h4>1. Purchase early ($11) or join waitlist</h4>
+                <p>Purchase the early lifetime license key for only $11 (regular $19 upon launch), or join our waitlist to be notified on Microsoft Store release day.</p>
               </div>
             </div>
 
@@ -531,29 +595,44 @@ export const HomePage: React.FC = () => {
 
 
       {/* ════════════════════════════════════════════════════════════════════
-          SECTION 6 — PRICING (PAY WHAT YOU WANT)
+          SECTION 6 — PRICING ($11 PRE-LAUNCH / $19 REGULAR UPON LAUNCH)
           ════════════════════════════════════════════════════════════════════ */}
       <section className="band" id="pricing">
         <div className="wrap">
+          {/* =========================================================================
+              PRE-LAUNCH MODE PRICING (ACTIVE)
+              To switch to Post-Launch mode ($19), see the commented block below!
+              ========================================================================= */}
           <div className="section-head center">
-            <span className="section-label">PAY WHAT YOU WANT</span>
-            <h2>Choose your price. Own it forever.</h2>
-            <p>Support independent software. Pay whatever price you think is fair — every contributor receives an instant lifetime license key with all future updates included.</p>
+            <span className="section-label">PRE-LAUNCH OFFER — ONLY FOR EARLY USERS</span>
+            <h2>Purchase early. Lock in $11 forever.</h2>
+            <p>
+              Purchase the early license key only for early users before the official Microsoft Store release.
+              When we officially launch, the regular price will be $19.
+            </p>
           </div>
 
           <div className="pricing-card-v2">
-            <div className="pricing-badge">LIFETIME LICENSE</div>
+            <div className="pricing-badge">PRE-LAUNCH OFFER · 42% OFF</div>
 
-            <div className="pricing-amount-row" style={{ flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
-              <span className="pricing-big-num" style={{ fontSize: 'clamp(2.2rem, 5vw, 3.2rem)' }}>
-                Pay What You Want
-              </span>
-              <span className="pricing-period">one-time contribution · lifetime access</span>
+            <div className="prelaunch-strike-row">
+              <span className="prelaunch-regular-price">$19 Regular Price</span>
+              <span className="prelaunch-discount-badge">Save $8 Pre-Launch</span>
             </div>
 
-            <p className="pricing-tagline">
-              Pay whatever you want at checkout. Unlocks perpetual offline usage with no recurring fees.
-            </p>
+            <div className="pricing-amount-row" style={{ flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
+              <span className="pricing-big-num" style={{ fontSize: 'clamp(2.6rem, 5.5vw, 4rem)' }}>
+                $11
+              </span>
+              <span className="pricing-period">one-time pre-launch payment · lifetime access</span>
+            </div>
+
+            <div className="early-supporter-alert">
+              <Sparkles size={18} color="var(--documents)" style={{ flexShrink: 0, marginTop: '2px' }} />
+              <div>
+                <strong>Early Users Exclusive:</strong> Purchase the early license key now to lock in lifetime access at $11 before our official Microsoft Store launch at $19.
+              </div>
+            </div>
 
             <button
               type="button"
@@ -564,18 +643,18 @@ export const HomePage: React.FC = () => {
               style={{ gap: '8px' }}
             >
               <Sparkles size={18} />
-              <span>{isProcessingBuy ? 'Connecting to Checkout…' : 'Get License Key — Pay What You Want'}</span>
+              <span>{isProcessingBuy ? 'Connecting to Checkout…' : 'Purchase Early License Key — $11'}</span>
             </button>
 
             <div className="pricing-features-grid">
               {[
                 'Lifetime license on 1 active PC',
+                'Guaranteed $11 pre-launch price',
                 'Instant digital key delivered by email',
-                'Ready for Microsoft Store release',
+                'Ready for Microsoft Store day-one launch',
                 'Natural-language search',
                 'On-device OCR for images & screenshots',
                 'Deep document text indexing',
-                'Binary duplicate detection',
                 'All future updates included forever',
               ].map((item, i) => (
                 <div key={i} className="pricing-feature-item">
@@ -586,7 +665,127 @@ export const HomePage: React.FC = () => {
             </div>
 
             <div className="pricing-footer-note">
-              Secure checkout by Dodo Payments · Instant digital license key emailed immediately
+              Secure checkout by Dodo Payments · Instant digital key delivered to your email · One-time $11 early payment ($19 regular launch price)
+            </div>
+          </div>
+
+          {/* =========================================================================
+              [POST-LAUNCH STANDARD PRICING CARD — UNCOMMENT WHEN OFFICIALLY LAUNCHED]
+              When the app goes live on the Microsoft Store:
+              1. Uncomment this block
+              2. Comment out the PRE-LAUNCH PRICING block above
+              -------------------------------------------------------------------------
+              <div className="pricing-card-v2" style={{ display: 'none' }}>
+                <div className="pricing-badge">LIFETIME LICENSE</div>
+                <div className="pricing-amount-row" style={{ flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
+                  <span className="pricing-big-num">$19</span>
+                  <span className="pricing-period">one-time payment · lifetime access</span>
+                </div>
+                <p className="pricing-tagline">
+                  One-time payment of $19. Unlocks perpetual offline usage with no recurring fees.
+                </p>
+                <button
+                  type="button"
+                  onClick={handleBuy}
+                  disabled={isProcessingBuy}
+                  className="btn btn-primary btn-lg pricing-cta"
+                >
+                  <Sparkles size={18} />
+                  <span>Get License Key — $19</span>
+                </button>
+                <div className="pricing-features-grid">
+                  {[
+                    'Lifetime license on 1 active PC',
+                    'Instant digital key delivered by email',
+                    'Available on Microsoft Store',
+                    'Natural-language search',
+                    'On-device OCR for images & screenshots',
+                    'Deep document text indexing',
+                    'Binary duplicate detection',
+                    'All future updates included forever',
+                  ].map((item, i) => (
+                    <div key={i} className="pricing-feature-item">
+                      <Check size={15} color="var(--music)" />
+                      <span>{item}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="pricing-footer-note">
+                  Secure checkout by Dodo Payments · Instant digital license delivery
+                </div>
+              </div>
+              ========================================================================= */}
+        </div>
+      </section>
+
+
+      {/* ════════════════════════════════════════════════════════════════════
+          SECTION 6.2 — JOIN LAUNCH WAITLIST
+          ════════════════════════════════════════════════════════════════════ */}
+      <section className="waitlist-section" id="waitlist">
+        <div className="wrap">
+          <div className="waitlist-card">
+            <div className="waitlist-badge">
+              <Bell size={14} />
+              <span>Microsoft Store Launch Waitlist</span>
+            </div>
+
+            <h2 className="waitlist-title">
+              Be the first to know when Filsy goes live
+            </h2>
+
+            <p className="waitlist-sub">
+              Prefer to wait for the official Microsoft Store release? Join our early waitlist.
+              We'll send you an instant notification on launch day with download links and release updates.
+            </p>
+
+            {waitlistSubmitted ? (
+              <div className="waitlist-success-box">
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', marginBottom: '8px' }}>
+                  <Check size={24} color="var(--music)" />
+                  <strong style={{ fontSize: '1.15rem' }}>You're on the waitlist!</strong>
+                </div>
+                <p style={{ fontSize: '0.92rem', color: 'var(--muted)', margin: 0 }}>
+                  We've saved your spot for <strong>{waitlistEmail}</strong>. You'll receive an email as soon as Filsy launches on the Microsoft Store.
+                </p>
+              </div>
+            ) : (
+              <form onSubmit={handleWaitlistSubmit} className="waitlist-form">
+                <div className="waitlist-field-wrap">
+                  <Mail size={18} className="waitlist-icon" />
+                  <input
+                    type="email"
+                    placeholder="Enter your email address..."
+                    value={waitlistEmail}
+                    onChange={(e) => setWaitlistEmail(e.target.value)}
+                    required
+                    className="waitlist-input"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="btn btn-primary btn-lg waitlist-btn"
+                  disabled={waitlistLoading}
+                >
+                  <Bell size={18} />
+                  <span>{waitlistLoading ? 'Saving...' : 'Join Waitlist'}</span>
+                </button>
+              </form>
+            )}
+
+            <div className="waitlist-perks-row">
+              <div className="waitlist-perk-item">
+                <Check size={15} color="var(--music)" />
+                <span>Store launch day notification</span>
+              </div>
+              <div className="waitlist-perk-item">
+                <Check size={15} color="var(--music)" />
+                <span>Special early adopter perks</span>
+              </div>
+              <div className="waitlist-perk-item">
+                <Check size={15} color="var(--music)" />
+                <span>Zero spam, unsubscribe anytime</span>
+              </div>
             </div>
           </div>
         </div>
@@ -718,11 +917,11 @@ export const HomePage: React.FC = () => {
               },
               {
                 q: "Is it a subscription?",
-                a: "No. It is Pay What You Want. You choose what to pay once and keep it forever. All future updates are included."
+                a: "No. Filsy is a one-time purchase. During pre-launch, early users can purchase the lifetime license key for only $11 (regular price upon official release will be $19). All future updates are included forever."
               },
               {
                 q: "How will I install Filsy from the Microsoft Store?",
-                a: "Filsy is currently preparing for its Microsoft Store release. Get your lifetime license key now at Pay What You Want, and as soon as the app goes live on the Store, simply download it and paste your key into Settings."
+                a: "Filsy is currently preparing for its Microsoft Store release. Purchase the early license key now for $11 (regular $19 upon launch), or join our waitlist, and as soon as the app goes live on the Store, simply download it and paste your key into Settings."
               },
               {
                 q: "Can I move my license to a new PC?",

@@ -47,7 +47,8 @@ export const Navbar: React.FC = () => {
             <a href={isHome ? "#features" : "/#features"}>Features</a>
             <a href={isHome ? "#compare" : "/#compare"}>vs Explorer</a>
             <a href={isHome ? "#how" : "/#how"}>How it works</a>
-            <Link to="/pricing">Pricing</Link>
+            <a href={isHome ? "#waitlist" : "/#waitlist"}>Waitlist</a>
+            <Link to="/pricing">Pricing ({APP_CONFIG.pricing.displayPrice})</Link>
             <Link to="/faq">FAQ</Link>
 
             {/* Sun / Moon Theme Toggle */}
@@ -72,7 +73,7 @@ export const Navbar: React.FC = () => {
               <span>Find Key</span>
             </Link>
 
-            {/* Get License Button */}
+            {/* Get License Button (Pre-Launch $11 / Post-Launch $19) */}
             <button
               type="button"
               id="navBuyBtn"
@@ -81,7 +82,7 @@ export const Navbar: React.FC = () => {
               style={{ gap: '6px' }}
             >
               <Sparkles size={14} />
-              <span>Get License</span>
+              <span>{APP_CONFIG.isPreLaunch ? 'Early Key ($11)' : 'Get Key ($19)'}</span>
             </button>
           </div>
 
@@ -120,6 +121,9 @@ export const Navbar: React.FC = () => {
           </a>
           <a href={isHome ? "#how" : "/#how"} onClick={closeMobile}>
             How it works
+          </a>
+          <a href={isHome ? "#waitlist" : "/#waitlist"} onClick={closeMobile}>
+            Join Waitlist
           </a>
           <Link to="/pricing" onClick={closeMobile}>
             Pricing ({APP_CONFIG.pricing.displayPrice})
@@ -167,7 +171,7 @@ export const Navbar: React.FC = () => {
               style={{ width: '100%', gap: '6px' }}
             >
               <Sparkles size={16} />
-              <span>Get License Key (Pay What You Want)</span>
+              <span>{APP_CONFIG.isPreLaunch ? 'Purchase Early Key ($11)' : 'Get License Key ($19)'}</span>
             </button>
           </div>
         </div>

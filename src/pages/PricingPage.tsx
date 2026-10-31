@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { APP_CONFIG } from '../config';
 import { initiateCheckout } from '../services/paymentService';
-import { Check, Sparkles, KeyRound, Shield } from 'lucide-react';
+import { Check, Sparkles, KeyRound, Bell, ArrowRight } from 'lucide-react';
 
 export const PricingPage: React.FC = () => {
   const [isProcessing, setIsProcessing] = useState(false);
@@ -19,26 +19,41 @@ export const PricingPage: React.FC = () => {
   return (
     <div className="page-wrapper">
       <div className="wrap">
+        {/* =========================================================================
+            PRE-LAUNCH MODE PRICING (ACTIVE)
+            To switch to Post-Launch mode ($19), see the commented section below!
+            ========================================================================= */}
         <div className="section-head center">
-          <span className="section-label">PAY WHAT YOU WANT</span>
-          <h2>Pay what you want. Yours forever.</h2>
-          <p>Support independent software. Pay whatever you think is fair — every supporter receives an instant lifetime license key with all future updates included.</p>
+          <span className="section-label">PRE-LAUNCH ACCESS — ONLY FOR EARLY USERS</span>
+          <h2>Purchase early. Lock in $11 forever.</h2>
+          <p>
+            Purchase the early license key only for early users before the official Microsoft Store release.
+            When we officially launch, the regular price will be $19.
+          </p>
         </div>
 
-        {/* Clean Pricing Card */}
+        {/* Clean Pre-Launch Pricing Card */}
         <div className="pricing-clean-card">
-          <span className="pill pill-early">LIFETIME LICENSE</span>
+          <span className="pill pill-early">EARLY SUPPORTER ACCESS · 42% OFF</span>
 
-          <div className="clean-price-box" style={{ flexDirection: 'column', gap: '4px', marginTop: '14px', marginBottom: '14px' }}>
-            <span className="clean-price-amount" style={{ fontSize: 'clamp(2.2rem, 5vw, 3rem)' }}>
-              Pay What You Want
-            </span>
-            <span style={{ fontSize: '0.92rem', color: 'var(--muted)' }}>one-time contribution · lifetime access</span>
+          <div className="prelaunch-strike-row" style={{ marginTop: '16px' }}>
+            <span className="prelaunch-regular-price">$19 Regular Price</span>
+            <span className="prelaunch-discount-badge">Save $8 Early Access</span>
           </div>
 
-          <p style={{ fontSize: '0.92rem', color: 'var(--muted)', marginBottom: '24px' }}>
-            Instant digital delivery. Unlocks perpetual offline usage with no recurring fees.
-          </p>
+          <div className="clean-price-box" style={{ flexDirection: 'column', gap: '4px', marginTop: '8px', marginBottom: '14px' }}>
+            <span className="clean-price-amount" style={{ fontSize: 'clamp(2.8rem, 6vw, 4.2rem)' }}>
+              $11
+            </span>
+            <span style={{ fontSize: '0.92rem', color: 'var(--muted)' }}>one-time pre-launch contribution · lifetime access</span>
+          </div>
+
+          <div className="early-supporter-alert" style={{ marginBottom: '20px' }}>
+            <Sparkles size={18} color="var(--documents)" style={{ flexShrink: 0, marginTop: '2px' }} />
+            <div>
+              <strong>Early Users Exclusive:</strong> Purchase the early license key now to lock in lifetime access for only $11 before our official Microsoft Store launch ($19 regular price).
+            </div>
+          </div>
 
           <button
             type="button"
@@ -49,13 +64,17 @@ export const PricingPage: React.FC = () => {
             style={{ width: '100%', gap: '8px' }}
           >
             <Sparkles size={18} />
-            <span>{isProcessing ? 'Connecting to Checkout…' : 'Get License Key — Pay What You Want'}</span>
+            <span>{isProcessing ? 'Connecting to Checkout…' : 'Purchase Early License Key — $11'}</span>
           </button>
 
           <ul className="clean-checklist" style={{ marginTop: '28px' }}>
             <li>
               <Check size={16} color="var(--music)" style={{ flexShrink: 0, marginTop: '2px' }} />
               <span><strong>Lifetime license on 1 active PC</strong> (move to a new PC anytime in 1 click)</span>
+            </li>
+            <li>
+              <Check size={16} color="var(--music)" style={{ flexShrink: 0, marginTop: '2px' }} />
+              <span><strong>Locked-in $11 pricing</strong> (price increases to $19 upon official launch)</span>
             </li>
             <li>
               <Check size={16} color="var(--music)" style={{ flexShrink: 0, marginTop: '2px' }} />
@@ -88,18 +107,62 @@ export const PricingPage: React.FC = () => {
           </ul>
 
           <div style={{ fontSize: '0.8rem', color: 'var(--subtle)', marginTop: '20px' }}>
-            Checkout secured by Dodo Payments · Instant digital license delivery
+            Checkout secured by Dodo Payments · Instant digital license delivery · One-time $11 payment ($19 regular launch price)
           </div>
         </div>
 
+        {/* =========================================================================
+            [POST-LAUNCH STANDARD PRICING CARD — UNCOMMENT WHEN OFFICIALLY LAUNCHED]
+            -------------------------------------------------------------------------
+            <div className="pricing-clean-card" style={{ display: 'none' }}>
+              <span className="pill pill-early">LIFETIME LICENSE</span>
+              <div className="clean-price-box" style={{ flexDirection: 'column', gap: '4px', marginTop: '14px', marginBottom: '14px' }}>
+                <span className="clean-price-amount">$19</span>
+                <span style={{ fontSize: '0.92rem', color: 'var(--muted)' }}>one-time payment · lifetime access</span>
+              </div>
+              <p style={{ fontSize: '0.92rem', color: 'var(--muted)', marginBottom: '24px' }}>
+                Instant digital delivery. Unlocks perpetual offline usage with no recurring fees.
+              </p>
+              <button
+                type="button"
+                onClick={handleCheckout}
+                disabled={isProcessing}
+                className="btn btn-primary btn-lg"
+                style={{ width: '100%', gap: '8px' }}
+              >
+                <Sparkles size={18} />
+                <span>Get License Key — $19</span>
+              </button>
+            </div>
+            ========================================================================= */}
+
+        {/* Waitlist Callout on Pricing Page */}
+        <div style={{ maxWidth: '560px', margin: '32px auto 0', padding: '24px', background: 'var(--card)', borderRadius: 'var(--radius-md)', border: '1px solid var(--line)', textAlign: 'center' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', color: 'var(--music)', fontSize: '0.86rem', fontWeight: 700, marginBottom: '8px' }}>
+            <Bell size={16} />
+            <span>NOT READY TO BUY YET?</span>
+          </div>
+          <h4 style={{ fontSize: '1.05rem', marginBottom: '6px' }}>Join the Microsoft Store Launch Waitlist</h4>
+          <p style={{ fontSize: '0.88rem', color: 'var(--muted)', marginBottom: '16px' }}>
+            Get an email alert the exact day Filsy becomes available on the Microsoft Store.
+          </p>
+          <a href="/#waitlist" className="btn btn-secondary btn-sm" style={{ gap: '6px' }}>
+            <span>Join Waitlist for Free</span>
+            <ArrowRight size={14} />
+          </a>
+        </div>
+
         {/* Action Links */}
-        <div style={{ maxWidth: '600px', margin: '40px auto 0', textAlign: 'center', display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
+        <div style={{ maxWidth: '600px', margin: '36px auto 0', textAlign: 'center', display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
           <Link to="/find-key" className="btn btn-secondary" style={{ gap: '6px' }}>
             <KeyRound size={16} />
             <span>Find My License Key</span>
           </Link>
           <Link to="/license" className="btn btn-secondary" style={{ gap: '6px' }}>
             <span>License Guide</span>
+          </Link>
+          <Link to="/free-license" className="btn btn-secondary" style={{ gap: '6px' }}>
+            <span>Free License Offer (5K Views)</span>
           </Link>
           <Link to="/faq" className="btn btn-ghost">Read Full FAQ</Link>
         </div>
