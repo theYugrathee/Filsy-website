@@ -138,9 +138,20 @@ export async function retrieveLicenses(email: string): Promise<RetrieveLicenseRe
 export async function initiateCheckout(currency: 'USD' | 'INR' = 'USD'): Promise<CheckoutResponse> {
   // Prioritize direct Dodo payment link
   if (APP_CONFIG.dodoPaymentLink && !APP_CONFIG.dodoPaymentLink.includes('YOUR-PRODUCT-ID')) {
-    window.location.href = APP_CONFIG.dodoPaymentLink;
+    let finalCheckoutUrl = APP_CONFIG.dodoPaymentLink;
+    try {
+      const urlObj = new URL(finalCheckoutUrl);
+      // Ensure redirect_url points directly to /payment/success on current host (or filsy.space)
+      const successUrl = `${window.location.origin}/payment/success`;
+      urlObj.searchParams.set('redirect_url', successUrl);
+      finalCheckoutUrl = urlObj.toString();
+    } catch {
+      // Keep original
+    }
+
+    window.location.href = finalCheckoutUrl;
     return {
-      checkoutUrl: APP_CONFIG.dodoPaymentLink,
+      checkoutUrl: finalCheckoutUrl,
       mode: 'live',
     };
   }

@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { ScrollToTop } from './components/ScrollToTop';
@@ -24,10 +24,34 @@ import { PaymentSuccessPage } from './pages/PaymentSuccessPage';
 import { PaymentCancelledPage } from './pages/PaymentCancelledPage';
 import { FreeLicensePage } from './pages/FreeLicensePage';
 
+/**
+ * Automatically catches any Dodo Payments redirect (to / or any other route)
+ * that contains payment confirmation parameters, and routes the user directly
+ * to the PaymentSuccessPage with all query params intact.
+ */
+const PaymentRedirectWatcher: React.FC = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const hasPaymentId = params.has('payment_id');
+    const hasLicenseKey = params.has('license_key');
+    const isSucceeded = params.get('status') === 'succeeded';
+
+    if ((hasPaymentId || hasLicenseKey || isSucceeded) && location.pathname !== '/payment/success') {
+      navigate(`/payment/success${location.search}`, { replace: true });
+    }
+  }, [location.pathname, location.search, navigate]);
+
+  return null;
+};
+
 export const App: React.FC = () => {
   return (
     <BrowserRouter>
       <ScrollToTop />
+      <PaymentRedirectWatcher />
       <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', width: '100%' }}>
         <Navbar />
         <main style={{ flex: 1 }}>

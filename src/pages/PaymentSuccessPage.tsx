@@ -11,15 +11,28 @@ export const PaymentSuccessPage: React.FC = () => {
   const paymentId = searchParams.get('payment_id') || '';
   const sessionId = searchParams.get('session_id') || searchParams.get('checkout_session_id') || searchParams.get('checkout_id') || '';
   const emailParam = searchParams.get('email') || searchParams.get('customer_email') || '';
+  const licenseKeyParam = searchParams.get('license_key') || searchParams.get('key') || '';
+  const statusParam = searchParams.get('status') || searchParams.get('state') || '';
 
   const [isLoading, setIsLoading] = useState(true);
   const [verification, setVerification] = useState<PaymentVerification | null>(null);
   const [copiedKey, setCopiedKey] = useState(false);
 
   const checkStatus = useCallback(async () => {
+    // 1. If Dodo directly passed the real license_key in URL parameters (instant display)
+    if (licenseKeyParam && (statusParam === 'succeeded' || paymentId || !statusParam)) {
+      setVerification({
+        status: 'succeeded',
+        licenseKey: licenseKeyParam,
+        customerEmail: emailParam || undefined,
+        createdAt: new Date().toISOString(),
+      });
+      setIsLoading(false);
+      return;
+    }
+
     // Development / visual preview overrides
-    const previewStatus = searchParams.get('status') || searchParams.get('state');
-    if (previewStatus === 'failed') {
+    if (statusParam === 'failed') {
       setIsLoading(false);
       setVerification({
         status: 'failed',
@@ -28,7 +41,7 @@ export const PaymentSuccessPage: React.FC = () => {
       return;
     }
 
-    if (previewStatus === 'loading') {
+    if (statusParam === 'loading') {
       setIsLoading(true);
       return;
     }
@@ -51,7 +64,7 @@ export const PaymentSuccessPage: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [paymentId, sessionId, emailParam, searchParams]);
+  }, [paymentId, sessionId, emailParam, licenseKeyParam, statusParam, searchParams]);
 
   useEffect(() => {
     checkStatus();

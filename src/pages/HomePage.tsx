@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useSearchParams } from 'react-router-dom';
 import { APP_CONFIG } from '../config';
 import { initiateCheckout, retrieveLicenses } from '../services/paymentService';
 import { ExplorerComparison } from '../components/ExplorerComparison';
@@ -152,6 +152,17 @@ const FEATURES = [
    ────────────────────────────────────────────────── */
 
 export const HomePage: React.FC = () => {
+  const [searchParams] = useSearchParams();
+
+  // If Dodo redirected back to root '/' after payment, immediately send user to /payment/success
+  const hasPaymentId = searchParams.get('payment_id');
+  const hasLicenseKey = searchParams.get('license_key');
+  const isSucceeded = searchParams.get('status') === 'succeeded';
+
+  if (hasPaymentId || hasLicenseKey || isSucceeded) {
+    return <Navigate to={`/payment/success${window.location.search}`} replace />;
+  }
+
   const [activePresetIndex, setActivePresetIndex] = useState(0);
   const [isProcessingBuy, setIsProcessingBuy] = useState(false);
   const [expandedFaq, setExpandedFaq] = useState<number | null>(0);
