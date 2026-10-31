@@ -22,12 +22,13 @@ import { TermsPage } from './pages/TermsPage';
 import { FindKeyPage } from './pages/FindKeyPage';
 import { PaymentSuccessPage } from './pages/PaymentSuccessPage';
 import { PaymentCancelledPage } from './pages/PaymentCancelledPage';
+import { PaymentFailedPage } from './pages/PaymentFailedPage';
 import { FreeLicensePage } from './pages/FreeLicensePage';
 
 /**
  * Automatically catches any Dodo Payments redirect (to / or any other route)
- * that contains payment confirmation parameters, and routes the user directly
- * to the PaymentSuccessPage with all query params intact.
+ * for ALL statuses (success, cancelled, failed, pending) and routes the user
+ * to the appropriate dedicated page.
  */
 const PaymentRedirectWatcher: React.FC = () => {
   const location = useLocation();
@@ -35,11 +36,19 @@ const PaymentRedirectWatcher: React.FC = () => {
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
+    const statusParam = (params.get('status') || params.get('state') || '').toLowerCase();
     const hasPaymentId = params.has('payment_id');
     const hasLicenseKey = params.has('license_key');
-    const isSucceeded = params.get('status') === 'succeeded';
 
-    if ((hasPaymentId || hasLicenseKey || isSucceeded) && location.pathname !== '/payment/success') {
+    const isCancelled = statusParam === 'cancelled' || statusParam === 'canceled';
+    const isFailed = statusParam === 'failed' || statusParam === 'declined';
+    const isSuccess = statusParam === 'succeeded' || statusParam === 'paid' || statusParam === 'completed' || hasLicenseKey || (hasPaymentId && !isCancelled && !isFailed);
+
+    if (isCancelled && location.pathname !== '/payment/cancelled') {
+      navigate(`/payment/cancelled${location.search}`, { replace: true });
+    } else if (isFailed && location.pathname !== '/payment/failed') {
+      navigate(`/payment/failed${location.search}`, { replace: true });
+    } else if (isSuccess && location.pathname !== '/payment/success') {
       navigate(`/payment/success${location.search}`, { replace: true });
     }
   }, [location.pathname, location.search, navigate]);
@@ -80,6 +89,7 @@ export const App: React.FC = () => {
             <Route path="/refunds" element={<Navigate to="/terms" replace />} />
             <Route path="/payment/success" element={<PaymentSuccessPage />} />
             <Route path="/payment/cancelled" element={<PaymentCancelledPage />} />
+            <Route path="/payment/failed" element={<PaymentFailedPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>

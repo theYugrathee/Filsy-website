@@ -154,12 +154,22 @@ const FEATURES = [
 export const HomePage: React.FC = () => {
   const [searchParams] = useSearchParams();
 
-  // If Dodo redirected back to root '/' after payment, immediately send user to /payment/success
+  // If Dodo redirected back to root '/' after payment, immediately send user to appropriate payment state page
+  const statusParam = (searchParams.get('status') || searchParams.get('state') || '').toLowerCase();
   const hasPaymentId = searchParams.get('payment_id');
   const hasLicenseKey = searchParams.get('license_key');
-  const isSucceeded = searchParams.get('status') === 'succeeded';
 
-  if (hasPaymentId || hasLicenseKey || isSucceeded) {
+  const isCancelled = statusParam === 'cancelled' || statusParam === 'canceled';
+  const isFailed = statusParam === 'failed' || statusParam === 'declined';
+  const isSuccess = statusParam === 'succeeded' || statusParam === 'paid' || statusParam === 'completed' || !!hasLicenseKey || (!!hasPaymentId && !isCancelled && !isFailed);
+
+  if (isCancelled) {
+    return <Navigate to={`/payment/cancelled${window.location.search}`} replace />;
+  }
+  if (isFailed) {
+    return <Navigate to={`/payment/failed${window.location.search}`} replace />;
+  }
+  if (isSuccess) {
     return <Navigate to={`/payment/success${window.location.search}`} replace />;
   }
 
