@@ -118,7 +118,7 @@ interface DetailedFeature {
   tags: string[];
   screenshot?: string;
   screenshotTitle?: string;
-  previewType?: 'ocr' | 'doc' | 'source' | 'tags' | 'privacy';
+  previewType?: 'quicklook' | 'ocr' | 'doc' | 'source' | 'tags' | 'privacy';
 }
 
 const DETAILED_FEATURES: DetailedFeature[] = [
@@ -130,8 +130,7 @@ const DETAILED_FEATURES: DetailedFeature[] = [
     accent: 'var(--documents)',
     icon: <Eye size={22} color="var(--documents)" />,
     tags: ['Word (.docx)', 'Excel (.xlsx)', 'Access (.accdb)', 'PowerPoint (.pptx)', 'PDFs', '4K Video', 'Audio', 'Code & Hex'],
-    screenshot: '/screenshots/quick-look-preview.jpg',
-    screenshotTitle: 'Quick Look · ai ml cheat code.docx',
+    previewType: 'quicklook',
   },
   {
     id: 'duplicate-hunter',
@@ -648,6 +647,17 @@ export const HomePage: React.FC = () => {
                       className="feature-screenshot-img"
                       loading="lazy"
                     />
+                  </div>
+                ) : feat.previewType === 'quicklook' ? (
+                  <div className="feature-no-img-preview">
+                    <div style={{ fontSize: '0.74rem', fontWeight: 600, color: 'var(--subtle)', marginBottom: '4px' }}>Press Spacebar to preview any file:</div>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                      {['Word (.docx)', 'Excel (.xlsx)', 'Access (.accdb)', 'PowerPoint', 'PDF Documents', 'Video & Audio', 'Code & Markdown', 'ZIP Tree'].map(fmt => (
+                        <span key={fmt} style={{ padding: '3px 8px', background: 'var(--card)', border: '1px solid var(--line)', borderRadius: 'var(--radius-full)', fontSize: '0.74rem', fontWeight: 600, color: 'var(--ink)' }}>
+                          ⚡ {fmt}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 ) : feat.previewType === 'ocr' ? (
                   <div className="feature-no-img-preview">
