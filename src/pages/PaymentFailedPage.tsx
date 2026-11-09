@@ -143,3 +143,4 @@ export const PaymentFailedPage: React.FC = () => {
     </div>
   );
 };
+

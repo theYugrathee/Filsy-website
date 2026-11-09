@@ -108,42 +108,124 @@ const PRESETS: PresetData[] = [
    FEATURES DATA
    ────────────────────────────────────────────────── */
 
-const FEATURES = [
+interface DetailedFeature {
+  id: string;
+  title: string;
+  badge: string;
+  desc: string;
+  accent: string;
+  icon: React.ReactNode;
+  tags: string[];
+  screenshot?: string;
+  screenshotTitle?: string;
+  previewType?: 'ocr' | 'doc' | 'source' | 'tags' | 'privacy';
+}
+
+const DETAILED_FEATURES: DetailedFeature[] = [
   {
-    icon: <ScanSearch size={22} />,
-    title: 'Natural-Language Search',
-    desc: 'Type what you remember — file types, dates, sizes. Live results with zero syntax.',
+    id: 'quick-look',
+    title: 'Spacebar Quick Look',
+    badge: 'Instant Preview',
+    desc: 'Press Spacebar on any file to preview it right away without opening Word, Excel, or heavy software. Browse documents, spreadsheets, videos, photos, and code with full layouts.',
     accent: 'var(--documents)',
+    icon: <Eye size={22} color="var(--documents)" />,
+    tags: ['Word (.docx)', 'Excel (.xlsx)', 'Access (.accdb)', 'PowerPoint (.pptx)', 'PDFs', '4K Video', 'Audio', 'Code & Hex'],
+    screenshot: '/screenshots/quick-look-preview.jpg',
+    screenshotTitle: 'Quick Look · ai ml cheat code.docx',
   },
   {
-    icon: <Image size={22} />,
-    title: 'Text Inside Screenshots',
-    desc: 'On-device OCR reads text inside images. Find that Wi-Fi password or receipt instantly.',
-    accent: 'var(--images)',
-  },
-  {
-    icon: <FileText size={22} />,
-    title: 'Search Inside Documents',
-    desc: 'PDFs, Word, Excel — all fully indexed. Search by content, not filename.',
-    accent: 'var(--videos)',
-  },
-  {
-    icon: <Tag size={22} />,
-    title: 'Download Source Tracking',
-    desc: 'Know whether a file came from WhatsApp, Slack, Gmail, or your browser.',
-    accent: 'var(--archives)',
-  },
-  {
-    icon: <Copy size={22} />,
-    title: 'Duplicate Detection',
-    desc: 'SHA-256 hashing identifies exact duplicate files. Free up gigabytes safely.',
+    id: 'duplicate-hunter',
+    title: 'Duplicate File Cleaner',
+    badge: 'Reclaim Space',
+    desc: 'Find exact copy-paste duplicates eating your hard drive space. Check the copies side-by-side with original paths and send duplicates safely to the Recycle Bin.',
     accent: 'var(--music)',
+    icon: <Copy size={22} color="var(--music)" />,
+    tags: ['Exact Byte Matching', 'SHA-256 Hashing', 'Cancel Anytime', 'Recycle Bin Safe', 'Keep Oldest Option'],
+    screenshot: '/screenshots/duplicate-hunter.png',
+    screenshotTitle: 'Duplicate Files · Smart Duplicate & Dead Weight Hunter',
   },
   {
-    icon: <Lock size={22} />,
-    title: '100% Offline & Private',
-    desc: 'No cloud, no analytics, no file uploads. Everything stays on your PC.',
+    id: 'storage-visualizer',
+    title: 'Storage Visualizer',
+    badge: 'Drive Health',
+    desc: 'See exactly what is taking up space on your PC. Easy color bars show your storage breakdown for Videos, Desktop, Documents, and your largest files at a glance.',
+    accent: 'var(--archives)',
+    icon: <HardDrive size={22} color="var(--archives)" />,
+    tags: ['Visual Treemap', 'Category Storage Bars', 'Space Hogs Finder', 'Drive Capacity Overview'],
+    screenshot: '/screenshots/storage-visualizer.png',
+    screenshotTitle: 'Storage Visualizer · Visual Disk Treemap & Space Hogs',
+  },
+  {
+    id: 'cleanup-center',
+    title: 'Safe Cleanup Center',
+    badge: 'Zero Risk',
+    desc: 'Clean old temporary files, crash dumps, and junk safely. Files modified in the last 24 hours are locked from deletion, and your personal documents are 100% protected.',
+    accent: 'var(--images)',
+    icon: <Trash2 size={22} color="var(--images)" />,
+    tags: ['Temp Files (%TEMP%)', 'Crash Dumps', '24-Hour Safety Buffer', 'Zero Document Risk'],
+    screenshot: '/screenshots/cleanup-center.png',
+    screenshotTitle: 'Cleanup Center · System Cleanup & Storage Reclaimer',
+  },
+  {
+    id: 'this-pc',
+    title: 'This PC & Drive Browser',
+    badge: 'All Drives',
+    desc: 'Browse your internal hard drives, external USB drives, and default folders with smooth breadcrumb navigation, back/forward buttons, and direct folder paths.',
+    accent: 'var(--videos)',
+    icon: <Folder size={22} color="var(--videos)" />,
+    tags: ['Internal & External Drives', 'Folder Breadcrumbs', 'Back / Forward History', 'Direct Path Bar'],
+    screenshot: '/screenshots/this-pc-browser.png',
+    screenshotTitle: 'This PC · Local & External Drives Explorer',
+  },
+  {
+    id: 'ocr',
+    title: 'Search Text Inside Images',
+    badge: 'Offline OCR',
+    desc: 'Filsy automatically reads words inside screenshots, photos, and receipts using on-device Windows OCR. Search for Wi-Fi keys or order codes, or copy all text with 1 click.',
+    accent: 'var(--images)',
+    icon: <ScanSearch size={22} color="var(--images)" />,
+    tags: ['Screenshots & Photos', 'Receipts & Notes', '100% Offline Vision', '1-Click Copy Text'],
+    previewType: 'ocr',
+  },
+  {
+    id: 'doc-search',
+    title: 'Search Inside Documents',
+    badge: 'Full-Text Search',
+    desc: 'Find files by the words written inside them. Full-text search lets you find the right PDF, Word document, Excel spreadsheet, or PowerPoint deck even if you forgot the filename.',
+    accent: 'var(--documents)',
+    icon: <FileText size={22} color="var(--documents)" />,
+    tags: ['PDF Text Extractor', 'Word (.docx)', 'Excel (.xlsx)', 'PowerPoint (.pptx)', 'Plain Text & Code'],
+    previewType: 'doc',
+  },
+  {
+    id: 'download-sources',
+    title: 'Download Source Tracking',
+    badge: 'File Origins',
+    desc: 'Always remember where you got a file. Filsy automatically tracks if a file came from WhatsApp, Gmail, Chrome, Edge, Slack, Discord, Google Drive, or ChatGPT.',
     accent: 'var(--apps)',
+    icon: <Download size={22} color="var(--apps)" />,
+    tags: ['WhatsApp', 'Gmail & Email', 'Chrome & Edge', 'ChatGPT', 'Google Drive', 'GitHub'],
+    previewType: 'source',
+  },
+  {
+    id: 'tags-organization',
+    title: 'Color Tags & Quick Actions',
+    badge: 'Smart Organization',
+    desc: 'Organize your files with custom color tags directly from the right-click menu. Group files together across different folders and drives without moving them.',
+    accent: 'var(--archives)',
+    icon: <Tag size={22} color="var(--archives)" />,
+    tags: ['Red · Blue · Green · Yellow · Purple', 'Right-Click Context Menu', 'Grid & List Views', 'Bulk Operations'],
+    previewType: 'tags',
+  },
+  {
+    id: 'privacy',
+    title: '100% Offline & Private',
+    badge: 'Zero Cloud',
+    desc: 'No user accounts, no login required, zero analytics, and zero telemetry. Everything is stored in a private local database on your PC. Your files never leave your computer.',
+    accent: 'var(--music)',
+    icon: <Lock size={22} color="var(--music)" />,
+    tags: ['No User Account', 'No Telemetry', 'Works Without Internet', 'Local SQLite Database'],
+    previewType: 'privacy',
   },
 ];
 
@@ -273,14 +355,13 @@ export const HomePage: React.FC = () => {
               </div>
 
               <h1 className="hero-headline">
-                Stop browsing folders.
+                Find any file in seconds.
                 <br />
-                <span className="gradient-text">Start finding files.</span>
+                <span className="gradient-text">Preview with Spacebar.</span>
               </h1>
 
               <p className="hero-sub">
-                Filsy replaces endless folder clicking with a single search bar that understands plain English.
-                Coming soon to the Microsoft Store — purchase the early license key for only $9 (first 99 users only, regular $19) before official launch.
+                Filsy is a fast file explorer for Windows 10 &amp; 11. Type what you need in plain everyday words, tap Spacebar to preview Word docs, Excel sheets, and images without waiting, and clean duplicate files to free up space. 100% private and works offline.
               </p>
 
               <div className="hero-actions">
@@ -383,46 +464,32 @@ export const HomePage: React.FC = () => {
               </Link>
             </div>
 
-            {/* RIGHT — Floating Stat Cards (unique visual element) */}
+            {/* RIGHT — Real App Preview Window with Floating Badges */}
             <div className="hero-visual-col">
-              <div className="stat-card stat-card-1">
-                <div className="stat-icon" style={{ background: 'rgba(124, 92, 252, 0.12)', color: 'var(--documents)' }}>
-                  <Folder size={20} />
-                </div>
-                <div>
-                  <div className="stat-value">27,425</div>
-                  <div className="stat-label">Files indexed</div>
-                </div>
+              <div className="hero-floating-badge hero-badge-top">
+                <Sparkles size={14} color="var(--documents)" />
+                <span>7,988 Files Indexed Locally</span>
               </div>
 
-              <div className="stat-card stat-card-2">
-                <div className="stat-icon" style={{ background: 'rgba(225, 29, 72, 0.1)', color: 'var(--images)' }}>
-                  <ScanSearch size={20} />
+              <div className="hero-app-window">
+                <div className="hero-window-header">
+                  <div className="hero-window-dots">
+                    <span className="hero-dot hero-dot-close" />
+                    <span className="hero-dot hero-dot-min" />
+                    <span className="hero-dot hero-dot-max" />
+                  </div>
+                  <span className="hero-window-title">Filsy — Your local library</span>
                 </div>
-                <div>
-                  <div className="stat-value">0.3s</div>
-                  <div className="stat-label">Avg search time</div>
-                </div>
+                <img
+                  src="/screenshots/home-dashboard.png"
+                  alt="Filsy App Dashboard"
+                  className="hero-app-image"
+                />
               </div>
 
-              <div className="stat-card stat-card-3">
-                <div className="stat-icon" style={{ background: 'rgba(16, 185, 129, 0.1)', color: 'var(--music)' }}>
-                  <Trash2 size={20} />
-                </div>
-                <div>
-                  <div className="stat-value">14.2 GB</div>
-                  <div className="stat-label">Duplicates found</div>
-                </div>
-              </div>
-
-              <div className="stat-card stat-card-4">
-                <div className="stat-icon" style={{ background: 'rgba(245, 158, 11, 0.1)', color: 'var(--archives)' }}>
-                  <Eye size={20} />
-                </div>
-                <div>
-                  <div className="stat-value">3,841</div>
-                  <div className="stat-label">OCR scanned</div>
-                </div>
+              <div className="hero-floating-badge hero-badge-bottom">
+                <Eye size={14} color="var(--images)" />
+                <span>Spacebar Document Quick Look</span>
               </div>
 
               {/* Background decorative gradient blob */}
@@ -533,19 +600,121 @@ export const HomePage: React.FC = () => {
       <section id="features">
         <div className="wrap">
           <div className="section-head center">
-            <span className="section-label">Capabilities</span>
-            <h2>Everything you need. Nothing you don't.</h2>
-            <p>Built for people with too many files and zero time to waste.</p>
+            <span className="section-label">All Features</span>
+            <h2>Simple, fast, and built for your PC</h2>
+            <p>Everything runs 100% locally on your computer with zero cloud and complete privacy.</p>
           </div>
 
-          <div className="feature-bento">
-            {FEATURES.map((feat, i) => (
-              <div key={i} className="feature-bento-card" style={{ '--feat-accent': feat.accent } as React.CSSProperties}>
-                <div className="feat-icon-wrap">
-                  {feat.icon}
+          <div className="feature-showcase-grid">
+            {DETAILED_FEATURES.map((feat) => (
+              <div key={feat.id} className="feature-showcase-card">
+                <div>
+                  <div className="feature-card-top">
+                    <div className="feature-icon-badge" style={{ background: `color-mix(in srgb, ${feat.accent} 14%, transparent)` }}>
+                      {feat.icon}
+                    </div>
+                    <div className="feature-card-title-group">
+                      <h3>
+                        {feat.title}
+                        <span className="feature-card-badge" style={{ background: `color-mix(in srgb, ${feat.accent} 15%, transparent)`, color: feat.accent }}>
+                          {feat.badge}
+                        </span>
+                      </h3>
+                    </div>
+                  </div>
+
+                  <p className="feature-card-desc">{feat.desc}</p>
+
+                  <div className="feature-tags-list">
+                    {feat.tags.map((tag) => (
+                      <span key={tag} className="feature-tag-pill">{tag}</span>
+                    ))}
+                  </div>
                 </div>
-                <h3>{feat.title}</h3>
-                <p>{feat.desc}</p>
+
+                {feat.screenshot ? (
+                  <div className="feature-screenshot-frame">
+                    <div className="feature-screenshot-header">
+                      <div className="feature-screenshot-dots">
+                        <span />
+                        <span />
+                        <span />
+                      </div>
+                      <span className="feature-screenshot-title">{feat.screenshotTitle || feat.title}</span>
+                    </div>
+                    <img
+                      src={feat.screenshot}
+                      alt={feat.title}
+                      className="feature-screenshot-img"
+                      loading="lazy"
+                    />
+                  </div>
+                ) : feat.previewType === 'ocr' ? (
+                  <div className="feature-no-img-preview">
+                    <div className="feature-preview-row">
+                      <span>🖼️ Screenshot_WiFi_Credentials.png</span>
+                      <span className="feature-copy-badge">
+                        <Copy size={12} /> Copy Text
+                      </span>
+                    </div>
+                    <div style={{ fontSize: '0.8rem', color: 'var(--muted)', background: 'var(--card)', padding: '8px 12px', borderRadius: 'var(--radius-xs)', border: '1px solid var(--line)' }}>
+                      <Eye size={12} style={{ display: 'inline', marginRight: '6px' }} />
+                      Detected text: <strong>"Wi-Fi Password: WPA3-Home984"</strong>
+                    </div>
+                  </div>
+                ) : feat.previewType === 'doc' ? (
+                  <div className="feature-no-img-preview">
+                    <div className="feature-preview-row">
+                      <span>📄 Annual_Budget_Summary.pdf</span>
+                      <span style={{ fontSize: '0.74rem', color: 'var(--documents)', fontWeight: 700 }}>Full-Text Matched</span>
+                    </div>
+                    <div style={{ fontSize: '0.8rem', color: 'var(--muted)', background: 'var(--card)', padding: '8px 12px', borderRadius: 'var(--radius-xs)', border: '1px solid var(--line)' }}>
+                      Found inside paragraph: <em>"...approved Q4 capital expenditure for software licenses..."</em>
+                    </div>
+                  </div>
+                ) : feat.previewType === 'source' ? (
+                  <div className="feature-no-img-preview">
+                    <div style={{ fontSize: '0.76rem', fontWeight: 600, color: 'var(--subtle)', marginBottom: '4px' }}>Automatic Source Filtering:</div>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                      {['WhatsApp', 'Gmail', 'Chrome', 'ChatGPT', 'Slack', 'Google Drive'].map(src => (
+                        <span key={src} style={{ padding: '4px 10px', background: 'var(--card)', border: '1px solid var(--line)', borderRadius: 'var(--radius-full)', fontSize: '0.76rem', fontWeight: 600, color: 'var(--ink)' }}>
+                          📁 from:{src.toLowerCase()}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                ) : feat.previewType === 'tags' ? (
+                  <div className="feature-no-img-preview">
+                    <div style={{ fontSize: '0.76rem', fontWeight: 600, color: 'var(--subtle)', marginBottom: '4px' }}>Custom Right-Click Tags:</div>
+                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
+                      {[
+                        { color: '#e11d48', label: 'Urgent' },
+                        { color: '#3b82f6', label: 'Work' },
+                        { color: '#10b981', label: 'Personal' },
+                        { color: '#f59e0b', label: 'Review' },
+                        { color: '#7c5cfc', label: 'Projects' },
+                      ].map(tag => (
+                        <span key={tag.label} style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'var(--card)', border: '1px solid var(--line)', padding: '4px 9px', borderRadius: 'var(--radius-full)', fontSize: '0.76rem', fontWeight: 600 }}>
+                          <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: tag.color }} />
+                          {tag.label}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                ) : feat.previewType === 'privacy' ? (
+                  <div className="feature-no-img-preview">
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.8rem' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'var(--card)', padding: '8px 12px', borderRadius: 'var(--radius-xs)', border: '1px solid var(--line)' }}>
+                        <Shield size={16} color="var(--music)" />
+                        <span><strong>100% Local Store:</strong> Database saved on your disk</span>
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'var(--card)', padding: '8px 12px', borderRadius: 'var(--radius-xs)', border: '1px solid var(--line)' }}>
+                        <Lock size={16} color="var(--documents)" />
+                        <span><strong>Zero Telemetry:</strong> No tracking and works without internet</span>
+                      </div>
+                    </div>
+                  </div>
+                ) : null}
               </div>
             ))}
           </div>
