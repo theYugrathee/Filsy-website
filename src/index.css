@@ -868,6 +868,65 @@ nav.site-nav {
   font-family: var(--font-mono);
 }
 
+/* ==========================================================================
+   DEMO VIDEO SECTION (JUST AFTER HERO)
+   ========================================================================== */
+.demo-video-section {
+  padding: 40px 0 24px;
+}
+
+.demo-video-wrapper {
+  max-width: 860px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.demo-video-window {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-window);
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.demo-video-window:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 24px 60px -15px rgba(0, 0, 0, 0.15);
+}
+
+.demo-video-header {
+  height: 32px;
+  background: var(--fill);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  gap: 8px;
+}
+
+.demo-video-dots {
+  display: flex;
+  gap: 5px;
+}
+
+.demo-video-title {
+  font-size: 0.74rem;
+  color: var(--muted);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.demo-video-player {
+  width: 100%;
+  height: auto;
+  display: block;
+  aspect-ratio: 16 / 9;
+  background: #000000;
+  outline: none;
+}
+
 /* Section Label */
 .section-label {
   display: inline-block;

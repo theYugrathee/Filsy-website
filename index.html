@@ -23,6 +23,17 @@
     <meta name="twitter:description" content="Filsy is a private, local-first file manager for Windows. Natural-language search, search inside screenshots and PDFs, Explorer-faithful folders and safe cleanup — nothing ever leaves your PC." />
     <meta name="twitter:image" content="/app-icon.png" />
 
+    <!-- Instant Theme Init Script (Zero Flash) -->
+    <script>
+      (function() {
+        try {
+          var stored = localStorage.getItem('filsy_theme') || localStorage.getItem('filsy_theme_mode');
+          var isDark = stored ? stored === 'dark' : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+          document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+        } catch (e) {}
+      })();
+    </script>
+
     <!-- Fonts: Segoe UI / Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

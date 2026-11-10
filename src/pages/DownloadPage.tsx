@@ -35,7 +35,7 @@ export const DownloadPage: React.FC = () => {
 
           <h3 style={{ fontSize: '1.45rem', marginBottom: '12px' }}>Get Your Early Supporter License Key</h3>
           <p style={{ fontSize: '0.94rem', color: 'var(--muted)', maxWidth: '520px', margin: '0 auto 28px', lineHeight: 1.6 }}>
-            The app will be distributed securely via the Microsoft Store. Purchase the early license key now for only $9 for the first 99 users (regular $19 upon launch), or join our waitlist to be notified on launch day.
+            The app will be distributed securely via the Microsoft Store. Purchase the early license key now for only $9 for the first 99 users (regular $19 upon launch) to lock in your lifetime license.
           </p>
 
           <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
@@ -48,14 +48,6 @@ export const DownloadPage: React.FC = () => {
               <Sparkles size={18} />
               <span>Purchase Early License Key ($9)</span>
             </button>
-
-            <a
-              href="/#waitlist"
-              className="btn btn-secondary btn-lg"
-              style={{ gap: '8px' }}
-            >
-              <span>Join Launch Waitlist</span>
-            </a>
 
             <Link
               to="/find-key"

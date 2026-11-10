@@ -35,7 +35,7 @@ const FAQS: FaqItem[] = [
   },
   {
     q: 'How will I install Filsy from the Microsoft Store?',
-    a: 'Filsy is currently preparing for its Microsoft Store release for Windows 10 & 11. You can purchase the early lifetime license key now for $9 (first 99 users special, regular $19 upon launch), or join our waitlist to be notified as soon as it goes live on the Store.',
+    a: 'Filsy is currently preparing for its Microsoft Store release for Windows 10 & 11. You can purchase the early lifetime license key now for $9 (first 99 users special, regular $19 upon launch) to lock in your lifetime license before the official launch.',
   },
   {
     q: 'What if I lose my license key?',

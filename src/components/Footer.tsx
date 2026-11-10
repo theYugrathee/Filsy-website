@@ -18,7 +18,6 @@ export const Footer: React.FC = () => {
           <div className="footer-links-list">
             <a href="/#features">Features</a>
             <a href="/#compare">vs Explorer</a>
-            <a href="/#waitlist">Join Waitlist</a>
             <Link to="/pricing">Pricing ({APP_CONFIG.pricing.displayPrice})</Link>
             <Link to="/free-license">Free License Offer</Link>
             <Link to="/find-key">Find My Key</Link>

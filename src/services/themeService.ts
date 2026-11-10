@@ -1,46 +1,45 @@
 // ==========================================================================
-// FILSY AUTOMATIC THEME MANAGER
-// Automatically switches to dark mode at night (7 PM – 6 AM) or system dark mode.
-// Also allows manual override via navbar toggle.
+// FILSY FAST THEME MANAGER
+// Immediate, rock-solid, zero-delay switcher between Light and Dark mode.
 // ==========================================================================
 
-export type ThemeMode = 'auto' | 'light' | 'dark';
+export type ThemeMode = 'light' | 'dark';
 
-export function isNightTime(): boolean {
-  const hour = new Date().getHours();
-  return hour >= 19 || hour < 6;
-}
-
-export function getEffectiveTheme(preference: ThemeMode): 'light' | 'dark' {
-  if (preference === 'light') return 'light';
-  if (preference === 'dark') return 'dark';
-  
-  // Auto mode: check night time or system preference
-  if (isNightTime()) return 'dark';
-  if (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    return 'dark';
+export function getCurrentTheme(): ThemeMode {
+  if (typeof document !== 'undefined') {
+    const attr = document.documentElement.getAttribute('data-theme');
+    if (attr === 'dark' || attr === 'light') return attr as ThemeMode;
+  }
+  if (typeof window !== 'undefined') {
+    try {
+      const stored = localStorage.getItem('filsy_theme') || localStorage.getItem('filsy_theme_mode');
+      if (stored === 'dark' || stored === 'light') return stored as ThemeMode;
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark';
+    } catch {}
   }
   return 'light';
 }
 
-export function applyTheme(preference: ThemeMode) {
-  const effective = getEffectiveTheme(preference);
-  document.documentElement.setAttribute('data-theme', effective);
-  document.documentElement.setAttribute('data-theme-preference', preference);
-}
-
-export function getStoredThemePreference(): ThemeMode {
-  if (typeof window === 'undefined') return 'auto';
-  const stored = localStorage.getItem('filsy_theme_mode') as ThemeMode;
-  if (stored === 'light' || stored === 'dark' || stored === 'auto') {
-    return stored;
+export function setTheme(mode: ThemeMode) {
+  if (typeof document !== 'undefined') {
+    document.documentElement.setAttribute('data-theme', mode);
   }
-  return 'auto';
-}
-
-export function setStoredThemePreference(mode: ThemeMode) {
   if (typeof window !== 'undefined') {
-    localStorage.setItem('filsy_theme_mode', mode);
+    try {
+      localStorage.setItem('filsy_theme', mode);
+      localStorage.setItem('filsy_theme_mode', mode);
+    } catch {}
   }
-  applyTheme(mode);
 }
+
+export function toggleTheme(): ThemeMode {
+  const current = getCurrentTheme();
+  const next: ThemeMode = current === 'dark' ? 'light' : 'dark';
+  setTheme(next);
+  return next;
+}
+
+// Backwards compatibility helpers
+export const getStoredThemePreference = getCurrentTheme;
+export const setStoredThemePreference = setTheme;
+export const applyTheme = setTheme;

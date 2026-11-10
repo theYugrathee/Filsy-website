@@ -136,22 +136,6 @@ export const PricingPage: React.FC = () => {
             </div>
             ========================================================================= */}
 
-        {/* Waitlist Callout on Pricing Page */}
-        <div style={{ maxWidth: '560px', margin: '32px auto 0', padding: '24px', background: 'var(--card)', borderRadius: 'var(--radius-md)', border: '1px solid var(--line)', textAlign: 'center' }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', color: 'var(--music)', fontSize: '0.86rem', fontWeight: 700, marginBottom: '8px' }}>
-            <Bell size={16} />
-            <span>NOT READY TO BUY YET?</span>
-          </div>
-          <h4 style={{ fontSize: '1.05rem', marginBottom: '6px' }}>Join the Microsoft Store Launch Waitlist</h4>
-          <p style={{ fontSize: '0.88rem', color: 'var(--muted)', marginBottom: '16px' }}>
-            Get an email alert the exact day Filsy becomes available on the Microsoft Store.
-          </p>
-          <a href="/#waitlist" className="btn btn-secondary btn-sm" style={{ gap: '6px' }}>
-            <span>Join Waitlist for Free</span>
-            <ArrowRight size={14} />
-          </a>
-        </div>
-
         {/* Action Links */}
         <div style={{ maxWidth: '600px', margin: '36px auto 0', textAlign: 'center', display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
           <Link to="/find-key" className="btn btn-secondary" style={{ gap: '6px' }}>

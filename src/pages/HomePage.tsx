@@ -258,11 +258,6 @@ export const HomePage: React.FC = () => {
   const [isProcessingBuy, setIsProcessingBuy] = useState(false);
   const [expandedFaq, setExpandedFaq] = useState<number | null>(0);
 
-  // Pre-launch Waitlist state
-  const [waitlistEmail, setWaitlistEmail] = useState('');
-  const [waitlistSubmitted, setWaitlistSubmitted] = useState(false);
-  const [waitlistLoading, setWaitlistLoading] = useState(false);
-
   // License retrieval state
   const [retrieveEmail, setRetrieveEmail] = useState('');
   const [retrieveStatus, setRetrieveStatus] = useState<'idle' | 'loading' | 'success' | 'not_found'>('idle');
@@ -273,33 +268,6 @@ export const HomePage: React.FC = () => {
   const activePriceDisplay = APP_CONFIG.isPreLaunch
     ? `$${APP_CONFIG.pricing.usdPrice} Pre-Launch (Regular $${APP_CONFIG.pricing.originalUsdPrice})`
     : `$${APP_CONFIG.pricing.originalUsdPrice}`;
-
-  const handleWaitlistSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const cleanEmail = waitlistEmail.trim().toLowerCase();
-    if (!cleanEmail) return;
-    setWaitlistLoading(true);
-
-    try {
-      const existing = JSON.parse(localStorage.getItem('filsy_waitlist') || '[]');
-      if (!existing.includes(cleanEmail)) {
-        existing.push(cleanEmail);
-        localStorage.setItem('filsy_waitlist', JSON.stringify(existing));
-      }
-      fetch('/api/waitlist', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: cleanEmail }),
-      }).catch(() => {});
-    } catch {
-      // Storage fallback
-    }
-
-    setTimeout(() => {
-      setWaitlistLoading(false);
-      setWaitlistSubmitted(true);
-    }, 350);
-  };
 
   const handleBuy = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -375,36 +343,6 @@ export const HomePage: React.FC = () => {
                   <Sparkles size={18} />
                   <span>Purchase Early License Key ($9)</span>
                 </button>
-
-                <a
-                  href="#waitlist"
-                  className="btn btn-secondary btn-lg"
-                  id="heroWaitlistBtn"
-                  style={{ gap: '8px' }}
-                >
-                  <Bell size={18} color="var(--music)" />
-                  <span>Join Waitlist</span>
-                </a>
-
-                <Link
-                  to="/free-license"
-                  className="btn btn-secondary btn-lg"
-                  id="heroFreeBtn"
-                  style={{ gap: '8px' }}
-                >
-                  <Gift size={18} color="var(--documents)" />
-                  <span>Get Free Key (5K Views)</span>
-                </Link>
-
-                <Link
-                  to="/find-key"
-                  className="btn btn-secondary btn-lg"
-                  id="heroRetrieveBtn"
-                  style={{ gap: '8px' }}
-                >
-                  <KeyRound size={18} />
-                  <span>Find My Key</span>
-                </Link>
               </div>
 
               {/* =========================================================================
@@ -512,6 +450,42 @@ export const HomePage: React.FC = () => {
                 <span className="category-chip-count">{cat.count}</span>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+
+      {/* ════════════════════════════════════════════════════════════════════
+          DEMO VIDEO SECTION — JUST AFTER HERO
+          ════════════════════════════════════════════════════════════════════ */}
+      <section className="demo-video-section" id="demo-video">
+        <div className="wrap">
+          <div className="section-head center">
+            <span className="section-label">See Filsy in Action</span>
+            <h2>Watch how fast finding files can be</h2>
+            <p>From Spacebar Quick Look to sub-second search and duplicate cleaning — see Filsy in real time.</p>
+          </div>
+
+          <div className="demo-video-wrapper">
+            <div className="demo-video-window">
+              <div className="demo-video-header">
+                <div className="demo-video-dots">
+                  <span className="hero-dot hero-dot-close" />
+                  <span className="hero-dot hero-dot-min" />
+                  <span className="hero-dot hero-dot-max" />
+                </div>
+                <span className="demo-video-title">Filsy — Official Product Demo</span>
+              </div>
+              <video
+                src="/filsy-demo.mp4"
+                controls
+                playsInline
+                preload="metadata"
+                className="demo-video-player"
+              >
+                Your browser does not support the video tag.
+              </video>
+            </div>
           </div>
         </div>
       </section>
@@ -765,8 +739,8 @@ export const HomePage: React.FC = () => {
                 <span>1</span>
               </div>
               <div className="timeline-content">
-                <h4>1. First 99 users: $9 or join waitlist</h4>
-                <p>Purchase the early lifetime license key for only $9 (strictly reserved for the first 99 users only, regular $19 upon launch), or join our waitlist to be notified on Microsoft Store release day.</p>
+                <h4>1. First 99 users: $9 special</h4>
+                <p>Purchase the early lifetime license key for only $9 (strictly reserved for the first 99 users only, regular $19 upon launch) to lock in your lifetime access before the official release.</p>
               </div>
             </div>
 
@@ -920,79 +894,6 @@ export const HomePage: React.FC = () => {
 
 
       {/* ════════════════════════════════════════════════════════════════════
-          SECTION 6.2 — JOIN LAUNCH WAITLIST
-          ════════════════════════════════════════════════════════════════════ */}
-      <section className="waitlist-section" id="waitlist">
-        <div className="wrap">
-          <div className="waitlist-card">
-            <div className="waitlist-badge">
-              <Bell size={14} />
-              <span>Microsoft Store Launch Waitlist</span>
-            </div>
-
-            <h2 className="waitlist-title">
-              Be the first to know when Filsy goes live
-            </h2>
-
-            <p className="waitlist-sub">
-              Prefer to wait for the official Microsoft Store release? Join our early waitlist.
-              We'll send you an instant notification on launch day with download links and release updates.
-            </p>
-
-            {waitlistSubmitted ? (
-              <div className="waitlist-success-box">
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', marginBottom: '8px' }}>
-                  <Check size={24} color="var(--music)" />
-                  <strong style={{ fontSize: '1.15rem' }}>You're on the waitlist!</strong>
-                </div>
-                <p style={{ fontSize: '0.92rem', color: 'var(--muted)', margin: 0 }}>
-                  We've saved your spot for <strong>{waitlistEmail}</strong>. You'll receive an email as soon as Filsy launches on the Microsoft Store.
-                </p>
-              </div>
-            ) : (
-              <form onSubmit={handleWaitlistSubmit} className="waitlist-form">
-                <div className="waitlist-field-wrap">
-                  <Mail size={18} className="waitlist-icon" />
-                  <input
-                    type="email"
-                    placeholder="Enter your email address..."
-                    value={waitlistEmail}
-                    onChange={(e) => setWaitlistEmail(e.target.value)}
-                    required
-                    className="waitlist-input"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="btn btn-primary btn-lg waitlist-btn"
-                  disabled={waitlistLoading}
-                >
-                  <Bell size={18} />
-                  <span>{waitlistLoading ? 'Saving...' : 'Join Waitlist'}</span>
-                </button>
-              </form>
-            )}
-
-            <div className="waitlist-perks-row">
-              <div className="waitlist-perk-item">
-                <Check size={15} color="var(--music)" />
-                <span>Store launch day notification</span>
-              </div>
-              <div className="waitlist-perk-item">
-                <Check size={15} color="var(--music)" />
-                <span>Special early adopter perks</span>
-              </div>
-              <div className="waitlist-perk-item">
-                <Check size={15} color="var(--music)" />
-                <span>Zero spam, unsubscribe anytime</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-
-      {/* ════════════════════════════════════════════════════════════════════
           SECTION 6.5 — DEDICATED BIG & HIGHLIGHTED "FIND LICENSE KEY"
           ════════════════════════════════════════════════════════════════════ */}
       <section className="find-key-highlight-section" id="retrieve">
@@ -1121,7 +1022,7 @@ export const HomePage: React.FC = () => {
               },
               {
                 q: "How will I install Filsy from the Microsoft Store?",
-                a: "Filsy is currently preparing for its Microsoft Store release. Purchase the early license key now for $9 (first 99 users special, regular $19 upon launch), or join our waitlist, and as soon as the app goes live on the Store, simply download it and paste your key into Settings."
+                a: "Filsy is currently preparing for its Microsoft Store release. Purchase the early license key now for $9 (first 99 users special, regular $19 upon launch), and as soon as the app goes live on the Store, simply download it and paste your key into Settings."
               },
               {
                 q: "Can I move my license to a new PC?",
