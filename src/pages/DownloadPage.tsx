@@ -57,7 +57,7 @@ export const DownloadPage: React.FC = () => {
               style={{ gap: '8px' }}
             >
               <Sparkles size={18} color="var(--documents)" />
-              <span>Purchase Early Key ($9)</span>
+              <span>Buy Filsy</span>
             </button>
 
             <Link

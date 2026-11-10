@@ -54,7 +54,7 @@ export const PaymentCancelledPage: React.FC = () => {
               style={{ gap: '8px' }}
             >
               <Sparkles size={16} />
-              <span>Purchase Early Key ($9)</span>
+              <span>Buy Filsy ($9)</span>
             </button>
             <Link to="/pricing" className="btn btn-secondary">
               View Pricing

@@ -353,7 +353,7 @@ export const HomePage: React.FC = () => {
                   style={{ gap: '8px' }}
                 >
                   <Sparkles size={18} color="var(--documents)" />
-                  <span>Early License Key ($9)</span>
+                  <span>Buy Filsy</span>
                 </button>
               </div>
 
@@ -816,7 +816,7 @@ export const HomePage: React.FC = () => {
             <div className="early-supporter-alert">
               <Sparkles size={18} color="var(--documents)" style={{ flexShrink: 0, marginTop: '2px' }} />
               <div>
-                <strong>First 99 Users Deal:</strong> Purchase the early license key now to lock in lifetime access for only $9. Price increases to $19 upon official Microsoft Store launch.
+                <strong>First 99 Users Deal:</strong> Purchase the early license key now to lock in lifetime access for only $9 celebrating our Microsoft Store release ($19 regular price).
               </div>
             </div>
 
@@ -829,7 +829,7 @@ export const HomePage: React.FC = () => {
               style={{ gap: '8px' }}
             >
               <Sparkles size={18} />
-              <span>{isProcessingBuy ? 'Connecting to Checkout…' : 'Purchase Early License Key — $9'}</span>
+              <span>{isProcessingBuy ? 'Connecting to Checkout…' : 'Buy Filsy — $9'}</span>
             </button>
 
             <div className="pricing-features-grid">
@@ -1033,8 +1033,8 @@ export const HomePage: React.FC = () => {
                 a: "No. Filsy is a one-time purchase. During pre-launch, the first 99 users can purchase the lifetime license key for only $9 (regular price upon official release will be $19). All future updates are included forever."
               },
               {
-                q: "How will I install Filsy from the Microsoft Store?",
-                a: "Filsy is currently preparing for its Microsoft Store release. Purchase the early license key now for $9 (first 99 users special, regular $19 upon launch), and as soon as the app goes live on the Store, simply download it and paste your key into Settings."
+                q: "How do I install Filsy from the Microsoft Store?",
+                a: "Filsy is published and live on the Microsoft Store for Windows 10 & 11! You can install it directly with one click from our Microsoft Store page. Early supporters can purchase the lifetime license key for $9 (first 99 users special, regular $19) to activate full access."
               },
               {
                 q: "Can I move my license to a new PC?",

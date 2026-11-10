@@ -64,7 +64,7 @@ export const PricingPage: React.FC = () => {
             style={{ width: '100%', gap: '8px' }}
           >
             <Sparkles size={18} />
-            <span>{isProcessing ? 'Connecting to Checkout…' : 'Purchase Early License Key — $9'}</span>
+            <span>{isProcessing ? 'Connecting to Checkout…' : 'Buy Filsy — $9'}</span>
           </button>
 
           <ul className="clean-checklist" style={{ marginTop: '28px' }}>

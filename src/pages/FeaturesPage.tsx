@@ -278,7 +278,7 @@ export const FeaturesPage: React.FC = () => {
         <div style={{ textAlign: 'center', marginTop: '54px', display: 'flex', gap: '14px', justifyContent: 'center', flexWrap: 'wrap' }}>
           <Link to="/pricing" className="btn btn-primary btn-lg" style={{ gap: '8px' }}>
             <Sparkles size={18} />
-            <span>Get Early License Key — {APP_CONFIG.pricing.displayPrice}</span>
+            <span>Buy Filsy — {APP_CONFIG.pricing.displayPrice}</span>
           </Link>
           <Link to="/#search-demo" className="btn btn-secondary btn-lg" style={{ gap: '8px' }}>
             <Search size={18} />
