@@ -27,8 +27,8 @@ export const PricingPage: React.FC = () => {
           <span className="section-label">FIRST 99 USERS SPECIAL · LIMITED SPOTS</span>
           <h2>First 99 users: Lock in $9 forever.</h2>
           <p>
-            Special early pricing of $9 reserved exclusively for the first 99 users before our official Microsoft Store release.
-            When we officially launch, the regular price will be $19.
+            Special early pricing of $9 reserved exclusively for the first 99 users celebrating our Microsoft Store release.
+            Regular price is $19.
           </p>
         </div>
 
@@ -51,7 +51,7 @@ export const PricingPage: React.FC = () => {
           <div className="early-supporter-alert" style={{ marginBottom: '20px' }}>
             <Sparkles size={18} color="var(--documents)" style={{ flexShrink: 0, marginTop: '2px' }} />
             <div>
-              <strong>First 99 Users Exclusive:</strong> Purchase the early license key now to lock in lifetime access for only $9 before our official Microsoft Store launch ($19 regular price).
+              <strong>First 99 Users Exclusive:</strong> Purchase the early license key now to lock in lifetime access for only $9 celebrating our official Microsoft Store release ($19 regular price).
             </div>
           </div>
 
@@ -82,7 +82,7 @@ export const PricingPage: React.FC = () => {
             </li>
             <li>
               <Check size={16} color="var(--music)" style={{ flexShrink: 0, marginTop: '2px' }} />
-              <span><strong>Ready for upcoming Microsoft Store release</strong> (activate in 1 click)</span>
+              <span><strong>Live on Microsoft Store</strong> (activate in 1 click)</span>
             </li>
             <li>
               <Check size={16} color="var(--music)" style={{ flexShrink: 0, marginTop: '2px' }} />
@@ -107,7 +107,7 @@ export const PricingPage: React.FC = () => {
           </ul>
 
           <div style={{ fontSize: '0.8rem', color: 'var(--subtle)', marginTop: '20px' }}>
-            Checkout secured by Dodo Payments · Instant digital license delivery · One-time $9 payment for first 99 users ($19 regular launch price)
+            Checkout secured by Dodo Payments · Instant digital license delivery · One-time $9 early pricing for first 99 users ($19 regular price)
           </div>
         </div>
 

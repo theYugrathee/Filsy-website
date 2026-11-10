@@ -317,8 +317,8 @@ export const HomePage: React.FC = () => {
                   To switch to Post-Launch mode, see the commented block below!
                   ========================================================================= */}
               <div className="version-chip">
-                <span style={{ fontSize: '0.9rem' }}>🚀</span>
-                <span>Pre-Launch Beta · First 99 Users Special</span>
+                <span style={{ fontSize: '0.9rem' }}>🎉</span>
+                <span>Now Live on Microsoft Store · First 99 Users Special ($9)</span>
               </div>
 
               <h1 className="hero-headline">
@@ -332,16 +332,28 @@ export const HomePage: React.FC = () => {
               </p>
 
               <div className="hero-actions">
+                <a
+                  href="https://apps.microsoft.com/detail/9N2ZWJ08B7X0?hl=en-us&gl=IN"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-primary btn-lg"
+                  id="heroStoreBtn"
+                  style={{ gap: '8px' }}
+                >
+                  <Download size={18} />
+                  <span>Get on Microsoft Store</span>
+                </a>
+
                 <button
                   type="button"
                   id="heroBuyBtn"
                   onClick={handleBuy}
                   disabled={isProcessingBuy}
-                  className="btn btn-primary btn-lg"
+                  className="btn btn-secondary btn-lg"
                   style={{ gap: '8px' }}
                 >
-                  <Sparkles size={18} />
-                  <span>Purchase Early License Key ($9)</span>
+                  <Sparkles size={18} color="var(--documents)" />
+                  <span>Early License Key ($9)</span>
                 </button>
               </div>
 
@@ -749,8 +761,8 @@ export const HomePage: React.FC = () => {
                 <span>2</span>
               </div>
               <div className="timeline-content">
-                <h4>2. Install via Microsoft Store (Coming Soon)</h4>
-                <p>Filsy will be available directly on the Microsoft Store for clean, secure one-click installation and automatic background updates.</p>
+                <h4>2. Install from Microsoft Store</h4>
+                <p>Filsy is now live on the Microsoft Store! Install it safely with one click, enjoy automatic background updates, and zero manual setup.</p>
               </div>
             </div>
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { APP_CONFIG } from '../config';
 import { initiateCheckout } from '../services/paymentService';
-import { Sparkles, KeyRound, HardDrive, Shield } from 'lucide-react';
+import { Sparkles, KeyRound, HardDrive, Shield, Download } from 'lucide-react';
 
 export const DownloadPage: React.FC = () => {
   const handleBuy = async () => {
@@ -13,12 +13,12 @@ export const DownloadPage: React.FC = () => {
     <div className="page-wrapper">
       <div className="wrap">
         <div className="section-head center">
-          <span className="section-label">MICROSOFT STORE RELEASE</span>
-          <h2>Coming Soon to Microsoft Store</h2>
-          <p>Filsy will be available directly on the Microsoft Store for Windows 10 &amp; Windows 11.</p>
+          <span className="section-label">OFFICIAL RELEASE</span>
+          <h2>Now Available on Microsoft Store</h2>
+          <p>Download and install Filsy directly from the official Microsoft Store for Windows 10 &amp; Windows 11.</p>
         </div>
 
-        {/* Store Coming Soon Box */}
+        {/* Store Live Download Box */}
         <div
           className="card"
           style={{
@@ -28,25 +28,36 @@ export const DownloadPage: React.FC = () => {
             textAlign: 'center',
           }}
         >
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 14px', borderRadius: 'var(--radius-full)', background: 'rgba(124, 92, 252, 0.1)', color: 'var(--documents)', fontSize: '0.85rem', fontWeight: 600, marginBottom: '20px' }}>
-            <HardDrive size={16} />
-            <span>Official Store Publication in Progress</span>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 14px', borderRadius: 'var(--radius-full)', background: 'rgba(16, 185, 129, 0.1)', color: 'var(--music)', fontSize: '0.85rem', fontWeight: 600, marginBottom: '20px' }}>
+            <Shield size={16} />
+            <span>Verified &amp; Published on Microsoft Store</span>
           </div>
 
-          <h3 style={{ fontSize: '1.45rem', marginBottom: '12px' }}>Get Your Early Supporter License Key</h3>
+          <h3 style={{ fontSize: '1.45rem', marginBottom: '12px' }}>Download Filsy for Windows</h3>
           <p style={{ fontSize: '0.94rem', color: 'var(--muted)', maxWidth: '520px', margin: '0 auto 28px', lineHeight: 1.6 }}>
-            The app will be distributed securely via the Microsoft Store. Purchase the early license key now for only $9 for the first 99 users (regular $19 upon launch) to lock in your lifetime license.
+            Install Filsy directly from the Microsoft Store with one click. First 99 users can lock in the early lifetime license key for only $9 (regular $19).
           </p>
 
           <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <button
-              type="button"
-              onClick={handleBuy}
+            <a
+              href="https://apps.microsoft.com/detail/9N2ZWJ08B7X0?hl=en-us&gl=IN"
+              target="_blank"
+              rel="noopener noreferrer"
               className="btn btn-primary btn-lg"
               style={{ gap: '8px' }}
             >
-              <Sparkles size={18} />
-              <span>Purchase Early License Key ($9)</span>
+              <Download size={18} />
+              <span>Get from Microsoft Store</span>
+            </a>
+
+            <button
+              type="button"
+              onClick={handleBuy}
+              className="btn btn-secondary btn-lg"
+              style={{ gap: '8px' }}
+            >
+              <Sparkles size={18} color="var(--documents)" />
+              <span>Purchase Early Key ($9)</span>
             </button>
 
             <Link

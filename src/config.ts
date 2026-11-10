@@ -52,7 +52,7 @@ export const APP_CONFIG: AppConfig = {
   releaseDate: "2026",
   downloadUrl:
     import.meta.env.VITE_DOWNLOAD_URL ||
-    "https://github.com/theYugrathee/filsy/releases/latest/download/Filsy.zip",
+    "https://apps.microsoft.com/detail/9N2ZWJ08B7X0?hl=en-us&gl=IN",
   githubUrl: "https://github.com/theYugrathee/filsy",
   dodoPaymentLink:
     import.meta.env.VITE_DODO_PAYMENT_LINK ||
@@ -75,9 +75,9 @@ export const APP_CONFIG: AppConfig = {
     earlyUsersNote: "First 99 users only: Purchase the early lifetime license key for $9 before price increases to $19.",
   },
   microsoftStore: {
-    status: "coming_soon",
-    storeUrl: "",
-    label: "Coming Soon to Microsoft Store",
+    status: "available",
+    storeUrl: "https://apps.microsoft.com/detail/9N2ZWJ08B7X0?hl=en-us&gl=IN",
+    label: "Download on Microsoft Store",
   },
   supportEmail: import.meta.env.VITE_SUPPORT_EMAIL || "support@filsy.app",
   windowsRequirements: {
@@ -85,7 +85,7 @@ export const APP_CONFIG: AppConfig = {
     architecture: "64-bit (x64)",
     ram: "4 GB RAM minimum",
     diskSpace: "~70 MB",
-    format: "Coming to Microsoft Store. Get your early lifetime license key today.",
+    format: "Available now on Microsoft Store. One-click install with automatic updates.",
   },
 };
 

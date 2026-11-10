@@ -31,8 +31,8 @@ export const HowItWorksPage: React.FC = () => {
           <div className="step-clean-item">
             <div className="step-badge-num">3</div>
             <div>
-              <h4 style={{ fontSize: '1rem', marginBottom: '4px' }}>Install from Microsoft Store (Coming Soon)</h4>
-              <p style={{ fontSize: '0.9rem' }}>Filsy will be available on the Microsoft Store for secure one-click installation and seamless background updates.</p>
+              <h4 style={{ fontSize: '1rem', marginBottom: '4px' }}>Install from Microsoft Store</h4>
+              <p style={{ fontSize: '0.9rem' }}>Filsy is now live on the Microsoft Store for secure one-click installation and seamless background updates.</p>
             </div>
           </div>
 

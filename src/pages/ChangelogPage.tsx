@@ -13,6 +13,20 @@ interface Release {
 
 const RELEASES: Release[] = [
   {
+    version: '1.0.1',
+    date: 'November 2026',
+    tagline: 'Official Microsoft Store Publication & Launch',
+    added: [
+      'Official Microsoft Store availability for Windows 10 & 11 with seamless one-click installation and automatic background updates.',
+      'Embedded video preview showcase directly on the web app for quick feature tours.',
+      'Instant zero-delay dark and light mode theme switching.',
+    ],
+    improved: [
+      'Refined compact interface typography and component layouts.',
+      'Direct Microsoft Store deep-link protocol integration.',
+    ],
+  },
+  {
     version: '1.0.0',
     date: 'October 2026',
     tagline: 'Initial Public Release for Windows 10 & 11',

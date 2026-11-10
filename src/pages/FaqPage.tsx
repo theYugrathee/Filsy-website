@@ -34,8 +34,8 @@ const FAQS: FaqItem[] = [
     a: 'Yes. The license only needs to verify once during activation, and Filsy continues working offline for up to 30 days in between.',
   },
   {
-    q: 'How will I install Filsy from the Microsoft Store?',
-    a: 'Filsy is currently preparing for its Microsoft Store release for Windows 10 & 11. You can purchase the early lifetime license key now for $9 (first 99 users special, regular $19 upon launch) to lock in your lifetime license before the official launch.',
+    q: 'How do I install Filsy from the Microsoft Store?',
+    a: 'Filsy is published and live on the Microsoft Store for Windows 10 & 11! You can install it directly with one click from our Microsoft Store page. Early supporters can purchase the lifetime license key for $9 (first 99 users special, regular $19) to activate full access.',
   },
   {
     q: 'What if I lose my license key?',
