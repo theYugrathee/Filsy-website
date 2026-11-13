@@ -6,6 +6,8 @@
 // (see docs/COMMERCIAL_SETUP.md — "hardening later").
 import { checkAppToken, jsonResponse, preflight, serviceHeaders, supabaseUrl } from "../_shared/licensing.ts";
 
+declare const Deno: any;
+
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") return preflight();
   if (req.method !== "POST") return jsonResponse({ ok: false, error: "METHOD_NOT_ALLOWED" }, 405);

@@ -1,11 +1,11 @@
 // Shared helpers for Filsy licensing Edge Functions.
-// Secrets come from function environment variables (set via `supabase secrets set`) —
-// never from the desktop app.
+// Secrets come from function environment variables injected by Supabase —
+// never hardcoded in source files.
+
+declare const Deno: any;
 
 export function serviceHeaders() {
-  const serviceKey =
-    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ||
-    "***REMOVED***";
+  const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
   return {
     apikey: serviceKey,
     Authorization: `Bearer ${serviceKey}`,
