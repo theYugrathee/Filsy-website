@@ -79,7 +79,7 @@ export const APP_CONFIG: AppConfig = {
     storeUrl: "https://apps.microsoft.com/detail/9N2ZWJ08B7X0?hl=en-us&gl=IN",
     label: "Download on Microsoft Store",
   },
-  supportEmail: import.meta.env.VITE_SUPPORT_EMAIL || "support@filsy.app",
+  supportEmail: import.meta.env.VITE_SUPPORT_EMAIL || "support@filsy.space",
   windowsRequirements: {
     os: "Windows 10 (1809+) / Windows 11",
     architecture: "64-bit (x64)",

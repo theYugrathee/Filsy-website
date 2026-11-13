@@ -163,7 +163,7 @@ This repository hosts the official web presence and license recovery portal for 
 
 ## 📬 Support & Community
 
-* **Developer Email**: [support@filsy.app](mailto:support@filsy.app)
+* **Developer Email**: [support@filsy.space](mailto:support@filsy.space)
 * **License Recovery**: [https://filsy.space/find-key](https://filsy.space/find-key)
 * **Website**: [https://filsy.space](https://filsy.space)
 
