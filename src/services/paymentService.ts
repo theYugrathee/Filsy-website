@@ -38,31 +38,7 @@ export async function retrieveLicenses(email: string): Promise<RetrieveLicenseRe
     return { ok: false, licenses: [], count: 0, error: 'Email address is required' };
   }
 
-  // 1. Try local dev middleware or serverless API endpoint
-  try {
-    const res = await fetch('/api/retrieve-license', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email: cleanEmail }),
-    });
-
-    if (res.ok) {
-      const data = await res.json();
-      if (data.ok && Array.isArray(data.licenses)) {
-        return {
-          ok: true,
-          licenses: data.licenses,
-          count: data.licenses.length,
-        };
-      }
-    }
-  } catch (err) {
-    console.warn('API /api/retrieve-license call failed or not mounted:', err);
-  }
-
-  // 2. Fallback: Supabase Edge Function if configured
+  // 1. Direct Supabase Edge Function call (fast, works on static hosting & custom domain)
   if (APP_CONFIG.supabaseFunctionsUrl) {
     try {
       const res = await fetch(`${APP_CONFIG.supabaseFunctionsUrl}/retrieve-license`, {
@@ -84,9 +60,36 @@ export async function retrieveLicenses(email: string): Promise<RetrieveLicenseRe
           };
         }
       }
-    } catch {
-      // Supabase unavailable
+    } catch (err) {
+      console.warn('Direct Supabase retrieve-license call failed:', err);
     }
+  }
+
+  // 2. Fallback: Local API or serverless proxy (/api/retrieve-license)
+  try {
+    const res = await fetch('/api/retrieve-license', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email: cleanEmail }),
+    });
+
+    if (res.ok) {
+      const contentType = res.headers.get('content-type') || '';
+      if (contentType.includes('application/json')) {
+        const data = await res.json();
+        if (data.ok && Array.isArray(data.licenses) && data.licenses.length > 0) {
+          return {
+            ok: true,
+            licenses: data.licenses,
+            count: data.licenses.length,
+          };
+        }
+      }
+    }
+  } catch (err) {
+    console.warn('API /api/retrieve-license call failed or not mounted:', err);
   }
 
   // 3. Fallback: Session storage (if user just made a purchase in current browser session)
