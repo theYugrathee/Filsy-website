@@ -55,8 +55,9 @@ export const APP_CONFIG: AppConfig = {
     "https://apps.microsoft.com/detail/9N2ZWJ08B7X0?hl=en-us&gl=IN",
   githubUrl: "https://github.com/theYugrathee/filsy",
   dodoPaymentLink:
-    import.meta.env.VITE_DODO_PAYMENT_LINK ||
-    "https://checkout.dodopayments.com/buy/pdt_0NrqmFou1hNcUvA974EKL?quantity=1&redirect_url=https://filsy.space/payment/success",
+    (import.meta.env.VITE_DODO_PAYMENT_LINK && !import.meta.env.VITE_DODO_PAYMENT_LINK.includes("test.checkout") && !import.meta.env.VITE_DODO_PAYMENT_LINK.includes("pdt_0Nqh7QW2IN8YpGoR08zQW"))
+      ? import.meta.env.VITE_DODO_PAYMENT_LINK
+      : "https://checkout.dodopayments.com/buy/pdt_0NrqmFou1hNcUvA974EKL?quantity=1&redirect_url=https://filsy.space/payment/success",
   supabaseFunctionsUrl:
     import.meta.env.VITE_SUPABASE_FUNCTIONS_URL ||
     "https://ofvyincijdrefgxbupwy.supabase.co/functions/v1",

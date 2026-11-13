@@ -18,7 +18,7 @@ export default async function handler(req: any, res: any) {
   const customerEmail = req.query?.email || req.query?.customer_email || req.body?.email || '';
 
   const apiKey = process.env.DODO_PAYMENTS_API_KEY;
-  const mode = process.env.DODO_MODE || 'test';
+  const mode = process.env.DODO_MODE || 'live';
   const dodoApiBase = mode === 'test'
     ? 'https://test.dodopayments.com'
     : 'https://api.dodopayments.com';

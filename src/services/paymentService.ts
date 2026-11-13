@@ -135,72 +135,37 @@ export async function retrieveLicenses(email: string): Promise<RetrieveLicenseRe
   };
 }
 
-/**
- * Initiates Dodo Payments checkout
- */
-export async function initiateCheckout(currency: 'USD' | 'INR' = 'USD'): Promise<CheckoutResponse> {
-  // Prioritize direct Dodo payment link
-  if (APP_CONFIG.dodoPaymentLink && !APP_CONFIG.dodoPaymentLink.includes('YOUR-PRODUCT-ID')) {
-    let finalCheckoutUrl = APP_CONFIG.dodoPaymentLink;
-    try {
-      const urlObj = new URL(finalCheckoutUrl);
-      // Ensure redirect_url points directly to /payment/success on current host (or filsy.space)
-      const successUrl = `${window.location.origin}/payment/success`;
-      urlObj.searchParams.set('redirect_url', successUrl);
-      finalCheckoutUrl = urlObj.toString();
-    } catch {
-      // Keep original
-    }
+const LIVE_DODO_CHECKOUT = 'https://checkout.dodopayments.com/buy/pdt_0NrqmFou1hNcUvA974EKL?quantity=1';
 
-    window.location.href = finalCheckoutUrl;
-    return {
-      checkoutUrl: finalCheckoutUrl,
-      mode: 'live',
-    };
+/**
+ * Initiates Dodo Payments checkout directly to the live production checkout
+ */
+export async function initiateCheckout(_currency: 'USD' | 'INR' = 'USD'): Promise<CheckoutResponse> {
+  let finalCheckoutUrl = APP_CONFIG.dodoPaymentLink || LIVE_DODO_CHECKOUT;
+
+  // Enforce live production checkout (strip any legacy test links or old product IDs)
+  if (
+    finalCheckoutUrl.includes('test.checkout.dodopayments.com') ||
+    finalCheckoutUrl.includes('pdt_0Nqh7QW2IN8YpGoR08zQW')
+  ) {
+    finalCheckoutUrl = LIVE_DODO_CHECKOUT;
   }
 
   try {
-    const response = await fetch('/api/create-checkout', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        productName: APP_CONFIG.productName,
-        currency,
-        amount: currency === 'USD' ? APP_CONFIG.pricing.usdPrice : APP_CONFIG.pricing.inrPrice,
-        returnUrl: `${window.location.origin}/payment/success`,
-        cancelUrl: `${window.location.origin}/payment/cancelled`,
-      }),
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      if (data.checkoutUrl) {
-        window.location.href = data.checkoutUrl;
-        return data;
-      }
-    }
-  } catch (err) {
-    console.warn('API endpoint unavailable or running in standalone frontend mode. Providing sandbox flow.', err);
+    const urlObj = new URL(finalCheckoutUrl);
+    // Ensure redirect_url points to /payment/success on current domain
+    const successUrl = `${window.location.origin}/payment/success`;
+    urlObj.searchParams.set('redirect_url', successUrl);
+    finalCheckoutUrl = urlObj.toString();
+  } catch {
+    finalCheckoutUrl = `${LIVE_DODO_CHECKOUT}&redirect_url=${window.location.origin}/payment/success`;
   }
 
-  // Graceful fallback / Sandbox development simulation
-  // Generates a mock session and redirects to success state for verification test
-  const mockSessionId = `dodo_sess_${Math.random().toString(36).substring(2, 12)}`;
-  const mockLicenseKey = `FILSY-${Math.random().toString(36).substring(2, 6).toUpperCase()}-${Math.random().toString(36).substring(2, 6).toUpperCase()}-${Math.random().toString(36).substring(2, 6).toUpperCase()}`;
-  
-  // Save in local storage for the success verification
-  sessionStorage.setItem(`session_${mockSessionId}`, JSON.stringify({
-    status: 'succeeded',
-    licenseKey: mockLicenseKey,
-    customerEmail: 'customer@example.com',
-    createdAt: new Date().toISOString(),
-    activeDevice: null
-  }));
-
+  // Redirect customer directly to live Dodo Payments checkout
+  window.location.href = finalCheckoutUrl;
   return {
-    checkoutUrl: `/payment/success?session_id=${mockSessionId}&demo=true`,
-    sessionId: mockSessionId,
-    mode: 'sandbox_simulated'
+    checkoutUrl: finalCheckoutUrl,
+    mode: 'live',
   };
 }
 

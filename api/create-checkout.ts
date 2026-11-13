@@ -9,14 +9,13 @@ export default async function handler(req: any, res: any) {
   }
 
   const apiKey = process.env.DODO_PAYMENTS_API_KEY;
-  const productId = process.env.DODO_PRODUCT_ID;
-  const mode = process.env.DODO_MODE || 'test';
+  const productId = process.env.DODO_PRODUCT_ID || 'pdt_0NrqmFou1hNcUvA974EKL';
+  const mode = process.env.DODO_MODE || 'live';
 
-  if (!apiKey || !productId) {
-    // If running in development without credentials, provide sandbox instruction
+  if (!apiKey) {
     return res.status(200).json({
-      mode: 'sandbox_simulated',
-      message: 'Dodo credentials not configured in environment. Using demo checkout simulation.',
+      checkoutUrl: 'https://checkout.dodopayments.com/buy/pdt_0NrqmFou1hNcUvA974EKL?quantity=1',
+      mode: 'live',
     });
   }
 
