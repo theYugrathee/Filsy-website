@@ -14,7 +14,6 @@ export function getCurrentTheme(): ThemeMode {
     try {
       const stored = localStorage.getItem('filsy_theme') || localStorage.getItem('filsy_theme_mode');
       if (stored === 'dark' || stored === 'light') return stored as ThemeMode;
-      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark';
     } catch {}
   }
   return 'light';
