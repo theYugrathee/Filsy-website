@@ -1,10 +1,12 @@
 import React from 'react';
 import { APP_CONFIG } from '../config';
+import { SEO } from '../components/SEO';
 import { ShieldCheck, HardDrive, Lock, EyeOff, CheckCircle2 } from 'lucide-react';
 
 export const PrivacyPage: React.FC = () => {
   return (
     <div className="page-wrapper">
+      <SEO routeKey="privacy" />
       <div className="wrap-reading">
         <div style={{ marginBottom: '40px' }}>
           <span className="section-tag" style={{ marginBottom: '12px' }}>Zero-Knowledge Philosophy</span>

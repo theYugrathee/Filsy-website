@@ -1,9 +1,11 @@
 import React from 'react';
 import { APP_CONFIG } from '../config';
+import { SEO } from '../components/SEO';
 
 export const TermsPage: React.FC = () => {
   return (
     <div className="page-wrapper">
+      <SEO routeKey="terms" />
       <div className="wrap-reading">
         <div style={{ marginBottom: '40px' }}>
           <span className="section-tag" style={{ marginBottom: '12px' }}>Legal Agreement</span>

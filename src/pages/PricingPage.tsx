@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { APP_CONFIG } from '../config';
 import { initiateCheckout } from '../services/paymentService';
+import { SEO } from '../components/SEO';
 import { Check, Sparkles, KeyRound, Bell, ArrowRight } from 'lucide-react';
 
 export const PricingPage: React.FC = () => {
@@ -18,6 +19,7 @@ export const PricingPage: React.FC = () => {
 
   return (
     <div className="page-wrapper">
+      <SEO routeKey="pricing" />
       <div className="wrap">
         {/* =========================================================================
             PRE-LAUNCH MODE PRICING (ACTIVE)
@@ -25,7 +27,9 @@ export const PricingPage: React.FC = () => {
             ========================================================================= */}
         <div className="section-head center">
           <span className="section-label">FIRST 99 USERS SPECIAL · LIMITED SPOTS</span>
-          <h2>First 99 users: Lock in $9 forever.</h2>
+          <h1 style={{ fontSize: 'clamp(2rem, 4vw, 2.75rem)', fontWeight: 800, lineHeight: 1.15, letterSpacing: '-0.02em', margin: '12px 0' }}>
+            First 99 users: Lock in $9 forever.
+          </h1>
           <p>
             Special early pricing of $9 reserved exclusively for the first 99 users celebrating our Microsoft Store release.
             Regular price is $19.

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { APP_CONFIG } from '../config';
 import { verifyPayment, type PaymentVerification } from '../services/paymentService';
+import { SEO } from '../components/SEO';
 import { Copy, Check, RefreshCw, AlertCircle, Sparkles, ShieldCheck, Mail, ArrowRight } from 'lucide-react';
 
 export const PaymentSuccessPage: React.FC = () => {
@@ -161,6 +162,7 @@ export const PaymentSuccessPage: React.FC = () => {
   // 4. Success State — REAL verified user key
   return (
     <div className="page-wrapper">
+      <SEO routeKey="paymentSuccess" />
       <div className="wrap" style={{ maxWidth: '720px' }}>
         {/* Celebration Header */}
         <div style={{ textAlign: 'center', marginBottom: '32px' }}>

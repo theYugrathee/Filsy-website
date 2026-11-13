@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { APP_CONFIG } from '../config';
+import { SEO } from '../components/SEO';
 import { KeyRound, Laptop, Mail, ShieldCheck, ArrowRight, Info } from 'lucide-react';
 
 export const ManageLicensePage: React.FC = () => {
@@ -41,8 +42,9 @@ export const ManageLicensePage: React.FC = () => {
 
   return (
     <div className="page-wrapper">
+      <SEO routeKey="manageLicense" />
       <div className="wrap" style={{ maxWidth: '780px' }}>
-        
+
         {/* Header */}
         <div className="section-head center" style={{ marginBottom: '32px' }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 16px', borderRadius: 'var(--radius-full)', background: 'rgba(124, 92, 252, 0.1)', color: 'var(--documents)', fontSize: '0.85rem', fontWeight: 700, marginBottom: '16px' }}>

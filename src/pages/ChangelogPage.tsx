@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { APP_CONFIG } from '../config';
+import { SEO } from '../components/SEO';
 
 interface Release {
   version: string;
@@ -55,10 +56,13 @@ const RELEASES: Release[] = [
 export const ChangelogPage: React.FC = () => {
   return (
     <div className="page-wrapper">
+      <SEO routeKey="changelog" />
       <div className="wrap-narrow">
         <div className="section-head center">
-          <h2>Changelog</h2>
-          <p>All notable changes, fixes, and improvements to Filsy for Windows.</p>
+          <h1 style={{ fontSize: 'clamp(2rem, 4vw, 2.75rem)', fontWeight: 800, lineHeight: 1.15, letterSpacing: '-0.02em', marginBottom: '12px' }}>
+            Release Changelog
+          </h1>
+          <p>Every update, performance optimization, and new feature released for Filsy.</p>
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>

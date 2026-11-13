@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { APP_CONFIG } from '../config';
+import { SEO } from '../components/SEO';
 import { Mail, Send, Check } from 'lucide-react';
 
 export const SupportPage: React.FC = () => {
@@ -18,10 +19,13 @@ export const SupportPage: React.FC = () => {
 
   return (
     <div className="page-wrapper">
+      <SEO routeKey="support" />
       <div className="wrap-narrow">
         <div className="section-head center">
-          <h2>Need help with Filsy?</h2>
-          <p>We're here to answer questions about installation, licensing, or bug reports.</p>
+          <h1 style={{ fontSize: 'clamp(2rem, 4vw, 2.75rem)', fontWeight: 800, lineHeight: 1.15, letterSpacing: '-0.02em', marginBottom: '12px' }}>
+            Need help with Filsy?
+          </h1>
+          <p>We&apos;re here to answer questions about installation, licensing, or bug reports.</p>
         </div>
 
         {/* Direct Email Card */}

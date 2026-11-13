@@ -1,13 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { APP_CONFIG } from '../config';
+import { SEO } from '../components/SEO';
 
 export const LicenseHelpPage: React.FC = () => {
   return (
     <div className="page-wrapper">
+      <SEO routeKey="license" />
       <div className="wrap-narrow">
         <div className="section-head center">
-          <h2>How to Activate &amp; Manage Your License</h2>
+          <h1 style={{ fontSize: 'clamp(2rem, 4vw, 2.75rem)', fontWeight: 800, lineHeight: 1.15, letterSpacing: '-0.02em', marginBottom: '12px' }}>
+            How to Activate &amp; Manage Your License
+          </h1>
           <p>Everything you need to know about activating, moving, and restoring your Filsy license.</p>
         </div>
 

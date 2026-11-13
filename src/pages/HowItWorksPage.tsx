@@ -1,13 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { APP_CONFIG } from '../config';
+import { SEO } from '../components/SEO';
 
 export const HowItWorksPage: React.FC = () => {
   return (
     <div className="page-wrapper">
+      <SEO routeKey="howItWorks" />
       <div className="wrap-narrow">
         <div className="section-head center">
-          <h2>From purchase to powered-up in five minutes</h2>
+          <h1 style={{ fontSize: 'clamp(2rem, 4vw, 2.75rem)', fontWeight: 800, lineHeight: 1.15, letterSpacing: '-0.02em', marginBottom: '12px' }}>
+            From purchase to powered-up in five minutes
+          </h1>
           <p>Zero cloud uploads. Zero background daemons. Just fast, deterministic local indexing.</p>
         </div>
 
@@ -15,7 +19,7 @@ export const HowItWorksPage: React.FC = () => {
           <div className="step-clean-item">
             <div className="step-badge-num">1</div>
             <div>
-              <h4 style={{ fontSize: '1rem', marginBottom: '4px' }}>Buy once — own it forever ({APP_CONFIG.pricing.displayPrice})</h4>
+              <h2 style={{ fontSize: '1rem', marginBottom: '4px', fontWeight: 600 }}>Buy once — own it forever ({APP_CONFIG.pricing.displayPrice})</h2>
               <p style={{ fontSize: '0.9rem' }}>Checkout is handled securely by Dodo Payments. No subscription, ever.</p>
             </div>
           </div>
@@ -23,7 +27,7 @@ export const HowItWorksPage: React.FC = () => {
           <div className="step-clean-item">
             <div className="step-badge-num">2</div>
             <div>
-              <h4 style={{ fontSize: '1rem', marginBottom: '4px' }}>Get your license key</h4>
+              <h2 style={{ fontSize: '1rem', marginBottom: '4px', fontWeight: 600 }}>Get your license key</h2>
               <p style={{ fontSize: '0.9rem' }}>Your key (<span className="mono">FILSY-XXXX-XXXX-XXXX</span>) is delivered with your receipt, and you can always retrieve it with your email.</p>
             </div>
           </div>
@@ -31,7 +35,7 @@ export const HowItWorksPage: React.FC = () => {
           <div className="step-clean-item">
             <div className="step-badge-num">3</div>
             <div>
-              <h4 style={{ fontSize: '1rem', marginBottom: '4px' }}>Install from Microsoft Store</h4>
+              <h2 style={{ fontSize: '1rem', marginBottom: '4px', fontWeight: 600 }}>Install from Microsoft Store</h2>
               <p style={{ fontSize: '0.9rem' }}>Filsy is now live on the Microsoft Store for secure one-click installation and seamless background updates.</p>
             </div>
           </div>
@@ -39,7 +43,7 @@ export const HowItWorksPage: React.FC = () => {
           <div className="step-clean-item">
             <div className="step-badge-num">4</div>
             <div>
-              <h4 style={{ fontSize: '1rem', marginBottom: '4px' }}>Activate on your PC</h4>
+              <h2 style={{ fontSize: '1rem', marginBottom: '4px', fontWeight: 600 }}>Activate on your PC</h2>
               <p style={{ fontSize: '0.9rem' }}>Paste your key once. One license covers 1 active PC, and you can move it to a new PC anytime in 1 click.</p>
             </div>
           </div>
@@ -47,7 +51,7 @@ export const HowItWorksPage: React.FC = () => {
           <div className="step-clean-item">
             <div className="step-badge-num">5</div>
             <div>
-              <h4 style={{ fontSize: '1rem', marginBottom: '4px' }}>Enjoy instant 0.02s queries</h4>
+              <h2 style={{ fontSize: '1rem', marginBottom: '4px', fontWeight: 600 }}>Enjoy instant 0.02s queries</h2>
               <p style={{ fontSize: '0.9rem' }}>Filsy indexes your files and quietly keeps your index current. All future updates are free.</p>
             </div>
           </div>

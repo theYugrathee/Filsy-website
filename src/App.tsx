@@ -24,6 +24,13 @@ import { PaymentSuccessPage } from './pages/PaymentSuccessPage';
 import { PaymentCancelledPage } from './pages/PaymentCancelledPage';
 import { PaymentFailedPage } from './pages/PaymentFailedPage';
 import { FreeLicensePage } from './pages/FreeLicensePage';
+import { NotFoundPage } from './pages/NotFoundPage';
+
+// Feature Sub-Pages
+import { FileSearchFeaturePage } from './pages/features/FileSearchFeaturePage';
+import { FilePreviewFeaturePage } from './pages/features/FilePreviewFeaturePage';
+import { OcrSearchFeaturePage } from './pages/features/OcrSearchFeaturePage';
+import { FileOrganizationFeaturePage } from './pages/features/FileOrganizationFeaturePage';
 
 /**
  * Automatically catches any Dodo Payments redirect (to / or any other route)
@@ -42,7 +49,12 @@ const PaymentRedirectWatcher: React.FC = () => {
 
     const isCancelled = statusParam === 'cancelled' || statusParam === 'canceled';
     const isFailed = statusParam === 'failed' || statusParam === 'declined';
-    const isSuccess = statusParam === 'succeeded' || statusParam === 'paid' || statusParam === 'completed' || hasLicenseKey || (hasPaymentId && !isCancelled && !isFailed);
+    const isSuccess =
+      statusParam === 'succeeded' ||
+      statusParam === 'paid' ||
+      statusParam === 'completed' ||
+      hasLicenseKey ||
+      (hasPaymentId && !isCancelled && !isFailed);
 
     if (isCancelled && location.pathname !== '/payment/cancelled') {
       navigate(`/payment/cancelled${location.search}`, { replace: true });
@@ -67,6 +79,10 @@ export const App: React.FC = () => {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/features" element={<FeaturesPage />} />
+            <Route path="/features/file-search" element={<FileSearchFeaturePage />} />
+            <Route path="/features/file-preview" element={<FilePreviewFeaturePage />} />
+            <Route path="/features/ocr-search" element={<OcrSearchFeaturePage />} />
+            <Route path="/features/file-organization" element={<FileOrganizationFeaturePage />} />
             <Route path="/how-it-works" element={<HowItWorksPage />} />
             <Route path="/explorer-vs-filsy" element={<ExplorerVsFilsyPage />} />
             <Route path="/pricing" element={<PricingPage />} />
@@ -90,7 +106,8 @@ export const App: React.FC = () => {
             <Route path="/payment/success" element={<PaymentSuccessPage />} />
             <Route path="/payment/cancelled" element={<PaymentCancelledPage />} />
             <Route path="/payment/failed" element={<PaymentFailedPage />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
+            <Route path="/404" element={<NotFoundPage />} />
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </main>
         <Footer />

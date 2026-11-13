@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { APP_CONFIG } from '../config';
+import { SEO } from '../components/SEO';
 import { ChevronDown, ChevronUp, Search } from 'lucide-react';
 
 interface FaqItem {
@@ -55,9 +56,12 @@ export const FaqPage: React.FC = () => {
 
   return (
     <div className="page-wrapper">
+      <SEO routeKey="faq" />
       <div className="wrap-narrow">
         <div className="section-head center">
-          <h2>Frequently Asked Questions</h2>
+          <h1 style={{ fontSize: 'clamp(2rem, 4vw, 2.75rem)', fontWeight: 800, lineHeight: 1.15, letterSpacing: '-0.02em', marginBottom: '12px' }}>
+            Frequently Asked Questions
+          </h1>
           <p>Everything you need to know about Filsy, security, and lifetime licensing.</p>
         </div>
 

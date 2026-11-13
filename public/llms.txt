@@ -1,0 +1,59 @@
+# Filsy — Desktop File Management & Search for Windows
+
+> Filsy is a fast, private, local-first file manager and desktop search tool for Windows 10 (1809+) and Windows 11 (64-bit x64). It indexes local files across internal and external NTFS/exFAT drives with ~0.02s query latency, previews documents and media instantly using the Spacebar, extracts searchable text from screenshots with on-device OCR, and identifies duplicate files using SHA-256 cryptographic hashing.
+
+## Key Capabilities & Technical Features
+
+- **Sub-Second Local Search Engine**: Inverted index built directly on local disk. Queries return in ~0.02 seconds even across drives with 500,000+ files. Supports search by filename, directory, or plain natural queries.
+- **Deep Content & Full-Text Search**: Extracts and queries text inside Microsoft Word (.docx), Excel spreadsheets (.xlsx), PowerPoint (.pptx), PDFs, source code (TypeScript, Python, C++, etc.), Markdown, and plain text.
+- **Instant Spacebar Quick Look**: macOS Quick Look-style preview on Windows. Press Spacebar to inspect documents, 4K videos, high-fidelity audio, photos, and formatted code syntax highlighting without launching heavy external desktop applications.
+- **On-Device Optical Character Recognition (OCR)**: Extracts and indexes text inside screenshots, photos, whiteboard captures, and scanned receipts using native on-device Windows OCR APIs. Zero cloud uploads and zero external computer vision APIs.
+- **Exact Duplicate File Hunter**: Compares binary files using SHA-256 cryptographic hashes (not superficial filename matching). Allows safe comparison and sends duplicate files to the standard Windows Recycle Bin.
+- **Storage Visualizer & Safe Cleanup**: Color-coded category storage bars and treemap visualizer identifying the 100 largest space hogs. Safe cleanup center purges %TEMP% and crash dumps with an automatic 24-hour safety buffer on recently modified files.
+- **Windows Explorer Companion**: Designed to run alongside Windows File Explorer, not replace core shell functions. Provides 1-click "Open in Explorer", full path copying, and drag-and-drop into external applications.
+- **100% Offline & Zero Telemetry**: All indexing, OCR, and hashing run exclusively on the local PC. Filsy requires zero user account creation and sends zero telemetry or file metadata to cloud servers.
+
+## Operating System & System Requirements
+
+- **Operating System**: Windows 10 (version 1809 or later), Windows 11 (64-bit x64 architecture).
+- **Distribution Platform**: Official Microsoft Store (Product ID: 9N2ZWJ08B7X0) with automatic background updates.
+- **Installation Footprint**: Approximately 70MB installer download.
+- **Offline Capability**: Fully functional offline after initial one-time license check.
+
+## Pricing & Licensing Model
+
+- **Model**: One-time purchase, lifetime perpetual license. Zero recurring subscriptions.
+- **Current Pre-Launch Price**: $9.00 USD (Early adopter special for the first 99 users celebrating Microsoft Store launch).
+- **Regular Retail Price**: $19.00 USD.
+- **Device Policy**: 1 license covers 1 active PC at a time. Users can move their license to a new PC anytime via in-app Settings or self-service license recovery.
+- **Payment Processing**: Processed securely by Dodo Payments with instant digital license key delivery.
+
+## Key Public Canonical URLs
+
+- Homepage: https://filsy.space/
+- Features Overview: https://filsy.space/features
+- File Search Deep-Dive: https://filsy.space/features/file-search
+- Spacebar Quick Look Preview: https://filsy.space/features/file-preview
+- On-Device OCR Image Search: https://filsy.space/features/ocr-search
+- Duplicate Cleaner & Storage Visualizer: https://filsy.space/features/file-organization
+- Explorer vs Filsy Comparison: https://filsy.space/explorer-vs-filsy
+- How It Works: https://filsy.space/how-it-works
+- Pricing: https://filsy.space/pricing
+- Download & Microsoft Store Link: https://filsy.space/download
+- Frequently Asked Questions: https://filsy.space/faq
+- Release Changelog: https://filsy.space/changelog
+- About Filsy: https://filsy.space/about
+- Community Creator Reward (Free License): https://filsy.space/free-license
+- License Activation & Transfer Guide: https://filsy.space/license
+- Support Contact: https://filsy.space/support (support@filsy.space)
+- Privacy Policy: https://filsy.space/privacy
+- Terms of Service: https://filsy.space/terms
+
+## Contact & Entity Information
+
+- **Brand Name**: Filsy
+- **Canonical Website**: https://filsy.space
+- **Customer & Technical Support**: support@filsy.space
+- **Official Microsoft Store Listing**: https://apps.microsoft.com/detail/9N2ZWJ08B7X0?hl=en-us&gl=IN
+- **Source Repository**: https://github.com/theYugrathee/filsy
+

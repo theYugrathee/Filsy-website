@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { APP_CONFIG } from '../config';
+import { SEO } from '../components/SEO';
 import {
   Eye,
   Copy,
@@ -141,12 +142,15 @@ const ALL_FEATURES: DetailedFeature[] = [
 export const FeaturesPage: React.FC = () => {
   return (
     <div className="page-wrapper">
+      <SEO routeKey="features" />
       <div className="wrap">
         <div className="section-head center" style={{ marginBottom: '40px' }}>
           <div className="version-chip" style={{ margin: '0 auto 12px' }}>
             <span>⚡ Complete Features</span>
           </div>
-          <h2>Everything you need to manage your files</h2>
+          <h1 style={{ fontSize: 'clamp(2rem, 4vw, 2.75rem)', fontWeight: 800, lineHeight: 1.15, letterSpacing: '-0.02em', marginBottom: '12px' }}>
+            Everything you need to manage your files
+          </h1>
           <p>Simple, lightning fast, and 100% private. All features run directly on your PC.</p>
         </div>
 

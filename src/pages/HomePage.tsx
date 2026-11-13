@@ -3,6 +3,7 @@ import { Link, Navigate, useSearchParams } from 'react-router-dom';
 import { APP_CONFIG } from '../config';
 import { initiateCheckout, retrieveLicenses } from '../services/paymentService';
 import { ExplorerComparison } from '../components/ExplorerComparison';
+import { SEO } from '../components/SEO';
 import {
   Search,
   Download,
@@ -303,6 +304,7 @@ export const HomePage: React.FC = () => {
 
   return (
     <div style={{ width: '100%' }}>
+      <SEO routeKey="home" />
 
       {/* ════════════════════════════════════════════════════════════════════
           SECTION 1 — HERO (LEFT-ALIGNED SPLIT LAYOUT)

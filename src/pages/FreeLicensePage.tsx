@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { APP_CONFIG } from '../config';
+import { SEO } from '../components/SEO';
 import {
   Gift,
   Flame,
@@ -48,6 +49,7 @@ export const FreeLicensePage: React.FC = () => {
 
   return (
     <div className="page-wrapper">
+      <SEO routeKey="freeLicense" />
       <div className="wrap" style={{ maxWidth: '860px' }}>
 
         {/* Hero Section */}

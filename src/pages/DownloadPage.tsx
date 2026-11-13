@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { APP_CONFIG } from '../config';
 import { initiateCheckout } from '../services/paymentService';
+import { SEO } from '../components/SEO';
 import { Sparkles, KeyRound, HardDrive, Shield, Download } from 'lucide-react';
 
 export const DownloadPage: React.FC = () => {
@@ -11,10 +12,13 @@ export const DownloadPage: React.FC = () => {
 
   return (
     <div className="page-wrapper">
+      <SEO routeKey="download" />
       <div className="wrap">
         <div className="section-head center">
           <span className="section-label">OFFICIAL RELEASE</span>
-          <h2>Now Available on Microsoft Store</h2>
+          <h1 style={{ fontSize: 'clamp(2rem, 4vw, 2.75rem)', fontWeight: 800, lineHeight: 1.15, letterSpacing: '-0.02em', margin: '12px 0' }}>
+            Now Available on Microsoft Store
+          </h1>
           <p>Download and install Filsy directly from the official Microsoft Store for Windows 10 &amp; Windows 11.</p>
         </div>
 

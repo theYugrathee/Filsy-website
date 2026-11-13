@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { APP_CONFIG } from '../config';
 import { initiateCheckout } from '../services/paymentService';
+import { SEO } from '../components/SEO';
 import { AlertCircle, RefreshCw, ArrowLeft, Mail, HelpCircle, ShieldCheck } from 'lucide-react';
 
 export const PaymentFailedPage: React.FC = () => {
@@ -15,6 +16,7 @@ export const PaymentFailedPage: React.FC = () => {
 
   return (
     <div className="page-wrapper" style={{ textAlign: 'center' }}>
+      <SEO routeKey="paymentFailed" />
       <div className="wrap" style={{ maxWidth: '600px' }}>
         <div
           className="card"
