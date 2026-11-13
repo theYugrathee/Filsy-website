@@ -56,7 +56,7 @@ export const APP_CONFIG: AppConfig = {
   githubUrl: "https://github.com/theYugrathee/filsy",
   dodoPaymentLink:
     import.meta.env.VITE_DODO_PAYMENT_LINK ||
-    "https://test.checkout.dodopayments.com/buy/pdt_0Nqh7QW2IN8YpGoR08zQW?quantity=1&redirect_url=https://filsy.space/payment/success",
+    "https://checkout.dodopayments.com/buy/pdt_0NrqmFou1hNcUvA974EKL?quantity=1&redirect_url=https://filsy.space/payment/success",
   supabaseFunctionsUrl:
     import.meta.env.VITE_SUPABASE_FUNCTIONS_URL ||
     "https://ofvyincijdrefgxbupwy.supabase.co/functions/v1",
