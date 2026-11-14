@@ -116,6 +116,8 @@ export const SEO: React.FC<SEOProps> = ({ routeKey, page: customPage }) => {
       'twitter:card',
       'summary_large_image'
     );
+    updateMetaTag('meta[name="twitter:creator"]', 'name', 'twitter:creator', '@Ratheeyug');
+    updateMetaTag('meta[name="twitter:site"]', 'name', 'twitter:site', '@Ratheeyug');
     updateMetaTag('meta[name="twitter:title"]', 'name', 'twitter:title', finalData.title);
     updateMetaTag(
       'meta[name="twitter:description"]',
