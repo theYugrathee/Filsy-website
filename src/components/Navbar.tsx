@@ -43,10 +43,10 @@ export const Navbar: React.FC = () => {
 
           {/* Desktop Nav Links */}
           <div className="nav-links">
-            <a href={isHome ? "#features" : "/#features"}>Features</a>
-            <a href={isHome ? "#compare" : "/#compare"}>vs Explorer</a>
-            <a href={isHome ? "#how" : "/#how"}>How it works</a>
+            <Link to="/features">Features</Link>
             <Link to="/pricing">Pricing ({APP_CONFIG.pricing.displayPrice})</Link>
+            <Link to="/download">Download</Link>
+            <Link to="/how-it-works">How It Works</Link>
             <Link to="/faq">FAQ</Link>
 
             {/* Sun / Moon Theme Toggle */}
@@ -111,26 +111,26 @@ export const Navbar: React.FC = () => {
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
         <div className="mobile-drawer">
-          <a href={isHome ? "#features" : "/#features"} onClick={closeMobile}>
+          <Link to="/features" onClick={closeMobile}>
             Features
-          </a>
-          <a href={isHome ? "#compare" : "/#compare"} onClick={closeMobile}>
-            vs Explorer
-          </a>
-          <a href={isHome ? "#how" : "/#how"} onClick={closeMobile}>
-            How it works
-          </a>
+          </Link>
           <Link to="/pricing" onClick={closeMobile}>
             Pricing ({APP_CONFIG.pricing.displayPrice})
           </Link>
-          <Link to="/license" onClick={closeMobile}>
-            License Guide
+          <Link to="/download" onClick={closeMobile}>
+            Download
           </Link>
-          <Link to="/changelog" onClick={closeMobile}>
-            Changelog
+          <Link to="/how-it-works" onClick={closeMobile}>
+            How it works
           </Link>
           <Link to="/faq" onClick={closeMobile}>
             FAQ
+          </Link>
+          <Link to="/about" onClick={closeMobile}>
+            About
+          </Link>
+          <Link to="/changelog" onClick={closeMobile}>
+            Changelog
           </Link>
 
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 0', borderBottom: '1px solid var(--line)' }}>

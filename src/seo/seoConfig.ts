@@ -106,6 +106,57 @@ export const SCHEMA_SOFTWARE_APP = {
   ],
 };
 
+// Sitelinks Navigation Schema for Google Search
+export const SCHEMA_SITE_NAV = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Main Navigation',
+  itemListElement: [
+    {
+      '@type': 'SiteNavigationElement',
+      position: 1,
+      name: 'Features',
+      description: 'Sub-second file search, Spacebar Quick Look previews, on-device OCR, and duplicate cleaner.',
+      url: `${SITE_URL}/features`,
+    },
+    {
+      '@type': 'SiteNavigationElement',
+      position: 2,
+      name: 'Pricing',
+      description: 'Lifetime perpetual license on 1 active PC with all future updates included forever.',
+      url: `${SITE_URL}/pricing`,
+    },
+    {
+      '@type': 'SiteNavigationElement',
+      position: 3,
+      name: 'Download',
+      description: 'Install Filsy securely for Windows 10 and 11 directly from the Microsoft Store.',
+      url: `${SITE_URL}/download`,
+    },
+    {
+      '@type': 'SiteNavigationElement',
+      position: 4,
+      name: 'How It Works',
+      description: 'How Filsy indexes drives at native speeds with zero cloud uploads and zero telemetry.',
+      url: `${SITE_URL}/how-it-works`,
+    },
+    {
+      '@type': 'SiteNavigationElement',
+      position: 5,
+      name: 'FAQ',
+      description: 'Frequently asked questions about Filsy, security, offline usage, and licensing.',
+      url: `${SITE_URL}/faq`,
+    },
+    {
+      '@type': 'SiteNavigationElement',
+      position: 6,
+      name: 'About',
+      description: 'Why we built an independent, private file manager for Windows.',
+      url: `${SITE_URL}/about`,
+    },
+  ],
+};
+
 export function buildBreadcrumbSchema(items: BreadcrumbItem[]) {
   return {
     '@context': 'https://schema.org',
@@ -137,9 +188,9 @@ export function buildFAQSchema(faqs: Array<{ q: string; a: string }>) {
 // Master Page-Level SEO Dictionary
 export const SEO_CONFIG: Record<string, SEOPageData> = {
   home: {
-    title: 'Filsy — Fast Windows File Search, Spacebar Preview & OCR',
+    title: 'Filsy — Fast, Private File Manager for Windows',
     description:
-      'Find any file in seconds. Filsy is a private, fast file manager for Windows 10 & 11 with natural language search, instant Spacebar file preview, OCR screenshot search, and duplicate cleaning.',
+      'Find any file on Windows in seconds. Filsy is a modern, private desktop file manager with instant search, Spacebar Quick Look previews, on-device OCR, and duplicate cleaning.',
     canonical: `${SITE_URL}/`,
     robots: 'index, follow',
     ogType: 'website',
@@ -155,11 +206,11 @@ export const SEO_CONFIG: Record<string, SEOPageData> = {
       'search files by content',
       'duplicate file finder windows',
     ],
-    schema: [SCHEMA_ORGANIZATION, SCHEMA_WEBSITE, SCHEMA_SOFTWARE_APP],
+    schema: [SCHEMA_ORGANIZATION, SCHEMA_WEBSITE, SCHEMA_SOFTWARE_APP, SCHEMA_SITE_NAV],
   },
 
   features: {
-    title: 'Features — Fast File Search, Spacebar Preview & OCR | Filsy',
+    title: 'Features — Filsy',
     description:
       'Explore all Filsy features: 0.02s local file indexing, instant Spacebar Quick Look preview, on-device OCR for screenshots, exact duplicate detection, and disk cleanup for Windows.',
     canonical: `${SITE_URL}/features`,
@@ -180,7 +231,7 @@ export const SEO_CONFIG: Record<string, SEOPageData> = {
   },
 
   featuresFileSearch: {
-    title: 'Fast Windows File Search & Instant Local Indexing | Filsy',
+    title: 'Windows File Search — Filsy',
     description:
       'Search millions of files in 0.02s on Windows 10 & 11. Search by filename, content, extension, date, and file size using natural language queries without slow Explorer lag.',
     canonical: `${SITE_URL}/features/file-search`,
@@ -202,7 +253,7 @@ export const SEO_CONFIG: Record<string, SEOPageData> = {
   },
 
   featuresFilePreview: {
-    title: 'Instant Spacebar File Preview for Windows (Quick Look) | Filsy',
+    title: 'Spacebar Quick Look — Filsy',
     description:
       'Preview PDFs, Word documents, Excel sheets, images, audio, and videos instantly by tapping Spacebar. No need to launch heavy desktop apps just to inspect a file.',
     canonical: `${SITE_URL}/features/file-preview`,
@@ -223,7 +274,7 @@ export const SEO_CONFIG: Record<string, SEOPageData> = {
   },
 
   featuresOcrSearch: {
-    title: 'On-Device OCR Image & Screenshot Text Search | Filsy',
+    title: 'OCR Image Search — Filsy',
     description:
       'Find screenshots, receipts, and photos by the words printed inside them. Filsy runs native on-device Windows OCR with 100% privacy and zero cloud uploads.',
     canonical: `${SITE_URL}/features/ocr-search`,
@@ -244,7 +295,7 @@ export const SEO_CONFIG: Record<string, SEOPageData> = {
   },
 
   featuresFileOrganization: {
-    title: 'Duplicate File Hunter & Windows Storage Cleanup | Filsy',
+    title: 'Duplicate Cleaner & Storage — Filsy',
     description:
       'Reclaim gigabytes of wasted disk space. Detect exact byte-for-byte duplicate files with SHA-256 cryptographic hashes and purge forgotten caches safely.',
     canonical: `${SITE_URL}/features/file-organization`,
@@ -265,7 +316,7 @@ export const SEO_CONFIG: Record<string, SEOPageData> = {
   },
 
   howItWorks: {
-    title: 'How Filsy Works — Architecture & Local-First Indexing | Filsy',
+    title: 'How It Works — Filsy',
     description:
       'Learn how Filsy indexes drives at native speeds, runs local OCR, and provides instant file search without sending your documents or personal data to cloud servers.',
     canonical: `${SITE_URL}/how-it-works`,
@@ -284,7 +335,7 @@ export const SEO_CONFIG: Record<string, SEOPageData> = {
   },
 
   explorerVsFilsy: {
-    title: 'Windows File Explorer vs Filsy — In-Depth Comparison',
+    title: 'Explorer vs Filsy — Filsy',
     description:
       'Compare Windows File Explorer and Filsy side-by-side. See how Filsy adds 0.02s search, Spacebar document previews, on-device OCR, and duplicate detection.',
     canonical: `${SITE_URL}/explorer-vs-filsy`,
@@ -303,7 +354,7 @@ export const SEO_CONFIG: Record<string, SEOPageData> = {
   },
 
   pricing: {
-    title: 'Pricing — Lifetime License for Windows | Filsy',
+    title: 'Pricing — Filsy',
     description:
       'Buy Filsy once, keep it forever. First 99 users special: $9 lifetime license (regular $19). No subscriptions, no recurring fees, all future updates included.',
     canonical: `${SITE_URL}/pricing`,
@@ -339,7 +390,7 @@ export const SEO_CONFIG: Record<string, SEOPageData> = {
   },
 
   download: {
-    title: 'Download Filsy for Windows 10 & 11 (Microsoft Store) | Filsy',
+    title: 'Download — Filsy',
     description:
       'Download and install Filsy directly from the official Microsoft Store for Windows 10 & 11 (64-bit). One-click verified installation with automatic updates.',
     canonical: `${SITE_URL}/download`,
@@ -359,7 +410,7 @@ export const SEO_CONFIG: Record<string, SEOPageData> = {
   },
 
   faq: {
-    title: 'Frequently Asked Questions (FAQ) | Filsy',
+    title: 'FAQ — Filsy',
     description:
       'Find answers to common questions about Filsy: privacy, offline capabilities, file formats supported, Microsoft Store installation, and license transfer.',
     canonical: `${SITE_URL}/faq`,
@@ -373,7 +424,7 @@ export const SEO_CONFIG: Record<string, SEOPageData> = {
   },
 
   about: {
-    title: 'About Filsy — Mission, Privacy & Local-First Philosophy',
+    title: 'About — Filsy',
     description:
       'Learn about Filsy: built to give Windows users a faster, cleaner, and completely private file navigation experience where your personal data never leaves your computer.',
     canonical: `${SITE_URL}/about`,
@@ -387,7 +438,7 @@ export const SEO_CONFIG: Record<string, SEOPageData> = {
   },
 
   changelog: {
-    title: 'Changelog & Release Notes | Filsy for Windows',
+    title: 'Changelog — Filsy',
     description:
       'View all updates, new features, performance improvements, and fixes for Filsy on Windows 10 & 11, including official Microsoft Store releases.',
     canonical: `${SITE_URL}/changelog`,
@@ -400,7 +451,7 @@ export const SEO_CONFIG: Record<string, SEOPageData> = {
   },
 
   support: {
-    title: 'Customer Support & Help Desk | Filsy',
+    title: 'Support — Filsy',
     description:
       'Get help with Filsy. Reach our team at support@filsy.space for license retrieval, activation questions, bug reports, and Windows feature requests.',
     canonical: `${SITE_URL}/support`,
@@ -413,7 +464,7 @@ export const SEO_CONFIG: Record<string, SEOPageData> = {
   },
 
   privacy: {
-    title: 'Privacy Policy — 100% On-Device Local Processing | Filsy',
+    title: 'Privacy Policy — Filsy',
     description:
       'Filsy is built on a strict local-first privacy architecture. Your indexed files, search queries, documents, and screenshots are processed locally and never uploaded to any cloud server.',
     canonical: `${SITE_URL}/privacy`,
@@ -426,7 +477,7 @@ export const SEO_CONFIG: Record<string, SEOPageData> = {
   },
 
   terms: {
-    title: 'Terms of Service & License Agreement | Filsy',
+    title: 'Terms of Service — Filsy',
     description:
       'Review the terms of service and software license agreement for Filsy. One-time lifetime licenses, single active PC transfer policy, and usage conditions.',
     canonical: `${SITE_URL}/terms`,
@@ -439,7 +490,7 @@ export const SEO_CONFIG: Record<string, SEOPageData> = {
   },
 
   license: {
-    title: 'License Activation & Device Transfer Guide | Filsy',
+    title: 'License Help — Filsy',
     description:
       'Step-by-step instructions for activating your Filsy lifetime license key, moving your license to a new PC, and managing device bindings.',
     canonical: `${SITE_URL}/license`,
@@ -452,7 +503,7 @@ export const SEO_CONFIG: Record<string, SEOPageData> = {
   },
 
   freeLicense: {
-    title: 'Creator Program — Earn a Free Lifetime License | Filsy',
+    title: 'Free License — Filsy',
     description:
       'Make a video review or tutorial of Filsy on YouTube, TikTok, X, or Instagram. Reach 5,000 views and receive a free genuine lifetime license key.',
     canonical: `${SITE_URL}/free-license`,
@@ -466,42 +517,42 @@ export const SEO_CONFIG: Record<string, SEOPageData> = {
 
   // Private / Internal Utility Routes (Must be NOINDEX)
   findKey: {
-    title: 'Retrieve Your License Key | Filsy',
+    title: 'Retrieve Your License Key — Filsy',
     description: 'Find and recover your Filsy license key using the email address from your purchase.',
     canonical: `${SITE_URL}/find-key`,
     robots: 'noindex, nofollow',
   },
 
   manageLicense: {
-    title: 'Manage Your License & Devices | Filsy',
+    title: 'Manage License & Devices — Filsy',
     description: 'View active devices and manage your Filsy software license key.',
     canonical: `${SITE_URL}/manage-license`,
     robots: 'noindex, nofollow',
   },
 
   paymentSuccess: {
-    title: 'Payment Confirmed — Welcome to Filsy',
+    title: 'Payment Confirmed — Filsy',
     description: 'Your payment was successful. Copy your new Filsy lifetime license key and activate the app.',
     canonical: `${SITE_URL}/payment/success`,
     robots: 'noindex, nofollow',
   },
 
   paymentCancelled: {
-    title: 'Checkout Cancelled | Filsy',
+    title: 'Checkout Cancelled — Filsy',
     description: 'Your checkout session was cancelled. No charges were made to your card.',
     canonical: `${SITE_URL}/payment/cancelled`,
     robots: 'noindex, nofollow',
   },
 
   paymentFailed: {
-    title: 'Payment Not Completed | Filsy',
+    title: 'Payment Failed — Filsy',
     description: 'Your payment attempt was interrupted or declined. You have not been charged.',
     canonical: `${SITE_URL}/payment/failed`,
     robots: 'noindex, nofollow',
   },
 
   notFound: {
-    title: 'Page Not Found (404) | Filsy',
+    title: 'Page Not Found (404) — Filsy',
     description: 'The page you are looking for does not exist or has been moved.',
     canonical: `${SITE_URL}/404`,
     robots: 'noindex, nofollow',
