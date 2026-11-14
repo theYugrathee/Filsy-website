@@ -5,7 +5,10 @@
 declare const Deno: any;
 
 export function serviceHeaders() {
-  const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
+  const serviceKey =
+    Deno.env.get("SUPABASE_SECRET_KEY") ||
+    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ||
+    "";
   return {
     apikey: serviceKey,
     Authorization: `Bearer ${serviceKey}`,
