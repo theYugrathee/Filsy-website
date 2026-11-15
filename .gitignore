@@ -29,3 +29,6 @@ dist-ssr
 # Supabase CLI temp files
 supabase/.temp
 
+# Local testing pages (never deploy)
+src/pages/TestPaymentPage.tsx
+

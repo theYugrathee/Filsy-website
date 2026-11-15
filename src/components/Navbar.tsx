@@ -19,6 +19,17 @@ export const Navbar: React.FC = () => {
     setCurrentTheme(getCurrentTheme());
   }, []);
 
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
+
   const handleToggleTheme = () => {
     const next = toggleTheme();
     setCurrentTheme(next);
@@ -32,8 +43,9 @@ export const Navbar: React.FC = () => {
   const closeMobile = () => setMobileMenuOpen(false);
 
   return (
-    <header className="site-header">
-      <div className="wrap">
+    <>
+      <header className="site-header">
+        <div className="wrap">
         <nav className="site-nav">
           {/* Brand Logo */}
           <Link to="/" className="logo-brand" onClick={closeMobile}>
@@ -107,9 +119,10 @@ export const Navbar: React.FC = () => {
           </div>
         </nav>
       </div>
+    </header>
 
-      {/* Mobile Drawer */}
-      {mobileMenuOpen && (
+    {/* Mobile Drawer (rendered outside header to prevent stacking context clipping) */}
+    {mobileMenuOpen && (
         <div className="mobile-drawer">
           <Link to="/features" onClick={closeMobile}>
             Features
@@ -171,6 +184,6 @@ export const Navbar: React.FC = () => {
           </div>
         </div>
       )}
-    </header>
+    </>
   );
 };

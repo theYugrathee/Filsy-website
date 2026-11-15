@@ -25,6 +25,8 @@ import { PaymentCancelledPage } from './pages/PaymentCancelledPage';
 import { PaymentFailedPage } from './pages/PaymentFailedPage';
 import { FreeLicensePage } from './pages/FreeLicensePage';
 import { NotFoundPage } from './pages/NotFoundPage';
+// Uncomment below when testing ₹0 payments locally in the future:
+// import { TestPaymentPage } from './pages/TestPaymentPage';
 
 // Feature Sub-Pages
 import { FileSearchFeaturePage } from './pages/features/FileSearchFeaturePage';
@@ -106,6 +108,9 @@ export const App: React.FC = () => {
             <Route path="/payment/success" element={<PaymentSuccessPage />} />
             <Route path="/payment/cancelled" element={<PaymentCancelledPage />} />
             <Route path="/payment/failed" element={<PaymentFailedPage />} />
+            {/* Uncomment below to re-enable local ₹0 test checkout route: */}
+            {/* <Route path="/test-payment" element={<TestPaymentPage />} /> */}
+            {/* <Route path="/test-checkout" element={<TestPaymentPage />} /> */}
             <Route path="/404" element={<NotFoundPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, Navigate, useSearchParams } from 'react-router-dom';
 import { APP_CONFIG } from '../config';
 import { initiateCheckout, retrieveLicenses } from '../services/paymentService';
@@ -125,9 +125,9 @@ interface DetailedFeature {
 const DETAILED_FEATURES: DetailedFeature[] = [
   {
     id: 'quick-look',
-    title: 'Spacebar Quick Look',
-    badge: 'Instant Preview',
-    desc: 'Press Spacebar on any file to preview it right away without opening Word, Excel, or heavy software. Browse documents, spreadsheets, videos, photos, and code with full layouts.',
+    title: 'One-Click File Preview',
+    badge: 'Instant Inspection',
+    desc: 'Click the preview button on any file to inspect it right away without opening Word, Excel, or heavy software. Browse documents, spreadsheets, videos, photos, and code with full layouts.',
     accent: 'var(--documents)',
     icon: <Eye size={22} color="var(--documents)" />,
     tags: ['Word (.docx)', 'Excel (.xlsx)', 'Access (.accdb)', 'PowerPoint (.pptx)', 'PDFs', '4K Video', 'Audio', 'Code & Hex'],
@@ -229,12 +229,57 @@ const DETAILED_FEATURES: DetailedFeature[] = [
   },
 ];
 
+const ROTATING_PHRASES = [
+  'actually finds what you need.',
+  'searches text inside screenshots.',
+  'reads inside PDFs & documents.',
+  'previews files in one click.',
+  'keeps your data 100% offline.',
+];
+
 /* ──────────────────────────────────────────────────
    HOME PAGE
    ────────────────────────────────────────────────── */
 
 export const HomePage: React.FC = () => {
   const [searchParams] = useSearchParams();
+
+  // Typewriter effect state
+  const [phraseIndex, setPhraseIndex] = useState(0);
+  const [displayText, setDisplayText] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const currentFullText = ROTATING_PHRASES[phraseIndex];
+    let timer: any;
+
+    if (!isDeleting) {
+      // Typing phase: fast, crisp character additions
+      if (displayText.length < currentFullText.length) {
+        timer = setTimeout(() => {
+          setDisplayText(currentFullText.slice(0, displayText.length + 1));
+        }, 34);
+      } else {
+        // Finished typing full phrase — comfortable pause to read
+        timer = setTimeout(() => {
+          setIsDeleting(true);
+        }, 1800);
+      }
+    } else {
+      // Deleting phase: brisk backspacing
+      if (displayText.length > 0) {
+        timer = setTimeout(() => {
+          setDisplayText(currentFullText.slice(0, displayText.length - 1));
+        }, 18);
+      } else {
+        // Finished deleting, transition to next phrase
+        setIsDeleting(false);
+        setPhraseIndex((prev) => (prev + 1) % ROTATING_PHRASES.length);
+      }
+    }
+
+    return () => clearTimeout(timer);
+  }, [displayText, isDeleting, phraseIndex]);
 
   // If Dodo redirected back to root '/' after payment, immediately send user to appropriate payment state page
   const statusParam = (searchParams.get('status') || searchParams.get('state') || '').toLowerCase();
@@ -318,19 +363,35 @@ export const HomePage: React.FC = () => {
                   PRE-LAUNCH MODE HERO (ACTIVE)
                   To switch to Post-Launch mode, see the commented block below!
                   ========================================================================= */}
-              <div className="version-chip">
-                <span style={{ fontSize: '0.9rem' }}>🎉</span>
-                <span>Now Live on Microsoft Store · First 99 Users Special ($9)</span>
-              </div>
+              <Link to="/pricing" className="hero-scarcity-chip" title="First 99 Users Special — Lock in $9 lifetime access">
+                <span className="scarcity-pill-badge">
+                  <span className="scarcity-live-dot" aria-hidden="true" />
+                  <span>59 SEATS LEFT</span>
+                </span>
+                <span className="scarcity-pill-body">
+                  <span className="scarcity-pill-deal">First 99 at $9</span>
+                  <span className="scarcity-pill-sep">·</span>
+                  <span className="scarcity-pill-next">Next price $19</span>
+                </span>
+                <span className="scarcity-pill-action">
+                  <span>Hurry up</span>
+                  <ArrowRight size={13} className="scarcity-arrow" />
+                </span>
+              </Link>
 
               <h1 className="hero-headline">
-                Find any file in seconds.
+                The file manager that
                 <br />
-                <span className="gradient-text">Preview with Spacebar.</span>
+                <span className="hero-typewriter-wrapper">
+                  <span className="hero-typewriter-phrase">
+                    {displayText}
+                  </span>
+                  <span className="typewriter-cursor" aria-hidden="true">|</span>
+                </span>
               </h1>
 
               <p className="hero-sub">
-                Filsy is a fast file explorer for Windows 10 &amp; 11. Type what you need in plain everyday words, tap Spacebar to preview Word docs, Excel sheets, and images without waiting, and clean duplicate files to free up space. 100% private and works offline.
+                Filsy is a fast, local-first file manager engineered for Windows 10 &amp; 11. Search inside documents and image screenshots with built-in OCR, inspect files instantly with a dedicated preview button, and safely clean duplicate files — 100% private, zero telemetry, and works completely offline.
               </p>
 
               <div className="hero-actions">
@@ -439,8 +500,8 @@ export const HomePage: React.FC = () => {
               </div>
 
               <div className="hero-floating-badge hero-badge-bottom">
-                <Eye size={14} color="var(--images)" />
-                <span>Spacebar Document Quick Look</span>
+                <Eye size={14} color="var(--documents)" />
+                <span>One-Click Document Preview</span>
               </div>
 
               {/* Background decorative gradient blob */}
@@ -477,7 +538,7 @@ export const HomePage: React.FC = () => {
           <div className="section-head center">
             <span className="section-label">See Filsy in Action</span>
             <h2>Watch how fast finding files can be</h2>
-            <p>From Spacebar Quick Look to sub-second search and duplicate cleaning — see Filsy in real time.</p>
+            <p>From instant one-click preview to sub-second search and duplicate cleaning — see Filsy in real time.</p>
           </div>
 
           <div className="demo-video-wrapper">
@@ -638,7 +699,7 @@ export const HomePage: React.FC = () => {
                   </div>
                 ) : feat.previewType === 'quicklook' ? (
                   <div className="feature-no-img-preview">
-                    <div style={{ fontSize: '0.74rem', fontWeight: 600, color: 'var(--subtle)', marginBottom: '4px' }}>Press Spacebar to preview any file:</div>
+                    <div style={{ fontSize: '0.74rem', fontWeight: 600, color: 'var(--subtle)', marginBottom: '4px' }}>Click Preview button to inspect any file:</div>
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
                       {['Word (.docx)', 'Excel (.xlsx)', 'Access (.accdb)', 'PowerPoint', 'PDF Documents', 'Video & Audio', 'Code & Markdown', 'ZIP Tree'].map(fmt => (
                         <span key={fmt} style={{ padding: '3px 8px', background: 'var(--card)', border: '1px solid var(--line)', borderRadius: 'var(--radius-full)', fontSize: '0.74rem', fontWeight: 600, color: 'var(--ink)' }}>
