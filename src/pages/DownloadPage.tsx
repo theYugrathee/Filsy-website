@@ -100,15 +100,15 @@ export const DownloadPage: React.FC = () => {
             <div className="step-clean-item" style={{ padding: '12px 16px' }}>
               <div className="step-badge-num">1</div>
               <div>
-                <strong style={{ fontSize: '0.9rem' }}>Get your key today</strong>
-                <p style={{ fontSize: '0.84rem' }}>Pay what you want and receive your lifetime license key immediately by email.</p>
+                <strong style={{ fontSize: '0.9rem' }}>Buy your lifetime key — $9</strong>
+                <p style={{ fontSize: '0.84rem' }}>Lock in the early-bird price and receive your lifetime license key instantly by email.</p>
               </div>
             </div>
             <div className="step-clean-item" style={{ padding: '12px 16px' }}>
               <div className="step-badge-num">2</div>
               <div>
-                <strong style={{ fontSize: '0.9rem' }}>Install from Microsoft Store</strong>
-                <p style={{ fontSize: '0.84rem' }}>Once live, install Filsy safely from the Microsoft Store with one click.</p>
+                <strong style={{ fontSize: '0.9rem' }}>Download from Microsoft Store</strong>
+                <p style={{ fontSize: '0.84rem' }}>Filsy is live now — install it safely from the Microsoft Store with one click.</p>
               </div>
             </div>
             <div className="step-clean-item" style={{ padding: '12px 16px' }}>
