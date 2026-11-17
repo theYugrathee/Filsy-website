@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Link, Navigate, useSearchParams } from 'react-router-dom';
+import { Link, Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 import { APP_CONFIG } from '../config';
-import { initiateCheckout, retrieveLicenses } from '../services/paymentService';
+import { retrieveLicenses } from '../services/paymentService';
 import { ExplorerComparison } from '../components/ExplorerComparison';
 import { SEO } from '../components/SEO';
 import {
@@ -243,6 +243,7 @@ const ROTATING_PHRASES = [
 
 export const HomePage: React.FC = () => {
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   // Typewriter effect state
   const [phraseIndex, setPhraseIndex] = useState(0);
@@ -315,14 +316,9 @@ export const HomePage: React.FC = () => {
     ? `$${APP_CONFIG.pricing.usdPrice} Pre-Launch (Regular $${APP_CONFIG.pricing.originalUsdPrice})`
     : `$${APP_CONFIG.pricing.originalUsdPrice}`;
 
-  const handleBuy = async (e: React.MouseEvent) => {
+  const handleBuy = (e: React.MouseEvent) => {
     e.preventDefault();
-    setIsProcessingBuy(true);
-    try {
-      await initiateCheckout('USD');
-    } catch {
-      setIsProcessingBuy(false);
-    }
+    navigate('/pricing');
   };
 
   const handleRetrieveLicense = async (e: React.FormEvent) => {

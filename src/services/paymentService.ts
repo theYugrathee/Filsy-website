@@ -137,6 +137,18 @@ export async function retrieveLicenses(email: string): Promise<RetrieveLicenseRe
 
 const LIVE_DODO_CHECKOUT = 'https://checkout.dodopayments.com/buy/pdt_0NrqmFou1hNcUvA974EKL?quantity=1';
 
+// 🖤 BLACK FRIDAY DEAL — $1 for today only (Nov 17 2026)
+export const BLACK_FRIDAY_CHECKOUT = 'https://checkout.dodopayments.com/buy/pdt_0Ns8EiDNngi2AuraQW2SA?quantity=1';
+
+/** Returns true if the Black Friday $1 deal is active (today only) */
+export function isBlackFridayActive(): boolean {
+  const now = new Date();
+  // Active all of Nov 17 2026 (UTC)
+  const start = new Date('2026-11-17T00:00:00Z');
+  const end   = new Date('2026-11-17T23:59:59Z');
+  return now >= start && now <= end;
+}
+
 /**
  * Initiates Dodo Payments checkout directly to the live production checkout
  */
@@ -167,6 +179,19 @@ export async function initiateCheckout(_currency: 'USD' | 'INR' = 'USD'): Promis
     checkoutUrl: finalCheckoutUrl,
     mode: 'live',
   };
+}
+
+export async function initiateBlackFridayCheckout(): Promise<CheckoutResponse> {
+  let url = BLACK_FRIDAY_CHECKOUT;
+  try {
+    const urlObj = new URL(url);
+    urlObj.searchParams.set('redirect_url', `${window.location.origin}/payment/success`);
+    url = urlObj.toString();
+  } catch {
+    url = `${BLACK_FRIDAY_CHECKOUT}&redirect_url=${window.location.origin}/payment/success`;
+  }
+  window.location.href = url;
+  return { checkoutUrl: url, mode: 'live' };
 }
 
 export interface VerifyPaymentQuery {
