@@ -140,6 +140,9 @@ const LIVE_DODO_CHECKOUT = 'https://checkout.dodopayments.com/buy/pdt_0NrqmFou1h
 // 🖤 BLACK FRIDAY DEAL — $1 for today only (Nov 17 2026)
 export const BLACK_FRIDAY_CHECKOUT = 'https://checkout.dodopayments.com/buy/pdt_0Ns8EiDNngi2AuraQW2SA?quantity=1';
 
+// 💚 PAY WHAT YOU WANT
+export const PWYW_CHECKOUT = 'https://checkout.dodopayments.com/buy/pdt_0Ns8GXBDenchjScGFgLBz?quantity=1';
+
 /** Returns true if the Black Friday $1 deal is active (today only) */
 export function isBlackFridayActive(): boolean {
   const now = new Date();
@@ -189,6 +192,19 @@ export async function initiateBlackFridayCheckout(): Promise<CheckoutResponse> {
     url = urlObj.toString();
   } catch {
     url = `${BLACK_FRIDAY_CHECKOUT}&redirect_url=${window.location.origin}/payment/success`;
+  }
+  window.location.href = url;
+  return { checkoutUrl: url, mode: 'live' };
+}
+
+export async function initiatePWYWCheckout(): Promise<CheckoutResponse> {
+  let url = PWYW_CHECKOUT;
+  try {
+    const urlObj = new URL(url);
+    urlObj.searchParams.set('redirect_url', `${window.location.origin}/payment/success`);
+    url = urlObj.toString();
+  } catch {
+    url = `${PWYW_CHECKOUT}&redirect_url=${window.location.origin}/payment/success`;
   }
   window.location.href = url;
   return { checkoutUrl: url, mode: 'live' };

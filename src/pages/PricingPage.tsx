@@ -1,30 +1,38 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { APP_CONFIG } from '../config';
-import { initiateCheckout, initiateBlackFridayCheckout, isBlackFridayActive } from '../services/paymentService';
+import {
+  initiateCheckout,
+  initiateBlackFridayCheckout,
+  initiatePWYWCheckout,
+  isBlackFridayActive,
+} from '../services/paymentService';
 import { SEO } from '../components/SEO';
-import { Check, Sparkles, KeyRound, Zap } from 'lucide-react';
+import { Check, Sparkles, KeyRound, Heart, Zap } from 'lucide-react';
+
+const FEATURES = [
+  'Lifetime license — pay once, use forever',
+  'Instant license key delivered by email',
+  'Natural-language search & OCR inside screenshots',
+  'Search text inside PDFs, Word & Excel files',
+  'Live on Microsoft Store — 1-click install',
+  'Binary duplicate detection (SHA-256)',
+  'All future updates included forever',
+  '100% offline & private — data never leaves your PC',
+];
 
 export const PricingPage: React.FC = () => {
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [isBFProcessing, setIsBFProcessing] = useState(false);
+  const [loading, setLoading] = useState<'bf' | 'pwyw' | 'standard' | null>(null);
   const blackFriday = isBlackFridayActive();
 
-  const handleCheckout = async () => {
-    setIsProcessing(true);
+  const go = async (which: 'bf' | 'pwyw' | 'standard') => {
+    setLoading(which);
     try {
-      await initiateCheckout('USD');
+      if (which === 'bf') await initiateBlackFridayCheckout();
+      else if (which === 'pwyw') await initiatePWYWCheckout();
+      else await initiateCheckout('USD');
     } catch {
-      setIsProcessing(false);
-    }
-  };
-
-  const handleBlackFriday = async () => {
-    setIsBFProcessing(true);
-    try {
-      await initiateBlackFridayCheckout();
-    } catch {
-      setIsBFProcessing(false);
+      setLoading(null);
     }
   };
 
@@ -32,203 +40,217 @@ export const PricingPage: React.FC = () => {
     <div className="page-wrapper">
       <SEO routeKey="pricing" />
       <div className="wrap">
-        {/* =========================================================================
-            PRE-LAUNCH MODE PRICING (ACTIVE)
-            To switch to Post-Launch mode ($19), see the commented section below!
-            ========================================================================= */}
-        <div className="section-head center">
-          <span className="section-label">{blackFriday ? '🖤 BLACK FRIDAY DEAL · TODAY ONLY' : 'FIRST 99 USERS SPECIAL · LIMITED SPOTS'}</span>
+
+        {/* ── Header ── */}
+        <div className="section-head center" style={{ marginBottom: '48px' }}>
+          {blackFriday && (
+            <span className="section-label" style={{ color: '#2563eb' }}>
+              🖤 BLACK FRIDAY · TODAY ONLY
+            </span>
+          )}
+          {!blackFriday && (
+            <span className="section-label">CHOOSE YOUR PRICE · LIFETIME ACCESS</span>
+          )}
           <h1 style={{ fontSize: 'clamp(2rem, 4vw, 2.75rem)', fontWeight: 800, lineHeight: 1.15, letterSpacing: '-0.02em', margin: '12px 0' }}>
-            {blackFriday ? 'Black Friday: Grab Filsy at just $1 🔥' : 'First 99 users: Lock in $9 forever.'}
+            {blackFriday ? 'Black Friday — pick what works for you.' : 'Pick the plan that works for you.'}
           </h1>
-          <p>
-            {blackFriday
-              ? 'One-time payment. Lifetime access. This deal expires at midnight — don\'t miss it.'
-              : 'Special early pricing of $9 reserved exclusively for the first 99 users celebrating our Microsoft Store release. Regular price is $19.'}
+          <p style={{ maxWidth: '560px', margin: '0 auto' }}>
+            One-time payment. Lifetime access. No subscriptions, no hidden fees.
+            {blackFriday && ' All deals expire at midnight tonight.'}
           </p>
         </div>
 
-        {/* ── Black Friday $1 Card (today only) ── */}
-        {blackFriday && (
-          <div
-            className="pricing-clean-card"
-            style={{
-              border: '2px solid #f97316',
-              background: 'linear-gradient(135deg, rgba(249,115,22,0.07) 0%, rgba(0,0,0,0.0) 100%)',
+        {/* ── 3-Card Grid ── */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gap: '24px',
+          maxWidth: '1080px',
+          margin: '0 auto',
+          alignItems: 'stretch',
+        }}>
+
+          {/* ── Card 1: Black Friday $1 (today only) ── */}
+          {blackFriday && (
+            <div style={{
+              background: 'var(--surface)',
+              border: '2px solid #1e40af',
+              borderRadius: '20px',
+              padding: '36px 32px',
+              display: 'flex',
+              flexDirection: 'column',
               position: 'relative',
               overflow: 'hidden',
-            }}
-          >
-            {/* Glow ribbon */}
-            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '3px', background: 'linear-gradient(90deg, #f97316, #ef4444, #f97316)', borderRadius: '2px 2px 0 0' }} />
+              boxShadow: '0 0 0 1px rgba(37,99,235,0.08), 0 8px 32px rgba(37,99,235,0.12)',
+            }}>
+              {/* Top accent bar */}
+              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '4px', background: 'linear-gradient(90deg, #1d4ed8, #2563eb, #3b82f6)', borderRadius: '20px 20px 0 0' }} />
 
-            <span className="pill" style={{ background: 'rgba(249,115,22,0.15)', color: '#f97316', fontWeight: 700, fontSize: '0.78rem', letterSpacing: '0.08em' }}>
-              🖤 BLACK FRIDAY · TODAY ONLY
-            </span>
-
-            <div className="prelaunch-strike-row" style={{ marginTop: '16px' }}>
-              <span className="prelaunch-regular-price">$9 Early Price</span>
-              <span className="prelaunch-discount-badge" style={{ background: 'rgba(249,115,22,0.12)', color: '#f97316' }}>Save $8 — 89% OFF</span>
-            </div>
-
-            <div className="clean-price-box" style={{ flexDirection: 'column', gap: '4px', marginTop: '8px', marginBottom: '14px' }}>
-              <span className="clean-price-amount" style={{ fontSize: 'clamp(2.8rem, 6vw, 4.2rem)', color: '#f97316' }}>
-                $1
+              <span style={{ display: 'inline-block', background: 'rgba(37,99,235,0.1)', color: '#2563eb', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.1em', padding: '4px 12px', borderRadius: '999px', marginBottom: '20px', alignSelf: 'flex-start' }}>
+                🖤 BLACK FRIDAY · TODAY ONLY
               </span>
-              <span style={{ fontSize: '0.92rem', color: 'var(--muted)' }}>one-time payment · lifetime access · today only</span>
-            </div>
 
-            <div className="early-supporter-alert" style={{ marginBottom: '20px', borderColor: 'rgba(249,115,22,0.3)', background: 'rgba(249,115,22,0.07)' }}>
-              <Zap size={18} color="#f97316" style={{ flexShrink: 0, marginTop: '2px' }} />
-              <div>
-                <strong>Black Friday Flash Deal:</strong> Get lifetime access to Filsy for just $1 — only today, November 17. Same app, same features, same lifetime key. Price goes back to $9 at midnight.
+              <div style={{ marginBottom: '4px', fontSize: '0.85rem', color: 'var(--muted)', textDecoration: 'line-through' }}>$9 early price</div>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginBottom: '6px' }}>
+                <span style={{ fontSize: 'clamp(3rem, 7vw, 4.5rem)', fontWeight: 900, letterSpacing: '-0.03em', lineHeight: 1, color: '#2563eb' }}>$1</span>
+              </div>
+              <div style={{ fontSize: '0.88rem', color: 'var(--muted)', marginBottom: '28px' }}>one-time · lifetime access · today only</div>
+
+              <button
+                type="button"
+                onClick={() => go('bf')}
+                disabled={loading !== null}
+                style={{
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+                  width: '100%', padding: '14px 20px', borderRadius: '12px',
+                  background: '#2563eb', color: '#fff', border: 'none',
+                  fontSize: '1rem', fontWeight: 700, cursor: loading ? 'not-allowed' : 'pointer',
+                  opacity: loading && loading !== 'bf' ? 0.5 : 1,
+                  transition: 'opacity 0.2s',
+                  marginBottom: '28px',
+                }}
+              >
+                <Zap size={18} />
+                {loading === 'bf' ? 'Connecting…' : 'Grab $1 Black Friday Deal'}
+              </button>
+
+              <div style={{ borderTop: '1px solid var(--line)', paddingTop: '24px', marginTop: 'auto' }}>
+                <div style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--muted)', marginBottom: '14px', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Everything included</div>
+                <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                  {FEATURES.map((f) => (
+                    <li key={f} style={{ display: 'flex', gap: '10px', alignItems: 'flex-start', fontSize: '0.875rem', color: 'var(--ink)' }}>
+                      <Check size={15} color="#2563eb" style={{ flexShrink: 0, marginTop: '2px' }} />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
+          )}
+
+          {/* ── Card 2: Pay What You Want ── */}
+          <div style={{
+            background: 'var(--surface)',
+            border: '1.5px solid var(--line)',
+            borderRadius: '20px',
+            padding: '36px 32px',
+            display: 'flex',
+            flexDirection: 'column',
+            position: 'relative',
+            overflow: 'hidden',
+          }}>
+            <span style={{ display: 'inline-block', background: 'rgba(16,185,129,0.1)', color: '#059669', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.1em', padding: '4px 12px', borderRadius: '999px', marginBottom: '20px', alignSelf: 'flex-start' }}>
+              PAY WHAT YOU WANT
+            </span>
+
+            <div style={{ marginBottom: '4px', fontSize: '0.85rem', color: 'var(--muted)' }}>your price</div>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginBottom: '6px' }}>
+              <span style={{ fontSize: 'clamp(3rem, 7vw, 4.5rem)', fontWeight: 900, letterSpacing: '-0.03em', lineHeight: 1, color: '#059669' }}>Any</span>
+            </div>
+            <div style={{ fontSize: '0.88rem', color: 'var(--muted)', marginBottom: '28px' }}>you choose the amount · lifetime access</div>
 
             <button
               type="button"
-              onClick={handleBlackFriday}
-              disabled={isBFProcessing}
-              className="btn btn-lg"
-              style={{ width: '100%', gap: '8px', background: '#f97316', color: '#fff', border: 'none', fontWeight: 700, fontSize: '1.05rem' }}
+              onClick={() => go('pwyw')}
+              disabled={loading !== null}
+              style={{
+                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+                width: '100%', padding: '14px 20px', borderRadius: '12px',
+                background: '#059669', color: '#fff', border: 'none',
+                fontSize: '1rem', fontWeight: 700, cursor: loading ? 'not-allowed' : 'pointer',
+                opacity: loading && loading !== 'pwyw' ? 0.5 : 1,
+                transition: 'opacity 0.2s',
+                marginBottom: '28px',
+              }}
             >
-              <Zap size={18} />
-              <span>{isBFProcessing ? 'Connecting to Checkout…' : '🖤 Grab Filsy — $1 (Black Friday)'}</span>
+              <Heart size={18} />
+              {loading === 'pwyw' ? 'Connecting…' : 'Pay What You Want'}
             </button>
 
-            <ul className="clean-checklist" style={{ marginTop: '24px' }}>
-              {[
-                'Lifetime license — pay once, use forever',
-                'Instant license key delivered by email',
-                'All future updates included at no extra cost',
-                'Natural-language search, OCR inside screenshots & PDFs',
-                'Live on Microsoft Store — download in one click',
-                '100% offline & private — your files never leave your PC',
-              ].map((item) => (
-                <li key={item}>
-                  <Check size={16} color="#f97316" style={{ flexShrink: 0, marginTop: '2px' }} />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-
-            <div style={{ fontSize: '0.8rem', color: 'var(--subtle)', marginTop: '20px' }}>
-              Checkout secured by Dodo Payments · Black Friday deal ends Nov 17 at midnight · Regular price $9
+            <div style={{ borderTop: '1px solid var(--line)', paddingTop: '24px', marginTop: 'auto' }}>
+              <div style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--muted)', marginBottom: '14px', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Everything included</div>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                {FEATURES.map((f) => (
+                  <li key={f} style={{ display: 'flex', gap: '10px', alignItems: 'flex-start', fontSize: '0.875rem', color: 'var(--ink)' }}>
+                    <Check size={15} color="#059669" style={{ flexShrink: 0, marginTop: '2px' }} />
+                    {f}
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
-        )}
 
-        {/* ── Standard $9 Card ── */}
-        <div className="pricing-clean-card" style={blackFriday ? { opacity: 0.82, marginTop: '8px' } : {}}>
-          {blackFriday && (
-            <div style={{ fontSize: '0.82rem', color: 'var(--muted)', fontWeight: 600, marginBottom: '12px', textAlign: 'center' }}>
-              — or stick with the standard early-bird price —
+          {/* ── Card 3: Standard $9 — MOST POPULAR ── */}
+          <div style={{
+            background: 'var(--surface)',
+            border: '2px solid var(--brand, #2563eb)',
+            borderRadius: '20px',
+            padding: '36px 32px',
+            display: 'flex',
+            flexDirection: 'column',
+            position: 'relative',
+            overflow: 'hidden',
+            boxShadow: '0 8px 40px rgba(37,99,235,0.15)',
+          }}>
+            {/* Top accent bar */}
+            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '4px', background: 'linear-gradient(90deg, #2563eb, #38bdf8)', borderRadius: '20px 20px 0 0' }} />
+
+            {/* Most popular badge */}
+            <div style={{ position: 'absolute', top: '20px', right: '20px', background: '#2563eb', color: '#fff', fontSize: '0.68rem', fontWeight: 700, letterSpacing: '0.08em', padding: '3px 10px', borderRadius: '999px' }}>
+              MOST POPULAR
             </div>
-          )}
-          <span className="pill pill-early">FIRST 99 USERS SPECIAL · 52% OFF</span>
 
-          <div className="prelaunch-strike-row" style={{ marginTop: '16px' }}>
-            <span className="prelaunch-regular-price">$19 Regular Price</span>
-            <span className="prelaunch-discount-badge">Save $10 (First 99 Users)</span>
-          </div>
-
-          <div className="clean-price-box" style={{ flexDirection: 'column', gap: '4px', marginTop: '8px', marginBottom: '14px' }}>
-            <span className="clean-price-amount" style={{ fontSize: 'clamp(2.8rem, 6vw, 4.2rem)' }}>
-              $9
+            <span style={{ display: 'inline-block', background: 'rgba(37,99,235,0.08)', color: '#2563eb', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.1em', padding: '4px 12px', borderRadius: '999px', marginBottom: '20px', alignSelf: 'flex-start' }}>
+              FIRST 99 USERS · 52% OFF
             </span>
-            <span style={{ fontSize: '0.92rem', color: 'var(--muted)' }}>one-time payment · lifetime access · first 99 users only</span>
-          </div>
 
-          <div className="early-supporter-alert" style={{ marginBottom: '20px' }}>
-            <Sparkles size={18} color="var(--documents)" style={{ flexShrink: 0, marginTop: '2px' }} />
-            <div>
-              <strong>First 99 Users Exclusive:</strong> Purchase the early license key now to lock in lifetime access for only $9 celebrating our official Microsoft Store release ($19 regular price).
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: '10px', marginBottom: '2px' }}>
+              <span style={{ fontSize: 'clamp(3rem, 7vw, 4.5rem)', fontWeight: 900, letterSpacing: '-0.03em', lineHeight: 1, color: '#2563eb' }}>$9</span>
+              <span style={{ fontSize: '1.1rem', color: 'var(--muted)', textDecoration: 'line-through', fontWeight: 500 }}>$19</span>
+            </div>
+            <div style={{ fontSize: '0.88rem', color: 'var(--muted)', marginBottom: '28px' }}>one-time · lifetime access · first 99 users</div>
+
+            <button
+              type="button"
+              id="pricingCheckoutBtn"
+              onClick={() => go('standard')}
+              disabled={loading !== null}
+              style={{
+                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+                width: '100%', padding: '14px 20px', borderRadius: '12px',
+                background: 'linear-gradient(135deg, #2563eb, #38bdf8)', color: '#fff', border: 'none',
+                fontSize: '1rem', fontWeight: 700, cursor: loading ? 'not-allowed' : 'pointer',
+                opacity: loading && loading !== 'standard' ? 0.5 : 1,
+                transition: 'opacity 0.2s',
+                marginBottom: '28px',
+              }}
+            >
+              <Sparkles size={18} />
+              {loading === 'standard' ? 'Connecting…' : 'Buy Filsy — $9'}
+            </button>
+
+            <div style={{ borderTop: '1px solid var(--line)', paddingTop: '24px', marginTop: 'auto' }}>
+              <div style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--muted)', marginBottom: '14px', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Everything included</div>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                {FEATURES.map((f) => (
+                  <li key={f} style={{ display: 'flex', gap: '10px', alignItems: 'flex-start', fontSize: '0.875rem', color: 'var(--ink)' }}>
+                    <Check size={15} color="#2563eb" style={{ flexShrink: 0, marginTop: '2px' }} />
+                    {f}
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
 
-          <button
-            type="button"
-            id="pricingCheckoutBtn"
-            onClick={handleCheckout}
-            disabled={isProcessing}
-            className="btn btn-primary btn-lg"
-            style={{ width: '100%', gap: '8px' }}
-          >
-            <Sparkles size={18} />
-            <span>{isProcessing ? 'Connecting to Checkout…' : 'Buy Filsy — $9'}</span>
-          </button>
+        </div>{/* end grid */}
 
-          <ul className="clean-checklist" style={{ marginTop: '28px' }}>
-            <li>
-              <Check size={16} color="var(--music)" style={{ flexShrink: 0, marginTop: '2px' }} />
-              <span><strong>Lifetime license on 1 active PC</strong> (move to a new PC anytime in 1 click)</span>
-            </li>
-            <li>
-              <Check size={16} color="var(--music)" style={{ flexShrink: 0, marginTop: '2px' }} />
-              <span><strong>Guaranteed $9 pricing</strong> for the first 99 users (increases to $19 at launch)</span>
-            </li>
-            <li>
-              <Check size={16} color="var(--music)" style={{ flexShrink: 0, marginTop: '2px' }} />
-              <span><strong>Instant digital key delivery</strong> directly to your email via Dodo Payments</span>
-            </li>
-            <li>
-              <Check size={16} color="var(--music)" style={{ flexShrink: 0, marginTop: '2px' }} />
-              <span><strong>Live on Microsoft Store</strong> (activate in 1 click)</span>
-            </li>
-            <li>
-              <Check size={16} color="var(--music)" style={{ flexShrink: 0, marginTop: '2px' }} />
-              <span><strong>Natural-language search</strong> with automatic filter parsing</span>
-            </li>
-            <li>
-              <Check size={16} color="var(--music)" style={{ flexShrink: 0, marginTop: '2px' }} />
-              <span><strong>On-device OCR</strong> inside screenshots, scanned receipts, and photos</span>
-            </li>
-            <li>
-              <Check size={16} color="var(--music)" style={{ flexShrink: 0, marginTop: '2px' }} />
-              <span><strong>Deep document text indexing</strong> for PDFs, Word, and Excel files</span>
-            </li>
-            <li>
-              <Check size={16} color="var(--music)" style={{ flexShrink: 0, marginTop: '2px' }} />
-              <span><strong>Binary duplicate detection</strong> with safe SHA-256 hash comparison</span>
-            </li>
-            <li>
-              <Check size={16} color="var(--music)" style={{ flexShrink: 0, marginTop: '2px' }} />
-              <span><strong>Every future update included forever</strong></span>
-            </li>
-          </ul>
+        {/* ── Trust line ── */}
+        <p style={{ textAlign: 'center', fontSize: '0.82rem', color: 'var(--subtle)', marginTop: '32px' }}>
+          Checkout secured by Dodo Payments · Instant digital key delivery · No subscriptions ever
+        </p>
 
-          <div style={{ fontSize: '0.8rem', color: 'var(--subtle)', marginTop: '20px' }}>
-            Checkout secured by Dodo Payments · Instant digital license delivery · One-time $9 early pricing for first 99 users ($19 regular price)
-          </div>
-        </div>
-
-        {/* =========================================================================
-            [POST-LAUNCH STANDARD PRICING CARD — UNCOMMENT WHEN OFFICIALLY LAUNCHED]
-            -------------------------------------------------------------------------
-            <div className="pricing-clean-card" style={{ display: 'none' }}>
-              <span className="pill pill-early">LIFETIME LICENSE</span>
-              <div className="clean-price-box" style={{ flexDirection: 'column', gap: '4px', marginTop: '14px', marginBottom: '14px' }}>
-                <span className="clean-price-amount">$19</span>
-                <span style={{ fontSize: '0.92rem', color: 'var(--muted)' }}>one-time payment · lifetime access</span>
-              </div>
-              <p style={{ fontSize: '0.92rem', color: 'var(--muted)', marginBottom: '24px' }}>
-                Instant digital delivery. Unlocks perpetual offline usage with no recurring fees.
-              </p>
-              <button
-                type="button"
-                onClick={handleCheckout}
-                disabled={isProcessing}
-                className="btn btn-primary btn-lg"
-                style={{ width: '100%', gap: '8px' }}
-              >
-                <Sparkles size={18} />
-                <span>Get License Key — $19</span>
-              </button>
-            </div>
-            ========================================================================= */}
-
-        {/* Action Links */}
-        <div style={{ maxWidth: '600px', margin: '36px auto 0', textAlign: 'center', display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
+        {/* ── Action Links ── */}
+        <div style={{ maxWidth: '600px', margin: '32px auto 0', textAlign: 'center', display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
           <Link to="/find-key" className="btn btn-secondary" style={{ gap: '6px' }}>
             <KeyRound size={16} />
             <span>Find My License Key</span>
@@ -241,6 +263,7 @@ export const PricingPage: React.FC = () => {
           </Link>
           <Link to="/faq" className="btn btn-ghost">Read Full FAQ</Link>
         </div>
+
       </div>
     </div>
   );
