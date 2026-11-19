@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { APP_CONFIG } from '../config';
-import { initiateCheckout } from '../services/paymentService';
 import {
   getCurrentTheme,
   toggleTheme,
@@ -33,11 +32,6 @@ export const Navbar: React.FC = () => {
   const handleToggleTheme = () => {
     const next = toggleTheme();
     setCurrentTheme(next);
-  };
-
-  const handleBuy = async (e: React.MouseEvent) => {
-    e.preventDefault();
-    await initiateCheckout('USD');
   };
 
   const closeMobile = () => setMobileMenuOpen(false);
@@ -84,16 +78,15 @@ export const Navbar: React.FC = () => {
             </Link>
 
             {/* Buy Filsy Button */}
-            <button
-              type="button"
+            <Link
+              to="/pricing"
               id="navBuyBtn"
-              onClick={handleBuy}
               className="btn btn-primary btn-sm"
               style={{ gap: '6px' }}
             >
               <Sparkles size={14} />
               <span>Buy Filsy</span>
-            </button>
+            </Link>
           </div>
 
           {/* Mobile hamburger */}
@@ -169,18 +162,15 @@ export const Navbar: React.FC = () => {
               <KeyRound size={16} />
               <span>Find My License Key</span>
             </Link>
-            <button
-              type="button"
-              onClick={(e) => {
-                closeMobile();
-                handleBuy(e);
-              }}
+            <Link
+              to="/pricing"
+              onClick={closeMobile}
               className="btn btn-primary"
-              style={{ width: '100%', gap: '6px' }}
+              style={{ width: '100%', gap: '6px', justifyContent: 'center' }}
             >
               <Sparkles size={16} />
               <span>Buy Filsy</span>
-            </button>
+            </Link>
           </div>
         </div>
       )}
