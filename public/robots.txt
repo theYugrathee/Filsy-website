@@ -26,6 +26,8 @@ User-agent: *
 Allow: /
 Allow: /features
 Allow: /features/*
+Allow: /blog
+Allow: /blog/*
 Allow: /how-it-works
 Allow: /explorer-vs-filsy
 Allow: /pricing
