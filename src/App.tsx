@@ -25,6 +25,7 @@ import { PaymentCancelledPage } from './pages/PaymentCancelledPage';
 import { PaymentFailedPage } from './pages/PaymentFailedPage';
 import { FreeLicensePage } from './pages/FreeLicensePage';
 import { NotFoundPage } from './pages/NotFoundPage';
+import { BlogIndexPage } from './pages/BlogIndexPage';
 // Uncomment below when testing ₹0 payments locally in the future:
 // import { TestPaymentPage } from './pages/TestPaymentPage';
 
@@ -166,6 +167,7 @@ export const App: React.FC = () => {
             {/* <Route path="/test-payment" element={<TestPaymentPage />} /> */}
             {/* <Route path="/test-checkout" element={<TestPaymentPage />} /> */}
                         {/* Blog & SEO Content Pages */}
+            <Route path="/blog" element={<BlogIndexPage />} />
             <Route path="/blog/anytxt-alternative" element={<AnyTxtAlternativePage />} />
             <Route path="/blog/best-duplicate-file-finder-windows" element={<BestDuplicateFinderPage />} />
             <Route path="/blog/best-file-explorer-alternatives-windows" element={<BestFileExplorersPage />} />

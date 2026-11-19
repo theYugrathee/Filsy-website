@@ -76,6 +76,11 @@ export const Footer: React.FC = () => {
             </h4>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.88rem' }}>
               <li>
+                <Link to="/blog" style={{ color: 'var(--muted)', textDecoration: 'none' }}>
+                  Blog &amp; Search Guides
+                </Link>
+              </li>
+              <li>
                 <Link to="/explorer-vs-filsy" style={{ color: 'var(--muted)', textDecoration: 'none' }}>
                   Explorer vs. Filsy
                 </Link>

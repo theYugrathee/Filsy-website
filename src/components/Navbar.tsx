@@ -52,6 +52,7 @@ export const Navbar: React.FC = () => {
             <Link to="/features">Features</Link>
             <Link to="/pricing">Pricing ({APP_CONFIG.pricing.displayPrice})</Link>
             <Link to="/download">Download</Link>
+            <Link to="/blog">Blog</Link>
             <Link to="/how-it-works">How It Works</Link>
             <Link to="/faq">FAQ</Link>
 
@@ -125,6 +126,9 @@ export const Navbar: React.FC = () => {
           </Link>
           <Link to="/download" onClick={closeMobile}>
             Download
+          </Link>
+          <Link to="/blog" onClick={closeMobile}>
+            Blog
           </Link>
           <Link to="/how-it-works" onClick={closeMobile}>
             How it works

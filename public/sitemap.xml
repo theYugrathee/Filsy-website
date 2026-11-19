@@ -124,6 +124,12 @@
 
   <!-- Blog & Search Guides -->
   <url>
+    <loc>https://filsy.space/blog</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://filsy.space/blog/anytxt-alternative</loc>
     <lastmod>2026-11-19</lastmod>
     <changefreq>monthly</changefreq>
